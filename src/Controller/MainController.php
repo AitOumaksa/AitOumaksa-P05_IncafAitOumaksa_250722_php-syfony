@@ -2,10 +2,24 @@
 
 namespace App\Controller;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 class MainController
 {
-    public function getUrlParams(string $param)
+
+    public function view($path, $datas = [])
     {
-        return filter_input(INPUT_GET, $param);
+        //prametrer le dossier contenent les templates html 
+        $loader = new FilesystemLoader('src/View');
+        //l'enverenement twig 
+        $twig = new Environment($loader, [
+            'cache' => false,
+        ]);
+        echo $twig->render($path, $datas);
+    }
+    public function afficheHome()
+    {
+        return $this->view('discription.twig');
     }
 }

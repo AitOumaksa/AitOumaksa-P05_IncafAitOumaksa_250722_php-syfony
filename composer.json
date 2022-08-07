@@ -11,5 +11,7 @@
           "App\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "twig/twig": "3.0"
+    }
 }

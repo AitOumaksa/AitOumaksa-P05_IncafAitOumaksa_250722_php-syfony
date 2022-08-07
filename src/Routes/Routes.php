@@ -1,7 +1,8 @@
 <?php
 
 namespace App;
-
-Router::get('/', 'PostController@getPosts');
-Router::get('/home/{id}', 'HomeController');
-Router::post('/', 'HomeControllercreat');
+/*
+Router::get('/', 'MainController@afficheHome');
+Router::get('/posts', 'PostController@getPosts');
+Router::get('/post/{id}', 'HomeController');
+Router::post('/home/add', 'HomeControllercreat');*/

@@ -9,6 +9,7 @@ class Request
     private $action;
     private $params = []; //tableau vide 
     private $requestForPost;
+    private $routeName;
 
     public function __construct(string $path, string $action)
     {
@@ -16,11 +17,21 @@ class Request
         $this->path = trim($path, '/');
         $this->action = $action;
     }
+
+    /* public function name(string $name = null)
+    {
+        //recup path $name puis le mets dans un tableau avec index , a chque name du route va correspondre a une path 
+        $this->routeName[$name][] = $this->path;
+        //se tableau me retourne une valeur avec un clés indexer 
+        return  $this->routeName;
+    }*/
     // la methode qui va matcher les route 
     public function match($url)
     {
         //en les cractere spéciaux avec  les alpha numerique  et on mets dans this->$path
-        $path = preg_replace('#({[\w]+})#', '([^/])', $this->path);
+        $path = preg_replace('#({[\w]+})#', '([^/]+)', $this->path);
+
+
         //Remplace tt la chaines 
         $pathToMatch = "#^$path$#";
         //comparer le path et lurl envoyer 
@@ -29,7 +40,8 @@ class Request
             array_shift($results);
             //stocker les resltat dans le var param 
             $this->params = $results;
-            var_dump($results);
+
+
             return true;
         } else {
             return false;
@@ -46,7 +58,6 @@ class Request
         $controllerPath = 'App\\Controller\\' . $controller;
         $controller = new $controllerPath();
         $methode = $action[1];
-
         //recup req methode 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             //Si La methode GET on recu le param puis le controller et la methode a excuter 

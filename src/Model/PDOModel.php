@@ -16,7 +16,6 @@ class PDOModel
 
     public function getAllData(string $req, array $param)
     {
-
         $req = ConnectDB::getPDO()->prepare($req);
         $req->execute($param);
         return $req->fetchAll();
