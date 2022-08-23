@@ -9,7 +9,6 @@ class Request
     private $action;
     private $params = []; //tableau vide 
     private $requestForPost;
-    private $routeName;
 
     public function __construct(string $path, string $action)
     {
@@ -34,6 +33,7 @@ class Request
 
         //Remplace tt la chaines 
         $pathToMatch = "#^$path$#";
+
         //comparer le path et lurl envoyer 
         if (preg_match($pathToMatch, $url, $results)) {
             //recupere le tableau d'url puis ecrase la premiere parti du tableau , et  recup param 
@@ -58,13 +58,16 @@ class Request
         $controllerPath = 'App\\Controller\\' . $controller;
         $controller = new $controllerPath();
         $methode = $action[1];
+
         //recup req methode 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
             //Si La methode GET on recu le param puis le controller et la methode a excuter 
             return isset($this->params) ? $controller->$methode(implode($this->params)) : $controller->$methode;
         } else {
             //si la methode et POST et que il n'ya pas de paramn on inject le request 
-            return isset($this->params) ? $controller->$methode($this->resquestForPost, implode($this->params)) : $controller->$methode($this->requestForPost);
+            return isset($this->params) ? $controller->$methode($this->requestForPost, implode($this->params)) :
+                $controller->$methode($this->requestForPost);
         }
     }
 }

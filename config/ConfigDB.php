@@ -4,7 +4,7 @@ $host = 'localhost';
 $db_Name = 'blog_php';
 $db_User = 'root';
 $db_Pass = 'Incaf123';
-$db_Port = '3307';
+$db_Port = '3306';
 $db_Dsn = "mysql:host={$host};dbname={$db_Name};port={$db_Port}";
 $option = [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

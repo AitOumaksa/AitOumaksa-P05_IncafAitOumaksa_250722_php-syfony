@@ -12,6 +12,12 @@
         }
     },
     "require": {
-        "twig/twig": "3.0"
+        "twig/twig": "3.0",
+        "phpmailer/phpmailer": "^6.6",
+        "league/oauth2-client": "^2.6",
+        "league/oauth2-google": "^4.0",
+        "firebase/php-jwt": "^6.3",
+        "paragonie/sodium_compat": "^1.17",
+        "laminas/laminas-config": "^3.7"
     }
 }

@@ -1,1 +1,46 @@
 {% extends 'layout/layout.twig' %}
+
+ {% block content %}
+      
+<div class="container p-4 blog-post">
+            <h1 class="blog-post-title mb-4">{{one_post.title}}</h1>
+          {% if post.updatePublication <= post.datePublication %}
+           <p class="blog-post-meta mb-4">Créé le {{one_post.datePublication|date('d/m/Y \\à H:i')}} par <strong> {{ one_post.autor}}</strong></p>
+          {% else %}
+          <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatePublication|date('d/m/Y \\à H:i') }} par <strong> {{ one_post.autor }}</strong></p>
+          {% endif %}
+            <p>{{one_post.chapo}}...</br> {{one_post.content}}</p>
+             <div class="d-flex flex-row align-items-center voting-icons">
+                <a href ="#" class="ml-2 mt-1 text-dark border-end border-dark border-3 pe-1">Modifier</a>
+                <a href ="#" class="ml-2 mt-1 float-end ps-1 text-dark">Suprimer</a>
+              </div>
+
+        <!-- start comment -->
+        <div class="d-flex justify-content-center row">
+                <div class="coment-bottom bg-white p-2 px-4">
+                <h2 class="blog-post-title mb-4 h4">Commentaires</h2>
+                    <div class="d-flex flex-row add-comment-section mt-4 mb-4"><input type="text" class="form-control mr-3" placeholder="Ajouter un commentaire"><button class="btn btn-dark" type="button">Comment</button></div>
+                      {% for comment in comments %}
+                    <div class="commented-section mt-2 border-bottom">
+                        <div class="d-flex flex-row align-items-center commented-user">
+                            <h2 class="mr-2 me-2 h5">{{comment.user_name}}</h2>
+                            {% if comment.updatecomment <= comment.datecomment %}
+                            <span class="mb-1  ml-2">{{comment.datecomment|date('d/m/Y \\à H:i')}} </span>
+                            {% else %}
+                            <span class="mb-1  ml-2">{{comment.updatecomment|date('d/m/Y \\à H:i')}} </span>
+                            {% endif %}
+                        </div>
+                        <div class="comment-text-sm"><span>{{comment.comment_content}}</span></div>
+                        <div
+                            class="reply-section">
+                            <div class="d-flex flex-row align-items-center voting-icons">
+                                <a href ="#" class="ml-2 mt-1">Modifier</a>
+                            </div>
+                    </div>
+</div>
+         {% endfor %}
+         <!-- end comment -->
+          </div><!-- /.blog-post -->
+
+
+{% endblock %}

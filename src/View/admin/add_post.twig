@@ -1,0 +1,74 @@
+{% extends 'admin/modal_add_edite.twig' %}
+
+{% block content %}
+<form method="post" class="needs-validation" action="" novalidate>
+            <div class="row">
+                <div class="form-group col-md pb-2 pb-md-0 pt-3">
+                    <label for="title" >Titre de l'article :</label><br>
+                      <input  type="text" name="title" id="title" class="form-control" placeholder="Titre de l'article" required>
+                </div>
+				<div class="form-group col-md pb-2 pb-md-0 pt-3">
+                    <label for="autor" >Auteur de l'article :</label><br>
+                      <input  type="text" name="autor" id="autor" class="form-control" placeholder="auteur de l'article" required>
+                </div>
+
+            </div>
+			    
+				  <div class="row">
+                    <div class=" pt-3">
+                    <label for="description" >Description de l'article :</label><br>
+                        <textarea name="chapo" class="form-control" rows="4" id="chapo" placeholder="Description de l'article" required></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class=" pt-3">
+                    <label for="Content" >Contenu de l'article :</label><br>
+                        <textarea name="content" class="form-control" rows="4" id="Content" placeholder="Contenu de l'article" required></textarea>
+                    </div>
+                </div>
+                     <div class="row">
+                    <div class="col pt-3">
+                        <input class = "btn btn-dark" type="submit" value="Envoyer"/>
+                    </div>
+                </div>
+                 
+                <div id="liveAlertPlaceholder"></div>
+</form>
+<script src="../../../public/js/main.js"></script>
+
+<script>
+
+      $url = 'http://localhost/addPost'
+      form = document.querySelector('.needs-validation')
+
+
+           form.addEventListener('submit', function (event) { 
+          event.stopPropagation();
+          event.preventDefault();
+          this.classList.add('was-validated');
+          if (form.checkValidity()) {
+            const formData = createFormData();
+            console.log(formData);
+            jsonres = postData(formData,$url)
+             .then(function (jsonres) {
+            // console.log('console',jsonres);
+              if(jsonres.success){
+                    formReset(form);
+                    alertType='success'
+                    alertMessage = 'Votre message est envoyer je vous répondrai dans les plus brefs délais'
+                }else{
+                    alertType='danger'
+                    alertMessage = jsonres.error
+                }
+                const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+                alert(alertMessage ,alertType ,alertPlaceholder)
+           })
+            //console.log('ici',jsonres);
+              
+          }
+
+      })
+
+</script>
+{% endblock %} 

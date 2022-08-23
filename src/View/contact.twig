@@ -1,0 +1,78 @@
+
+    <div class="form-group container">
+        <h3>Me contacter</h3>
+
+        <form method="post" class="needs-validation" action="" novalidate>
+            <div class="row">
+                <div class="form-group col-md pb-2 pb-md-0 pt-3">
+                    <label for="name" >Nom Et Prénom :</label><br>
+                      <input  type="text" name="name" id="name" class="form-control" placeholder="Nom Et Prénom" required pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð '-]+$">
+                      <div class="valid-feedback">Nom et prénom valide</div>
+                       <div class="invalid-feedback">Nom et prénom invalide</div>
+                </div>
+
+                <div class="form-group mb-4 pt-3">
+                      
+                     <label for="email" >Email :</label><br>
+                     <input type="email" name="email" id="email" placeholder="Email" class="form-control" required>
+                    <div class="valid-feedback">Email valide</div>
+                     <div class="invalid-feedback">Email invalide</div>     
+                </div>
+            </div>
+                <div class="row">
+                    <div class=" pt-3">
+                    <label for="Message" >Message :</label><br>
+                        <textarea name="message" class="form-control" rows="4" id="message" placeholder="Message" required></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col pt-3">
+                        <input class = "btn btn-dark" type="submit" value="Envoyer"/>
+                    </div>
+                </div>
+                 
+                <div id="liveAlertPlaceholder"></div>
+
+
+        </form>
+    </div>
+
+
+    <script>
+
+      $url = 'http://localhost/contact'
+      form = document.querySelector('.needs-validation')
+      
+
+          form.addEventListener('submit', function (event) { 
+          event.stopPropagation();
+          event.preventDefault();
+          this.classList.add('was-validated');
+          if (form.checkValidity()) {
+            const formData = createFormData();
+            //console.log(formData);
+            jsonres = postData(formData,$url)
+             .then(function (jsonres) {
+            // console.log('console',jsonres);
+              if(jsonres.success){
+                    formReset(form);
+                    alertType='success'
+                    alertMessage = 'Votre message est envoyer je vous répondrai dans les plus brefs délais'
+                }else{
+                    alertType='danger'
+                    alertMessage = jsonres.error
+                }
+                const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+                alert(alertMessage ,alertType ,alertPlaceholder)
+           })
+            //console.log('ici',jsonres);
+              
+          }
+
+      })
+      
+        
+
+    </script>
+                
+ 

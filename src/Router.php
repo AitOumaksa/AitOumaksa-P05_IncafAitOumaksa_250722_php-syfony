@@ -27,6 +27,7 @@ class router
         //stocker mes route dans la variable requeste  avec la clés 'GET'
         self::$request['POST'][] = $routes;
         //retun la routes pour faire l'enchainage 
+
         return $routes;
     }
     //methode parcourir le tables des routes puis matcher avec la route envoyer par le navigateur 
@@ -35,13 +36,13 @@ class router
 
         //PARCURIR LE TABLEAU  $request puis recuperer la method avec $_SERVER 
         foreach (self::$request[$_SERVER['REQUEST_METHOD']] as $route) {
+
             //methode match prend en parametre url passer dans .htaccess ,en enleve les / en debut et fin 
             if ($route->match(trim($_GET['url']), '/')) {
+
                 $route->execute();
-                die();
             }
         }
-        echo 'page nexiste pas ' . '<br/>';
     }
     //matching urlname 
     /* public static function urlName($name, $params = [])

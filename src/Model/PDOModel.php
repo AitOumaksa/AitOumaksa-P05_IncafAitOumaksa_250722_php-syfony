@@ -6,25 +6,29 @@ namespace App\Model;
 class PDOModel
 {
 
-    public function getData($statement)
+    public function getData($req)
     {
-        $req = ConnectDB::getPDO()->prepare($statement);
-        $req->execute();
-        return $req->fetch();
+        $request = ConnectDB::getPDO()->prepare($req);
+        $request->execute();
+        return $request->fetch();
     }
 
 
     public function getAllData(string $req, array $param)
     {
+        //var_dump($req);
         $req = ConnectDB::getPDO()->prepare($req);
+        // var_dump($param, 'parametre');
         $req->execute($param);
         return $req->fetchAll();
     }
 
 
-    public function setData(string $statement, array $params = [])
+    public function setData(string $req, array $params = [])
     {
-        $req = ConnectDB::getPDO()->prepare($statement);
-        return $req->execute($params);
+
+        $request = ConnectDB::getPDO()->prepare($req);
+        //var_dump($request);
+        return $request->execute($params);
     }
 }

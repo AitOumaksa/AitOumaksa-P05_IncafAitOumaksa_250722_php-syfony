@@ -1,0 +1,15 @@
+{% extends 'layout/layout.twig' %}
+
+{% block addForm %}
+
+ {{  include ('admin/add_post.twig') }}
+
+{% endblock %}
+
+ {% block title %}<h1 class = "text-center p-3">Vos Articles</h1>{% endblock %}
+
+{% block content %}
+
+   {{  include ('admin/items_posts_admin.twig') }}
+
+{% endblock %} 
