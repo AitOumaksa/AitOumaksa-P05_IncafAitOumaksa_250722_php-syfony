@@ -6,34 +6,36 @@ use App\Model\ConnectDB;
 use App\Model\PDOModel;
 use App\Model\PostModel;
 use App\Routes\HttpRequest;
+use App\Routes\Request;
 
 class AdminController extends MainController
 {
 
 
-    public function adminInterface()
+    /*public function adminInterface()
     {
         return $this->view('admin_interface.twig');
-    }
+    }*/
 
-    public function addPost($requestForPost)
+
+
+    public function getPostsAdmin($id_user)
     {
 
-        $token = $this->verifAuth();
-        try {
-            $data = $requestForPost->ValueForm();
+        $col_table = [
+            'post.id',
+            'post.title',
+            'post.chapo',
+            'post.autor',
+            'post.createdAt' => 'datePublication',
+            'post.updatedAt' => 'updatePublication',
 
-            $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
-            $setPost = $postModel->setPost($token->id, $data['title'], $data['chapo'], $data['autor'], $data['content']);
-            $setPostJson = json_encode($setPost);
-            var_dump($setPostJson);
-            if ($setPostJson == true) {
+        ];
+        $join = ['user' => 'user.id=post.id_user'];
 
-                echo json_encode(array("success" => true));
-            }
-        } catch (\Exception $e) {
 
-            echo json_encode(array("error" => $e->getMessage()));
-        }
+        $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
+        $posts = $postModel->selectData($col_table, $join, 'id_user', '1');
+        return $this->view('admin_interface.twig', compact('posts'));
     }
 }

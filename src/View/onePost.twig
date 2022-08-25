@@ -1,18 +1,97 @@
 {% extends 'layout/layout.twig' %}
 
  {% block content %}
+
+ <!-- Modal edite -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier l'article</h5>
+        <button type="button" onclick="javascript:window.location.reload()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      <form method="post" class="needs-validation" action="" novalidate>
+            <div class="row">
+                <div class="form-group col-md pb-2 pb-md-0 pt-3">
+                    <label for="title" >Titre de l'article :</label><br>
+                      <input  type="text" name="title" id="title" class="form-control" placeholder="Titre de l'article" value="{{ one_post.title}}" required>
+                </div>
+				<div class="form-group col-md pb-2 pb-md-0 pt-3">
+                    <label for="autor" >Auteur de l'article :</label><br>
+                      <input  type="text" name="autor" id="autor" class="form-control" placeholder="auteur de l'article" value="{{ one_post.autor}}" required>
+                </div>
+
+            </div>
+			    
+				  <div class="row">
+                    <div class=" pt-3">
+                    <label for="description" >Description de l'article :</label><br>
+                        <textarea name="chapo" class="form-control" rows="4" id="chapo" placeholder="chapo de l'article"  required>{{ one_post.chapo}}</textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class=" pt-3">
+                    <label for="Content" >Contenu de l'article :</label><br>
+                        <textarea name="content" class="form-control" rows="4" id="content" placeholder="Contenu de l'article"  required>{{ one_post.content}}</textarea>
+                    </div>
+                </div>
+                     <div class="row">
+                    <div class="col pt-3">
+                        <input class = "btn btn-dark" type="submit" value="Modifier"/>
+                    </div>
+                </div>
+                 
+                <div id="liveAlertPlaceholder"></div>
+      </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--End modale edite-->
+
+<!--modal delete -->
+
+
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Supression de l'article</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sur de suprimer l'article ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark btn-delete">Suprimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal en delete -->
+
       
-<div class="container p-4 blog-post">
+<div class="container p-4 blog-post" data-id= {{one_post.id}}>
             <h1 class="blog-post-title mb-4">{{one_post.title}}</h1>
-          {% if post.updatePublication <= post.datePublication %}
+          {% if one_post.updatePublication <= one_post.datePublication %}
            <p class="blog-post-meta mb-4">Créé le {{one_post.datePublication|date('d/m/Y \\à H:i')}} par <strong> {{ one_post.autor}}</strong></p>
           {% else %}
           <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatePublication|date('d/m/Y \\à H:i') }} par <strong> {{ one_post.autor }}</strong></p>
           {% endif %}
             <p>{{one_post.chapo}}...</br> {{one_post.content}}</p>
              <div class="d-flex flex-row align-items-center voting-icons">
-                <a href ="#" class="ml-2 mt-1 text-dark border-end border-dark border-3 pe-1">Modifier</a>
-                <a href ="#" class="ml-2 mt-1 float-end ps-1 text-dark">Suprimer</a>
+                <button type="button" class="btn btn-dark mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Modifier
+                </button>
+                <button type="button" class="btn btn-dark ml-2 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModalDelete">
+                  Suprimer
+                </button>
               </div>
 
         <!-- start comment -->
@@ -37,10 +116,90 @@
                                 <a href ="#" class="ml-2 mt-1">Modifier</a>
                             </div>
                     </div>
-</div>
+        </div>
          {% endfor %}
          <!-- end comment -->
           </div><!-- /.blog-post -->
+
+          <script src="../../../public/js/main.js"></script>
+
+       <script>
+      
+       id = document.querySelector('.blog-post').dataset.id
+      $url = `http://localhost/updatePost/${id}`
+
+      form = document.querySelector('.needs-validation')
+       inputVAlueTitle = document.getElementById('title');
+       inputVAlueAutor = document.getElementById('autor');
+       inputVAlueContent = document.getElementById('content');
+        inputVAlueChapo = document.getElementById('chapo');
+
+     
+      
+
+           form.addEventListener('submit', function (event) { 
+          event.stopPropagation();
+          event.preventDefault();
+          this.classList.add('was-validated');
+          if (form.checkValidity()) {
+            const formData = createFormData();
+            console.log(formData);
+            jsonres = postData(formData,$url)
+             .then(function (jsonres) {
+            // console.log('console',jsonres);
+              if(jsonres.success){
+                   formReset(form);
+                    alertType='success'
+                    alertMessage = 'Article Modifier'
+                    inputVAlueTitle.value = '';
+                     inputVAlueAutor.value = '';
+                     inputVAlueChapo.value = '';
+                     inputVAlueContent.value = '';
+                      
+                }else{
+                    alertType='danger'
+                    alertMessage = jsonres.error
+                }
+                const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+                alert(alertMessage ,alertType ,alertPlaceholder)
+           })
+              
+          }
+
+      })
+      
+      
+      
+
+      btnDelete = document.querySelector('.btn-delete')
+      btnDelete.addEventListener('click', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        console.log('en cour de supression ');
+
+        fetch(`http://localhost/deletePost/${id}`)
+         .then(function (res) {
+        if (res.ok) {
+            return res.json();
+        }
+        })
+         .then(function (jsonres) {
+          console.log('je suis la ')
+              document.location.href = `http://localhost/admin`;
+
+        })
+
+
+      })
+
+
+
+
+  
+        
+
+
+</script>
 
 
 {% endblock %}

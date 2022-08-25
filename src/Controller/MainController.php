@@ -44,7 +44,7 @@ class MainController
     public function verifyInputName($name)
     {
         if (!preg_match("/^([a-zA-Z' ]+)$/", $name)) {
-            throw new \Exception('User name not valide.');
+            throw new \Exception('Name format not valide or empty.');
             return false;
         } else {
             return true;
@@ -52,8 +52,8 @@ class MainController
     }
     public function verifyInputMessage($message)
     {
-        if (!preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð '-]+$/", $message)) {
-            throw new \Exception('Message not valide.');
+        if (empty(htmlspecialchars($message))) {
+            throw new \Exception('input empty or format not valid');
             return false;
         } else {
             return true;

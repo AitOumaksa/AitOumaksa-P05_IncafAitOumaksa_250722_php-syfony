@@ -82,14 +82,4 @@ class MainModel
 
         return $this->database->getData($query, [$value]);
     }
-
-    public function setPost($id_user, $title, $chapo, $autor, $content)
-    {
-
-        $query = 'INSERT INTO ' . $this->table . ' (id_user, title, chapo,autor, content, createdAt,updatedAt) VALUES (?, ?, ?, ?, ?,?,?)';
-        $date = date("Y-m-d H:i:s");
-        $value = array($id_user, $title, $chapo, $autor, $content, $date, $date);
-        // var_dump($value);
-        return $this->database->setData($query, $value);
-    }
 }

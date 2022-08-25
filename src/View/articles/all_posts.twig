@@ -4,7 +4,7 @@
         <div class="col p-4 d-flex flex-column position-static">
           <h3 class="mb-0">{{post.title}}</h3>
           {% if post.updatePublication <= post.datePublication %}
-          <div class="mb-1 text-muted">Créé le {{ post.datePublication|date('d/m/Y \\à H:i') }} par <strong>{{ post.user_name }}</strong></div>
+          <div class="mb-1 text-muted">Créé le {{ post.datePublication|date('d/m/Y \\à H:i') }} par <strong>{{ post.autor }}</strong></div>
           {% else %}
           <div class="mb-1 text-muted">Mis à jour le {{ post.updatePublication|date('d/m/Y \\à H:i') }} par <strong>{{ post.autor }}</strong></div>
           {% endif %}

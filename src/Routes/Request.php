@@ -10,6 +10,8 @@ class Request
     private $params = []; //tableau vide 
     private $requestForPost;
 
+
+
     public function __construct(string $path, string $action)
     {
         $this->requestForPost = new HttpRequest();
@@ -40,8 +42,7 @@ class Request
             array_shift($results);
             //stocker les resltat dans le var param 
             $this->params = $results;
-
-
+            // var_dump($this->params);
             return true;
         } else {
             return false;
@@ -58,11 +59,11 @@ class Request
         $controllerPath = 'App\\Controller\\' . $controller;
         $controller = new $controllerPath();
         $methode = $action[1];
-
         //recup req methode 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             //Si La methode GET on recu le param puis le controller et la methode a excuter 
+
             return isset($this->params) ? $controller->$methode(implode($this->params)) : $controller->$methode;
         } else {
             //si la methode et POST et que il n'ya pas de paramn on inject le request 
