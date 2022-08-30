@@ -5,12 +5,18 @@ namespace App\Routes;
 class HttpRequest
 {
 
-    //recup les valeur de formulaire 
+    /**
+     * Received value from the form 
+     * @return Array $_POST
+     */
     public function ValueForm()
     {
         return $_POST;
     }
-    //recup content of form
+    /**
+     * Received value input from the form 
+     * @return Array $_POST
+     */
     public function nameInput($field)
     {
         return $_POST[$field];

@@ -5,9 +5,26 @@ namespace App\Model;
 class MainModel
 {
 
+
+    /**
+     * database 
+     * @var PDOModel
+     */
+
     protected $database = null;
 
+    /**
+     * Table database
+     * @var String $table
+     */
+
     protected $table = null;
+
+    /**
+     * Model constructor
+     * Receives the Database Object & creates the Table Name
+     * @param PDOModel $database
+     */
 
     public function __construct(PDOModel $database)
     {
@@ -15,6 +32,14 @@ class MainModel
         $model = explode('\\', get_class($this));
         $this->table = lcfirst(str_replace('Model', '', array_pop($model)));
     }
+
+
+    /**
+     * Lists all Datas from the id or another key
+     * @param String $value
+     * @param String $key
+     * @return Array|Mixed
+     */
 
     public function listData(string $value = null, string $key = null)
     {
@@ -27,7 +52,15 @@ class MainModel
 
         return $this->database->getAllData($query, [$value]);
     }
-    // 
+
+    /**
+     * Join a table 
+     * @param Mixed $col_tables
+     * @param Mixed $join_tables
+     * @param String $key
+     * @param String $value
+     * @return Array|Mixed
+     */
 
     public function selectData($col_tables, $join_tables, $key, $value)
     {
@@ -71,6 +104,64 @@ class MainModel
         return $this->database->getAllData($query, [$value]);
     }
 
+
+
+    /**
+     * Insert data 
+     * @param Array $col_table
+     * @param String|Array $value
+     * @return BOOL
+     */
+
+    public function insertData($col_table, $value)
+    {
+        $query_col = implode(",", $col_table);
+        $value_num = array_fill(0, count($col_table), '?');
+        $value_req = implode(",", $value_num);
+
+        $query = 'INSERT INTO ' . $this->table . '  (' . $query_col . ')  VALUES (' . $value_req . ')';
+        return $this->database->setData($query, $value);
+    }
+
+    /**
+     * Update data 
+     * @param Array $col_table
+     * @param String|Array $value
+     * @param String $key
+     *  @param String $$keyValue
+     * @return BOOL
+     */
+
+
+    public function updateData($col_table, $values, $key, $keyValue)
+    {
+        $col_table[count($col_table) - 1]  =  $col_table[count($col_table) - 1] . '=?';
+        $query_col = implode("=?,", $col_table);
+        $query = 'UPDATE ' . $this->table . ' SET ' . $query_col . ' WHERE ' . $key . ' = ' . $keyValue;
+        return $this->database->setData($query, $values);
+    }
+
+
+    /**
+     * Delete data 
+     * @param String $key
+     * @param String $keyValue
+     * @return BOOL
+     */
+
+    public function deleteData($key, $keyValue)
+    {
+        $query = 'DELETE FROM ' . $this->table . ' WHERE ' . $key . ' = ' . $keyValue;
+        return $this->database->deleteData($query);
+    }
+
+
+    /**
+     * Select data from the id or another key
+     * @param String $value
+     * @param String $key
+     * @return Array|Mixed
+     */
 
     public function readData(string $value = null, string $key = null)
     {

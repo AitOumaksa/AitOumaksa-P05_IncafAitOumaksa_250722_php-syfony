@@ -3,24 +3,28 @@
  {% block content %}
 
  <!-- Modal edite -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Modifier l'article</h5>
-        <button type="button" onclick="javascript:window.location.reload()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         
-      <form method="post" class="needs-validation" action="" novalidate>
+      <form method="post" class="needs-validation modifyPost" action="" novalidate>
             <div class="row">
                 <div class="form-group col-md pb-2 pb-md-0 pt-3">
                     <label for="title" >Titre de l'article :</label><br>
                       <input  type="text" name="title" id="title" class="form-control" placeholder="Titre de l'article" value="{{ one_post.title}}" required>
+                       <div class="valid-feedback">Titre de l'article valide</div>
+                    <div class="invalid-feedback">Titre de l'article invalide</div>
                 </div>
 				<div class="form-group col-md pb-2 pb-md-0 pt-3">
                     <label for="autor" >Auteur de l'article :</label><br>
                       <input  type="text" name="autor" id="autor" class="form-control" placeholder="auteur de l'article" value="{{ one_post.autor}}" required>
+                       <div class="valid-feedback">Auteur de l'article valide</div>
+                    <div class="invalid-feedback">Auteur de l'article invalide</div>
                 </div>
 
             </div>
@@ -29,6 +33,8 @@
                     <div class=" pt-3">
                     <label for="description" >Description de l'article :</label><br>
                         <textarea name="chapo" class="form-control" rows="4" id="chapo" placeholder="chapo de l'article"  required>{{ one_post.chapo}}</textarea>
+                        <div class="valid-feedback">Description de l'article valide</div>
+                    <div class="invalid-feedback">Description de l'article invalide</div>
                     </div>
                 </div>
 
@@ -36,6 +42,8 @@
                     <div class=" pt-3">
                     <label for="Content" >Contenu de l'article :</label><br>
                         <textarea name="content" class="form-control" rows="4" id="content" placeholder="Contenu de l'article"  required>{{ one_post.content}}</textarea>
+                        <div class="valid-feedback">Contenu de l'article valide</div>
+                    <div class="invalid-feedback">Contenu de l'article invalide</div>
                     </div>
                 </div>
                      <div class="row">
@@ -68,7 +76,7 @@
         Êtes-vous sur de suprimer l'article ?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark btn-delete">Suprimer</button>
+        <button type="button" class="btn btn-dark btn-delete-post">Suprimer</button>
       </div>
     </div>
   </div>
@@ -76,86 +84,143 @@
 
 <!--modal en delete -->
 
-      
-<div class="container p-4 blog-post" data-id= {{one_post.id}}>
+<!--Start container for one post-->
+    <div class="container p-4 blog-post" data-id= {{one_post.id}}>
             <h1 class="blog-post-title mb-4">{{one_post.title}}</h1>
-          {% if one_post.updatePublication <= one_post.datePublication %}
-           <p class="blog-post-meta mb-4">Créé le {{one_post.datePublication|date('d/m/Y \\à H:i')}} par <strong> {{ one_post.autor}}</strong></p>
-          {% else %}
-          <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatePublication|date('d/m/Y \\à H:i') }} par <strong> {{ one_post.autor }}</strong></p>
-          {% endif %}
+            {% if one_post.updatePublication <= one_post.datePublication %}
+            <p class="blog-post-meta mb-4">Créé le {{one_post.datePublication|date('d/m/Y \\à H:i')}} par <strong> {{ one_post.autor}}</strong></p>
+            {% else %}
+            <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatePublication|date('d/m/Y \\à H:i') }} par <strong> {{ one_post.autor }}</strong></p>
+            {% endif %}
             <p>{{one_post.chapo}}...</br> {{one_post.content}}</p>
-             <div class="d-flex flex-row align-items-center voting-icons">
-                <button type="button" class="btn btn-dark mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Modifier
-                </button>
-                <button type="button" class="btn btn-dark ml-2 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModalDelete">
-                  Suprimer
-                </button>
-              </div>
+            <div class="d-flex flex-row align-items-center voting-icons">
+            <button type="button" class="btn btn-dark mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> Modifier</button>
+            <button type="button" class="btn btn-dark ml-2 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModalDelete">Suprimer</button>
+    </div>
+
+<!--End container for one post-->
 
         <!-- start comment -->
         <div class="d-flex justify-content-center row">
-                <div class="coment-bottom bg-white p-2 px-4">
+              <div class="coment-bottom bg-white p-2 px-4">
                 <h2 class="blog-post-title mb-4 h4">Commentaires</h2>
-                    <div class="d-flex flex-row add-comment-section mt-4 mb-4"><input type="text" class="form-control mr-3" placeholder="Ajouter un commentaire"><button class="btn btn-dark" type="button">Comment</button></div>
+                <form method="post" class="needs-validation container addComment"  novalidate>
+                  <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+                    <input type="text"  name="comment_content" class="form-control mr-3 " placeholder="Ajouter un commentaire" required> 
+                    <div class="valid-feedback">Commentaire valide</div>
+                    <div class="invalid-feedback">Commentaire invalide</div>
+                  <button class="btn btn-dark comment" type="submit">Comment</button> 
+                     
+                  </div>
+                  
+                    <div id="alertPlaceholderComment"></div>
+                </form>
+             
+                <div class = "all-comment" id = "all-comment">
                       {% for comment in comments %}
-                    <div class="commented-section mt-2 border-bottom">
+                    <div class="commented-section mt-2 border-bottom" data-id= {{comment.id_comment}}>
                         <div class="d-flex flex-row align-items-center commented-user">
                             <h2 class="mr-2 me-2 h5">{{comment.user_name}}</h2>
                             {% if comment.updatecomment <= comment.datecomment %}
-                            <span class="mb-1  ml-2">{{comment.datecomment|date('d/m/Y \\à H:i')}} </span>
+                            <span class="mb-1  ml-2"> Crée le {{comment.datecomment|date('d/m/Y \\à H:i')}} </span>
                             {% else %}
-                            <span class="mb-1  ml-2">{{comment.updatecomment|date('d/m/Y \\à H:i')}} </span>
+                            <span class="mb-1  ml-2"> Mis à jour le {{comment.updatecomment|date('d/m/Y \\à H:i')}} </span>
                             {% endif %}
                         </div>
+                        <form method="post" class="needs-validation container updateComment"  novalidate>
+                        <div class="d-flex flex-row update-comment-section mt-4 mb-4 d-none" >
+                        <input type="text"  name="comment_content" value="{{comment.comment_content}}" class="form-control mr-3 comment-content " placeholder="Ajouter un commentaire" required>
+                        <div class="valid-feedback">Commentaire valide</div>
+                        <div class="invalid-feedback">Commentaire invalide</div>
+                        <button class="btn btn-dark btn-sm mx-2 btn-to-update" type="submit">Modifier</button>
+                        <button class="btn btn-dark btn-sm btn-to-cancel" type="button">Annuler</button>
+                        </div>
+                        <div class="alertPlaceholderUpdateComment"></div>
+                        </form>
                         <div class="comment-text-sm"><span>{{comment.comment_content}}</span></div>
-                        <div
-                            class="reply-section">
+                        <div class="reply-section">
                             <div class="d-flex flex-row align-items-center voting-icons">
-                                <a href ="#" class="ml-2 mt-1">Modifier</a>
+                                <a href ="#" class="ml-2 mt-1 modifycomment text-dark fw-bold mx-2">Modifier</a>
+                                <a href ="#" class="ml-2 mt-1 deletecomment text-dark fw-bold">Suprimer</a>
                             </div>
+                        </div>
                     </div>
-        </div>
-         {% endfor %}
+                   {% endfor %}
+                  </div>
          <!-- end comment -->
-          </div><!-- /.blog-post -->
+         
+          </div>
+          <!-- /.blog-post -->
 
-          <script src="../../../public/js/main.js"></script>
 
        <script>
+
+
+  document.querySelectorAll('.modifycomment').forEach(element => {
+  element.addEventListener('click', function (event) {
+    event.stopPropagation();
+    event.preventDefault();
+ 
+   this.closest(".commented-section").querySelector('.update-comment-section').classList.remove('d-none')
+   this.closest(".commented-section").querySelector('.reply-section').classList.add('d-none')
+   this.closest(".commented-section").querySelector('.comment-text-sm').classList.add('d-none')
+   
+ 
+  });
+
+});
+
+   document.querySelectorAll('.update-comment-section > .btn-to-cancel').forEach(element => {
+  element.addEventListener('click', function (event) {
+    event.stopPropagation();
+    event.preventDefault();
+ 
+   this.closest('.update-comment-section').classList.add('d-none')
+   this.closest(".commented-section").querySelector('.reply-section').classList.remove('d-none')
+   this.closest(".commented-section").querySelector('.comment-text-sm').classList.remove('d-none')
+   
+  this.closest('.update-comment-section').querySelector('.comment-content').value = this.closest(".commented-section").querySelector('.comment-text-sm > span').innerHTML
+  this.closest(".commented-section").querySelector('.updateComment').classList.remove('was-validated')
+ 
+  });
+
+});
       
-       id = document.querySelector('.blog-post').dataset.id
-      $url = `http://localhost/updatePost/${id}`
-
-      form = document.querySelector('.needs-validation')
-       inputVAlueTitle = document.getElementById('title');
-       inputVAlueAutor = document.getElementById('autor');
-       inputVAlueContent = document.getElementById('content');
-        inputVAlueChapo = document.getElementById('chapo');
-
+      id_post = document.querySelector('.blog-post').dataset.id
+      // url updatePost
+      url = `http://localhost/updatePost/${id_post}`
+      // url addComment
+      urlComment = `http://localhost/${id_post}/addComment`
+      //update comment
+       urlUpdateComment = `http://localhost/updateComment`
+      //form update post
+      form_post = document.querySelector('.modifyPost')
+      //form add comment 
+      form_comment = document.querySelector('.addComment')
+      //form update post 
+       
+       form_update_comment = document.querySelectorAll('.updateComment')
+     //form add comment 
+       urlDeleteComment = `http://localhost/deleteComment`
+    
+   
      
       
-
-           form.addEventListener('submit', function (event) { 
+        //update post 
+          form_post.addEventListener('submit', function (event) { 
           event.stopPropagation();
           event.preventDefault();
           this.classList.add('was-validated');
-          if (form.checkValidity()) {
-            const formData = createFormData();
-            console.log(formData);
-            jsonres = postData(formData,$url)
+          if (form_post.checkValidity()) {
+            const formData = createFormData(form_post);
+            jsonres = postData(formData,url)
              .then(function (jsonres) {
             // console.log('console',jsonres);
               if(jsonres.success){
-                   formReset(form);
+                   formReset(form_post);
                     alertType='success'
                     alertMessage = 'Article Modifier'
-                    inputVAlueTitle.value = '';
-                     inputVAlueAutor.value = '';
-                     inputVAlueChapo.value = '';
-                     inputVAlueContent.value = '';
-                      
+                    window.location.reload()
                 }else{
                     alertType='danger'
                     alertMessage = jsonres.error
@@ -170,32 +235,108 @@
       
       
       
-
-      btnDelete = document.querySelector('.btn-delete')
+    //Delete post
+      btnDelete = document.querySelector('.btn-delete-post')
       btnDelete.addEventListener('click', function (event) {
         event.stopPropagation();
         event.preventDefault();
-        console.log('en cour de supression ');
 
-        fetch(`http://localhost/deletePost/${id}`)
+       jsonres =  getData(`http://localhost/deletePost/${id_post}`)
          .then(function (res) {
-        if (res.ok) {
-            return res.json();
-        }
+          document.location.href = `http://localhost/admin`;
         })
-         .then(function (jsonres) {
-          console.log('je suis la ')
-              document.location.href = `http://localhost/admin`;
+        
 
         })
 
+
+       
+
+
+  
+     // add comment 
+      form_comment.addEventListener('submit', function (event) { 
+      event.stopPropagation();
+      event.preventDefault();
+      this.classList.add('was-validated');
+      if (form_comment.checkValidity()) {
+            const InputData = createFormData(form_comment);
+            jsonres = postData(InputData,urlComment)    
+             .then(function (jsonres) {
+              if(jsonres.success){
+          
+                formReset(form_comment);
+                //window.location.reload();
+                    alertType='success';
+                    alertMessage = 'Commentaire Ajouter'
+                window.location.reload();
+
+                }else{
+                    alertType='danger'
+                    alertMessage = jsonres.error
+                }
+                const alertPlaceholder = document.getElementById('alertPlaceholderComment');
+                alert(alertMessage ,alertType ,alertPlaceholder);
+           })
+      }
 
       })
 
 
+      //update form comment 
 
 
-  
+  form_update_comment.forEach(element => {
+  element.addEventListener('submit', function (event) {
+    event.stopPropagation();
+    event.preventDefault();
+     this.classList.add('was-validated');
+     thisForm=this;
+    if (this.checkValidity()) {
+         idComment =   this.closest('.commented-section').dataset.id
+          const formData = createFormData(this);
+            jsonres = postData(formData,`${urlUpdateComment}/${idComment}`)
+            
+             .then(function (jsonres) {
+            // console.log('console',jsonres);
+              if(jsonres.success){
+                   //formReset(this);
+                    alertType='success'
+                    alertMessage = 'Article Modifier'
+                   window.location.reload()
+                }else{
+                    alertType='danger'
+                    alertMessage = jsonres.error
+                }
+                
+                const alertPlaceholder = thisForm.querySelector('.alertPlaceholderUpdateComment')
+                console.log(alertPlaceholder)
+                alert(alertMessage ,alertType ,alertPlaceholder)
+           })
+     }
+   
+ 
+  });
+
+});
+
+//delete comment
+
+  document.querySelectorAll('.deletecomment').forEach(element => {
+  element.addEventListener('click', function (event) {
+    event.stopPropagation();
+    event.preventDefault();
+   idComment =   this.closest('.commented-section').dataset.id
+    jsonres = getData(`${urlDeleteComment}/${idComment}`)
+            
+             .then(function (jsonres) {
+              document.location.href = `http://localhost/post/${id_post}`;
+           })
+   
+ 
+  });
+
+});
         
 
 

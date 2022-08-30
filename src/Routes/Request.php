@@ -5,12 +5,39 @@ namespace App\Routes;
 
 class Request
 {
+    /**
+     * Request path
+     * @var String
+     */
+
     private $path;
+
+    /**
+     * Request  action (controller)
+     * @var String
+     */
+
     private $action;
-    private $params = []; //tableau vide 
+
+    /**
+     * Request  params
+     * @var Array
+     */
+
+    private $params = [];
+
+    /**
+     * Request Methode POST
+     * @var Array
+     */
+
     private $requestForPost;
 
-
+    /**
+     * Route constructor ,received $path and $action
+     * @param String $path
+     * @param String $action 
+     */
 
     public function __construct(string $path, string $action)
     {
@@ -19,30 +46,24 @@ class Request
         $this->action = $action;
     }
 
-    /* public function name(string $name = null)
-    {
-        //recup path $name puis le mets dans un tableau avec index , a chque name du route va correspondre a une path 
-        $this->routeName[$name][] = $this->path;
-        //se tableau me retourne une valeur avec un clés indexer 
-        return  $this->routeName;
-    }*/
-    // la methode qui va matcher les route 
+    /**
+     * Route matching 
+     * @param String $url
+     * @return BOOL
+     */
+
     public function match($url)
     {
-        //en les cractere spéciaux avec  les alpha numerique  et on mets dans this->$path
         $path = preg_replace('#({[\w]+})#', '([^/]+)', $this->path);
 
-
-        //Remplace tt la chaines 
         $pathToMatch = "#^$path$#";
 
-        //comparer le path et lurl envoyer 
         if (preg_match($pathToMatch, $url, $results)) {
-            //recupere le tableau d'url puis ecrase la premiere parti du tableau , et  recup param 
+
             array_shift($results);
-            //stocker les resltat dans le var param 
             $this->params = $results;
-            // var_dump($this->params);
+
+
             return true;
         } else {
             return false;
@@ -50,23 +71,25 @@ class Request
     }
 
 
-    //si sa matche on aura lla methode excute 
+    /**
+     * If matching OK Excuting 
+     * @return $_GET or $_POST
+     */
+
     public function execute()
     {
-        //recuperer le controller
+
         $action = explode('@', $this->action);
         $controller = $action[0];
         $controllerPath = 'App\\Controller\\' . $controller;
         $controller = new $controllerPath();
         $methode = $action[1];
-        //recup req methode 
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-            //Si La methode GET on recu le param puis le controller et la methode a excuter 
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             return isset($this->params) ? $controller->$methode(implode($this->params)) : $controller->$methode;
         } else {
-            //si la methode et POST et que il n'ya pas de paramn on inject le request 
+
             return isset($this->params) ? $controller->$methode($this->requestForPost, implode($this->params)) :
                 $controller->$methode($this->requestForPost);
         }

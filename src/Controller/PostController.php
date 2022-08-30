@@ -14,52 +14,46 @@ use App\Routes\HttpRequest;
 class PostController extends MainController
 {
 
+    /**
+     * get all posts and diplay 
+     * @return Array $posts and a view to display posts page 
+     */
+
     public function getPosts()
     {
-        $col_table = [
-            'post.id',
-            'post.title',
-            'post.chapo',
-            'post.autor',
-            'post.createdAt' => 'datePublication',
-            'post.updatedAt' => 'updatePublication',
-
-        ];
-        $join = ['user' => 'user.id=post.id_user'];
         $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
-        $posts = $postModel->selectData($col_table, null, null, null);
+        $posts = $postModel->getAllPost();
         return $this->view('posts.twig', compact('posts'));
     }
 
+    /**
+     * get one posts with his comments and display  
+     * @return Array $posts, $comment and a view to display onePost page 
+     */
 
     public function getOnePost($post_id)
     {
-        $col_table = [
-            'post.id',
-            'post.title',
-            'post.chapo',
-            'post.content',
-            'post.autor',
-            'post.createdAt' => 'datePublication',
-            'post.updatedAt' => 'updatePublication',
 
-        ];
-        $join = ['user' => 'user.id=post.id_user'];
         $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
         $commentModel = new CommentController();
         $comments = $commentModel->getComments($post_id);
-        //var_dump($comments);
-        $one_post = $postModel->selectData($col_table, $join, 'post.id', $post_id)[0];
-        //var_dump($one_post);
+        $one_post = $postModel->getOnePost($post_id);
         return $this->view('onePost.twig', compact('one_post', 'comments'));
     }
 
 
-    public function addPost($requestForPost, $param)
+    /**
+     * check the input and add post 
+     * @param Object $requestForPost
+     * @return True or error  
+     */
+
+    public function addPost($requestForPost)
     {
 
         $token = $this->verifAuth();
         $data = $requestForPost->ValueForm();
+
 
 
         try {
@@ -74,7 +68,8 @@ class PostController extends MainController
                 $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
                 $setPost = $postModel->setPost($token->id, $data['title'], $data['chapo'], $data['autor'], $data['content']);
 
-                if ($setPost == true) {
+                if ($setPost != 'nok') {
+
                     echo json_encode(array("success" => true));
                 }
             }
@@ -83,6 +78,13 @@ class PostController extends MainController
             echo json_encode(array("error" => $e->getMessage()));
         }
     }
+
+    /**
+     * check the input and add updated a post 
+     * @param Object $requestForPost
+     * @param Integer $id
+     * @return True or error  
+     */
 
     public function updatePost($requestForPost, $id)
     {
@@ -97,9 +99,9 @@ class PostController extends MainController
             $autor = $this->verifyInputName($data['autor']);
             if ($title && $chapo  && $autor && $content) {
                 $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
-                //   var_dump($postModel);
                 $updatePost = $postModel->updatePost($id, $data['title'], $data['chapo'], $data['content'], $data['autor']);
-                if ($updatePost == true) {
+
+                if ($updatePost != 'nok') {
 
                     echo json_encode(array("success" => true));
                 }
@@ -110,6 +112,11 @@ class PostController extends MainController
         }
     }
 
+    /**
+     * Delete post 
+     * @param Integer $id
+     * @return False  or error  
+     */
 
     public function deletePost($id)
     {
@@ -117,10 +124,9 @@ class PostController extends MainController
 
             $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
             $deletePost = $postModel->deletePost($id);
-            /// var_dump($deletePost);
-            if ($deletePost == false) {
+            if ($deletePost == true) {
 
-                echo json_encode(array("success" => false));
+                echo json_encode(array("success" => true));
             }
         } catch (\Exception $e) {
 

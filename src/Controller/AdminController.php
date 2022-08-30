@@ -11,15 +11,7 @@ use App\Routes\Request;
 class AdminController extends MainController
 {
 
-
-    /*public function adminInterface()
-    {
-        return $this->view('admin_interface.twig');
-    }*/
-
-
-
-    public function getPostsAdmin($id_user)
+    public function getPostsAdmin()
     {
 
         $col_table = [
@@ -35,7 +27,7 @@ class AdminController extends MainController
 
 
         $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
-        $posts = $postModel->selectData($col_table, $join, 'id_user', '1');
+        $posts = $postModel->selectData($col_table, $join, null, null);
         return $this->view('admin_interface.twig', compact('posts'));
     }
 }

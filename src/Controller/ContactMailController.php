@@ -8,14 +8,16 @@ use  App\Controller\setupSmtp\SmtpSend;
 class ContactMailController extends MainController
 {
 
-
+    /**
+     * Receive the form data , check the input .
+     * @param Object $requestForPost
+     * @return True or error
+     */
 
     public function sendMessage($requestForPost)
     {
 
         $data = $requestForPost->ValueForm();
-        //var_dump($data);
-
         try {
             $name = $this->verifyInputName($data['name']);
             $email = $this->verifyInputEmail($data['email']);

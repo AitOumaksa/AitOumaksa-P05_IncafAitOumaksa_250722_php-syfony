@@ -16,12 +16,13 @@ const tokenOption = {
 
 
 
-function createFormData() {
-    const form = document.querySelector('.needs-validation')
+function createFormData(form) {
+
     const formattedFormData = new FormData(form);
     //postData(formattedFormData);
     return formattedFormData;
 }
+
 
 
 
@@ -42,10 +43,37 @@ function postData(formattedFormData, $url) {
         method: 'POST',
         body: formattedFormData
     })
+
         .then(function (res) {
+
             if (res.ok) {
                 //console.log(res);
-                //console.log('res',res.json());
+                // console.log('res', res.json());
+
+                return res.json();
+            }
+        })
+        .then(function (jsonres) {
+            //console.log(jsonres);
+            //console.log('console', jsonres);
+            return jsonres
+
+
+        })
+    return response
+}
+
+function getData($url) {
+    response = fetch($url, {
+        ...tokenOption,
+        method: 'GET',
+    })
+
+        .then(function (res) {
+
+            if (res.ok) {
+                //console.log(res);
+                // console.log('res', res.json());
 
                 return res.json();
             }

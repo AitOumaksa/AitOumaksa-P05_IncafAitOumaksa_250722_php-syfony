@@ -10,25 +10,41 @@ use Firebase\JWT\Key;
 
 
 
+//Main is calss Parent 
 
 class MainController
 {
 
+    /**
+     * Setting twig 
+     * @param String $path 
+     * @param Array $datas
+     */
+
     public function view($path, $datas = [])
     {
-        //prametrer le dossier contenent les templates html 
         $loader = new FilesystemLoader('src/View');
-        //l'enverenement twig 
         $twig = new Environment($loader, [
             'cache' => false,
         ]);
         echo $twig->render($path, $datas);
     }
+
+    /**
+     * To display home page 
+     * @return View Home page 
+     */
+
     public function afficheHome()
     {
         return $this->view('home.twig');
     }
 
+    /**
+     * Check input mail 
+     * @param String $email
+     * @return BOOL 
+     */
 
     public function verifyInputEmail($email)
     {
@@ -41,6 +57,12 @@ class MainController
         }
     }
 
+    /**
+     * Check input name 
+     * @param String $name
+     * @return BOOL 
+     */
+
     public function verifyInputName($name)
     {
         if (!preg_match("/^([a-zA-Z' ]+)$/", $name)) {
@@ -50,6 +72,13 @@ class MainController
             return true;
         }
     }
+
+    /**
+     * Check input message  
+     * @param String $message
+     * @return BOOL 
+     */
+
     public function verifyInputMessage($message)
     {
         if (empty(htmlspecialchars($message))) {
@@ -78,7 +107,6 @@ class MainController
 
         $jwt = $matches[1];
         if (!$jwt) {
-            // Aucun jeton n'a pu être extrait de l'en-tête d'autorisation.
             header('HTTP/1.0 400 Bad Request');
             exit;
         }

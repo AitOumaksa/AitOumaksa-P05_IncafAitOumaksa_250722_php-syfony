@@ -1,15 +1,22 @@
-{% extends 'admin/modal_add_edite.twig' %}
+{% extends 'admin/modal_add_post.twig' %}
 
 {% block content %}
-<form method="post" class="needs-validation" action="" novalidate>
+
+<!--Start form add-->
+
+<form method="post" class="needs-validation addPost" action="" novalidate>
             <div class="row">
                 <div class="form-group col-md pb-2 pb-md-0 pt-3">
                     <label for="title" >Titre de l'article :</label><br>
                       <input  type="text" name="title" id="title" class="form-control" placeholder="Titre de l'article" required>
+                      <div class="valid-feedback">Titre de l'article valide</div>
+                       <div class="invalid-feedback">Titre de l'article invalide</div>
                 </div>
 				<div class="form-group col-md pb-2 pb-md-0 pt-3">
                     <label for="autor" >Auteur de l'article :</label><br>
                       <input  type="text" name="autor" id="autor" class="form-control" placeholder="auteur de l'article" required>
+                      <div class="valid-feedback">Auteur de l'article valide</div>
+                       <div class="invalid-feedback">Auteur de l'article invalide</div>
                 </div>
 
             </div>
@@ -18,6 +25,8 @@
                     <div class=" pt-3">
                     <label for="description" >Description de l'article :</label><br>
                         <textarea name="chapo" class="form-control" rows="4" id="chapo" placeholder="Description de l'article" required></textarea>
+                        <div class="valid-feedback">Description de l'article valide</div>
+                       <div class="invalid-feedback">Description de l'article invalide</div>
                     </div>
                 </div>
 
@@ -25,6 +34,8 @@
                     <div class=" pt-3">
                     <label for="Content" >Contenu de l'article :</label><br>
                         <textarea name="content" class="form-control" rows="4" id="Content" placeholder="Contenu de l'article" required></textarea>
+                        <div class="valid-feedback">Contenu de l'article valide</div>
+                       <div class="invalid-feedback"> Contenu de l'article invalide</div>
                     </div>
                 </div>
                      <div class="row">
@@ -33,38 +44,41 @@
                     </div>
                 </div>
                  
-                <div id="liveAlertPlaceholder"></div>
+                <div id="liveAlertPlaceholderAddPost"></div>
 </form>
+
+<!--End form add-->
+<!-- main.js -->
 <script src="../../../public/js/main.js"></script>
 
 <script>
 
       $url = 'http://localhost/addPost'
-      form = document.querySelector('.needs-validation')
+      form_post = document.querySelector('.addPost')
 
 
-           form.addEventListener('submit', function (event) { 
+           form_post.addEventListener('submit', function (event) { 
           event.stopPropagation();
           event.preventDefault();
           this.classList.add('was-validated');
-          if (form.checkValidity()) {
-            const formData = createFormData();
+          if (form_post.checkValidity()) {
+            const formData = createFormData(form_post);
             console.log(formData);
             jsonres = postData(formData,$url)
              .then(function (jsonres) {
             // console.log('console',jsonres);
               if(jsonres.success){
-                    formReset(form);
+                    formReset(form_post);
                     alertType='success'
                     alertMessage = 'Article ajouter'
+                    window.location.reload()
                 }else{
                     alertType='danger'
                     alertMessage = jsonres.error
                 }
-                const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+                const alertPlaceholder = document.getElementById('liveAlertPlaceholderAddPost')
                 alert(alertMessage ,alertType ,alertPlaceholder)
            })
-            //console.log('ici',jsonres);
               
           }
 

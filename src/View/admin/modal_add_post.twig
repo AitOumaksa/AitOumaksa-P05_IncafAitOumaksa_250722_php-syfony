@@ -1,23 +1,24 @@
 
 
 
-<!-- Button trigger modal -->
+<!-- Button Add article -->
 <button type="button" class="btn btn-secondary container" id="myModal" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Ajouter un article
 </button>
 
-<!-- Modal -->
+<!--Start  Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Ajouter un article</h5>
-        <button type="button" onclick="javascript:window.location.reload()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button"  class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         
        {% block content %}
 
+        <!--Form add -->
 
         {% endblock %} 
 
@@ -25,10 +26,4 @@
     </div>
   </div>
 </div>
-
-<script>
-
-
-
-
-</script>
+<!--Start  Modal -->

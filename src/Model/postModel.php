@@ -7,31 +7,100 @@ namespace App\Model;
 class PostModel extends MainModel
 {
 
+
+    /**
+     * get all post
+     * @return Array
+     */
+
+    public function getAllPost()
+    {
+        $col_table = [
+            'post.id',
+            'post.title',
+            'post.chapo',
+            'post.autor',
+            'post.createdAt' => 'datePublication',
+            'post.updatedAt' => 'updatePublication',
+
+        ];
+        $join = ['user' => 'user.id=post.id_user'];
+        return $this->selectData($col_table, $join, null, null);
+    }
+
+    /**
+     * get unique post
+     * @param Integer $post_id
+     * @return Array
+     */
+
+    public function getOnePost($post_id)
+    {
+        $col_table = [
+            'post.id',
+            'post.title',
+            'post.chapo',
+            'post.content',
+            'post.autor',
+            'post.createdAt' => 'datePublication',
+            'post.updatedAt' => 'updatePublication',
+
+        ];
+        $join = ['user' => 'user.id=post.id_user'];
+        return $this->selectData($col_table, $join, 'post.id', $post_id)[0];
+    }
+
+
+    /**
+     * Add post
+     * @param Integer $id_user
+     * @param String $title
+     * @param String $chapo
+     * @param String $content
+     * @param String $autor
+     * @return BOOL
+     */
+
     public function setPost($id_user, $title, $chapo, $autor, $content)
     {
-
-        $query = 'INSERT INTO ' . $this->table . ' (id_user, title, chapo,autor, content, createdAt,updatedAt) VALUES (?, ?, ?, ?, ?,?,?)';
         $date = date("Y-m-d H:i:s");
-        $value = array($id_user, $title, $chapo, $autor, $content, $date, $date);
-        // var_dump($value);
-        return $this->database->setData($query, $value);
+        $col_table = ['id_user', 'title', 'chapo', 'autor', 'content', 'createdAt', 'updatedAt'];
+        $values = array($id_user, $title, $chapo, $autor, $content, $date, $date);
+        return $this->insertData($col_table, $values);
     }
+
+    /**
+     * Updated post
+     * @param Integer $id
+     * @param String $post_title
+     * @param String $post_chapo
+     * @param String $post_content
+     * @param String $post_autor
+     * @return BOOL
+     */
 
     public function updatePost($id, $post_title, $post_chapo, $post_content, $post_autor)
     {
 
         $date = date("Y-m-d H:i:s");
+        $col_table = ['title', 'chapo', 'content', 'updatedAt', 'autor'];
+        $key = 'id';
+        $keyValue = $id;
+        $values = array($post_title, $post_chapo, $post_content, $date, $post_autor);
 
-        $query = 'UPDATE ' . $this->table . ' SET post.title =?, post.chapo =?,
-        post.content =?, post.updatedAt =?, post.autor =? WHERE post.id = ' . $id;
-
-        $value = array($post_title, $post_chapo, $post_content, $date, $post_autor);
-        return $this->database->setData($query, $value);
+        return $this->updateData($col_table, $values, $key, $keyValue);
     }
+
+    /**
+     * Delete post 
+     * @param Integer $id
+     * @return BOOL
+     */
 
     public function deletePost($id)
     {
-        $query = 'DELETE FROM ' . $this->table . ' WHERE post.id =' . $id;
-        return $this->database->getData($query);
+        $key = 'id';
+        $keyValue = $id;
+        return $this->deleteData($key, $keyValue);
     }
 }

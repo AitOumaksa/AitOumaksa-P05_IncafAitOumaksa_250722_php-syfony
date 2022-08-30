@@ -1,8 +1,8 @@
-
+<!-- Form Contact  -->
     <div class="form-group container">
         <h3>Me contacter</h3>
 
-        <form method="post" class="needs-validation" action="" novalidate>
+        <form method="post" class="needs-validation sendContact" action="" novalidate>
             <div class="row">
                 <div class="form-group col-md pb-2 pb-md-0 pt-3">
                     <label for="name" >Nom Et Prénom :</label><br>
@@ -31,41 +31,39 @@
                     </div>
                 </div>
                  
-                <div id="liveAlertPlaceholder"></div>
+                <div id="liveAlertPlaceholderContact"></div>
 
 
         </form>
     </div>
+    <!--End  Form Contact  -->
 
 
     <script>
 
       $url = 'http://localhost/contact'
-      form = document.querySelector('.needs-validation')
+      form_contact = document.querySelector('.sendContact')
       
 
-          form.addEventListener('submit', function (event) { 
+          form_contact.addEventListener('submit', function (event) { 
           event.stopPropagation();
           event.preventDefault();
           this.classList.add('was-validated');
-          if (form.checkValidity()) {
-            const formData = createFormData();
-            //console.log(formData);
+          if (form_contact.checkValidity()) {
+            const formData = createFormData(form_contact);
             jsonres = postData(formData,$url)
              .then(function (jsonres) {
-            // console.log('console',jsonres);
               if(jsonres.success){
-                    formReset(form);
+                    formReset(form_contact);
                     alertType='success'
-                    alertMessage = 'Votre message est envoyer je vous répondrai dans les plus brefs délais'
+                    alertMessage = 'Votre message est envoyé je vous répondrai dans les plus brefs délais'
                 }else{
                     alertType='danger'
                     alertMessage = jsonres.error
                 }
-                const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+                const alertPlaceholder = document.getElementById('liveAlertPlaceholderContact')
                 alert(alertMessage ,alertType ,alertPlaceholder)
            })
-            //console.log('ici',jsonres);
               
           }
 
