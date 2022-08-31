@@ -47,7 +47,7 @@ class PostModel extends MainModel
 
         ];
         $join = ['user' => 'user.id=post.id_user'];
-        return $this->selectData($col_table, $join, 'post.id', $post_id)[0];
+        return $this->selectOneData($col_table, $join, 'post.id', $post_id);
     }
 
 

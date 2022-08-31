@@ -44,7 +44,7 @@ class commentModel extends MainModel
 
         ];
         $join = ['user' => 'user.id = comment.id_user'];
-        return $this->selectData($col_table, $join, 'comment.id', $comment_id);
+        return $this->selectOneData($col_table, $join, 'comment.id', $comment_id);
     }
 
     /**
@@ -61,6 +61,7 @@ class commentModel extends MainModel
         $col_table = ['id_post', 'comment_content', 'createdAt', 'updatedAt', 'id_user'];
 
         $values = array($id_post, $comment_content, $date, $date, $id_user);
+        // var_dump($values);
         return $this->insertData($col_table, $values);
     }
 

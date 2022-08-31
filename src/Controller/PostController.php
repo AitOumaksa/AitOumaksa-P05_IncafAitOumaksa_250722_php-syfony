@@ -51,10 +51,8 @@ class PostController extends MainController
     public function addPost($requestForPost)
     {
 
-        $token = $this->verifAuth();
+        $id_user = 48;
         $data = $requestForPost->ValueForm();
-
-
 
         try {
             $title = $this->verifyInputMessage($data['title']);
@@ -66,8 +64,7 @@ class PostController extends MainController
 
             if ($title && $chapo  && $autor && $content) {
                 $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
-                $setPost = $postModel->setPost($token->id, $data['title'], $data['chapo'], $data['autor'], $data['content']);
-
+                $setPost = $postModel->setPost($id_user, $data['title'], $data['chapo'], $data['autor'], $data['content']);
                 if ($setPost != 'nok') {
 
                     echo json_encode(array("success" => true));
@@ -88,9 +85,7 @@ class PostController extends MainController
 
     public function updatePost($requestForPost, $id)
     {
-
         $data = $requestForPost->ValueForm();
-
 
         try {
             $title = $this->verifyInputMessage($data['title']);

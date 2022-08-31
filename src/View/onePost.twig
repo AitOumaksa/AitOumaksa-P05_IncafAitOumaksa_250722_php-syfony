@@ -88,9 +88,9 @@
     <div class="container p-4 blog-post" data-id= {{one_post.id}}>
             <h1 class="blog-post-title mb-4">{{one_post.title}}</h1>
             {% if one_post.updatePublication <= one_post.datePublication %}
-            <p class="blog-post-meta mb-4">Créé le {{one_post.datePublication|date('d/m/Y \\à H:i')}} par <strong> {{ one_post.autor}}</strong></p>
+            <p class="blog-post-meta mb-4">Créé le {{one_post.datePublication|date('d/m/Y \\à H:i',"Europe/Paris")}} par <strong> {{ one_post.autor}}</strong></p>
             {% else %}
-            <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatePublication|date('d/m/Y \\à H:i') }} par <strong> {{ one_post.autor }}</strong></p>
+            <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatePublication|date('d/m/Y \\à H:i',"Europe/Paris") }} par <strong> {{ one_post.autor }}</strong></p>
             {% endif %}
             <p>{{one_post.chapo}}...</br> {{one_post.content}}</p>
             <div class="d-flex flex-row align-items-center voting-icons">
@@ -122,9 +122,9 @@
                         <div class="d-flex flex-row align-items-center commented-user">
                             <h2 class="mr-2 me-2 h5">{{comment.user_name}}</h2>
                             {% if comment.updatecomment <= comment.datecomment %}
-                            <span class="mb-1  ml-2"> Crée le {{comment.datecomment|date('d/m/Y \\à H:i')}} </span>
+                            <span class="mb-1  ml-2"> Crée le {{comment.datecomment|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
                             {% else %}
-                            <span class="mb-1  ml-2"> Mis à jour le {{comment.updatecomment|date('d/m/Y \\à H:i')}} </span>
+                            <span class="mb-1  ml-2"> Mis à jour le {{comment.updatecomment|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
                             {% endif %}
                         </div>
                         <form method="post" class="needs-validation container updateComment"  novalidate>

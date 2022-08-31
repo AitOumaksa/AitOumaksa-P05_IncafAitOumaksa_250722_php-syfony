@@ -46,17 +46,17 @@ class CommentController extends MainController
 
     public function addComment($requestForPost, $post_id)
     {
-        $token = $this->verifAuth();
+        $id_user = 48;
         $data = $requestForPost->ValueForm();
 
         try {
             $content = $this->verifyInputMessage($data['comment_content']);
             if ($content) {
                 $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
-                $setComment = $commentModel->addComment($post_id, $data['comment_content'], $token->id);
+                $setComment = $commentModel->addComment($post_id, $data['comment_content'], $id_user);
                 if ($setComment != 'nok') {
                     echo json_encode(array(
-                        'success' => true,  'comment' => $this->getOneComment($setComment)[0]
+                        'success' => true
                     ));
                 }
             }

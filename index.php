@@ -12,6 +12,8 @@ Router::get('/admin', 'AdminController@getPostsAdmin');
 Router::post('/addPost', 'PostController@addPost');
 Router::post('/{id}/addComment', 'CommentController@addComment');
 Router::post('/contact', 'ContactMailController@sendMessage');
+Router::post('/contact', 'ContactMailController@sendMessage');
+Router::post('/signup', 'UserController@signUp');
 Router::put('/updatePost/{id}', 'PostController@updatePost');
 Router::put('/updateComment/{id}', 'CommentController@updateComment');
 Router::delete('/deletePost/{id}', 'PostController@deletePost');

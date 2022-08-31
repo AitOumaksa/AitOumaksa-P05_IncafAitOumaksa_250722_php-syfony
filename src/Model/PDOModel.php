@@ -17,6 +17,7 @@ class PDOModel
 
         $request = ConnectDB::getPDO()->prepare($req);
         $request->execute($params);
+        // var_dump($request->execute($params));
         return $request->fetch();
     }
 
@@ -31,6 +32,7 @@ class PDOModel
     {
         $req = ConnectDB::getPDO()->prepare($req);
         $req->execute($params);
+        //var_dump($req);
         return $req->fetchAll();
     }
 
@@ -47,9 +49,8 @@ class PDOModel
 
         $db = ConnectDB::getPDO();
         $request = $db->prepare($req);
-        // var_dump($request);
+        //  var_dump($request = $db->prepare($req));
         if ($request->execute($params)) {
-            //  var_dump($request->execute($params));
             return $db->lastInsertId();
         } else {
             return 'nok';

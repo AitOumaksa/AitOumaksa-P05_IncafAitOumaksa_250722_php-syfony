@@ -157,20 +157,53 @@ class MainModel
 
 
     /**
-     * Select data from the id or another key
-     * @param String $value
+     * Join a table 
+     * @param Mixed $col_tables
+     * @param Mixed $join_tables
      * @param String $key
+     * @param String $value
      * @return Array|Mixed
      */
 
-    public function readData(string $value = null, string $key = null)
+    public function selectOneData($col_tables, $join_tables, $key, $value)
     {
-        if (isset($key)) {
-            $query = 'SELECT * FROM ' . $this->table . ' WHERE ' . $key . ' = ?';
-        } else {
-            $query = 'SELECT * FROM ' . $this->table . ' WHERE id = ?';
+        $query_join = null;
+        $query_col = null;
+        $query_condition = null;
+        $count_col = null;
+
+        if (isset($join_tables)) {
+
+            foreach ($join_tables as $table => $condition) {
+                $query_join .= ' INNER JOIN ' . $table . ' ON ' . $condition;
+            }
         }
 
+        if (isset($col_tables)) {
+            foreach ($col_tables as $col => $label) {
+                if (is_string($col)) {
+                    $label = 'AS ' . $label;
+                } else {
+
+                    $col = $label;
+                    $label = '';
+                }
+                $count_col++;
+                if ($count_col > 1) {
+                    $query_col .=  ',' . $col . ' ' . $label;
+                } else {
+                    $query_col .=   $col . ' ' . $label;
+                }
+            }
+        } else {
+            $query_col = '*';
+        }
+
+        if (isset($key) && isset($value)) {
+            $query_condition = ' WHERE ' . $key . ' = ?';
+        }
+
+        $query = 'SELECT ' . $query_col . ' FROM ' . $this->table . ' ' . $query_join . ' ' . $query_condition;
         return $this->database->getData($query, [$value]);
     }
 }

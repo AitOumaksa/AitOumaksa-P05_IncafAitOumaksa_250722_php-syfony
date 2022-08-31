@@ -73,6 +73,16 @@ class MainController
         }
     }
 
+    public function verifyInputPassword($password)
+    {
+        if (!preg_match("/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/", $password)) {
+            throw new \Exception('le mot de passe doit contenir 8 caractères dont au minimum une majuscule, une minuscule, un caractère numérique et un caractère spécial.');
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      * Check input message  
      * @param String $message
@@ -119,7 +129,6 @@ class MainController
             echo json_encode(array("error" => $e->getMessage()));
             exit;
         }
-
 
         return $token;
     }
