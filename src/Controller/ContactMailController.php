@@ -19,20 +19,16 @@ class ContactMailController extends MainController
 
         $data = $requestForPost->ValueForm();
         try {
-            $name = $this->verifyInputName($data['name']);
-            $email = $this->verifyInputEmail($data['email']);
-            $message = $this->verifyInputMessage($data['message']);
+            $this->verifyInputName($data['name']);
+            $this->verifyInputEmail($data['email']);
+            $this->verifyInputMessage($data['message']);
+            $smtpSend = new SmtpSend();
+            $sendMessage = $smtpSend->smtpSend($data);
 
-            if ($email && $name && $message) {
+            header("Content-Type : application/json");
+            if ($sendMessage == true) {
 
-                $smtpSend = new SmtpSend();
-                $sendMessage = $smtpSend->smtpSend($data);
-
-                header("Content-Type : application/json");
-                if ($sendMessage == true) {
-
-                    echo json_encode(array("success" => true));
-                }
+                echo json_encode(array("success" => true));
             }
         } catch (\Exception $e) {
 

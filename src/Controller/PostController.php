@@ -37,7 +37,9 @@ class PostController extends MainController
         $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
         $commentModel = new CommentController();
         $comments = $commentModel->getComments($post_id);
+        //var_dump($comments);
         $one_post = $postModel->getOnePost($post_id);
+        // var_dump($one_post);
         return $this->view('onePost.twig', compact('one_post', 'comments'));
     }
 
@@ -51,24 +53,25 @@ class PostController extends MainController
     public function addPost($requestForPost)
     {
 
-        $id_user = 48;
+        $id_user = $this->session->getUserVar('id');
+        $is_admin = $this->session->getUserVar('is_admin');
         $data = $requestForPost->ValueForm();
 
         try {
-            $title = $this->verifyInputMessage($data['title']);
-            $chapo = $this->verifyInputMessage($data['chapo']);
-            $content = $this->verifyInputMessage($data['content']);
-            $autor = $this->verifyInputName($data['autor']);
+            $this->verifyInputMessage($data['title']);
+            $this->verifyInputMessage($data['chapo']);
+            $this->verifyInputMessage($data['content']);
+            $this->verifyInputName($data['autor']);
 
-
-
-            if ($title && $chapo  && $autor && $content) {
+            if ($is_admin === 'Admin') {
                 $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
                 $setPost = $postModel->setPost($id_user, $data['title'], $data['chapo'], $data['autor'], $data['content']);
-                if ($setPost != 'nok') {
+                if ($setPost) {
 
                     echo json_encode(array("success" => true));
                 }
+            } else {
+                throw new \Exception(' you can\'t add a post, you are not a admin');
             }
         } catch (\Exception $e) {
 
@@ -86,20 +89,23 @@ class PostController extends MainController
     public function updatePost($requestForPost, $id)
     {
         $data = $requestForPost->ValueForm();
+        $is_admin = $this->session->getUserVar('is_admin');
 
         try {
-            $title = $this->verifyInputMessage($data['title']);
-            $chapo = $this->verifyInputMessage($data['chapo']);
-            $content = $this->verifyInputMessage($data['content']);
-            $autor = $this->verifyInputName($data['autor']);
-            if ($title && $chapo  && $autor && $content) {
+            $this->verifyInputMessage($data['title']);
+            $this->verifyInputMessage($data['chapo']);
+            $this->verifyInputMessage($data['content']);
+            $this->verifyInputName($data['autor']);
+            if ($is_admin === 'Admin') {
                 $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
                 $updatePost = $postModel->updatePost($id, $data['title'], $data['chapo'], $data['content'], $data['autor']);
 
-                if ($updatePost != 'nok') {
+                if ($updatePost) {
 
                     echo json_encode(array("success" => true));
                 }
+            } else {
+                throw new \Exception(' you can\'t update a post, you are not a admin');
             }
         } catch (\Exception $e) {
 
@@ -115,13 +121,18 @@ class PostController extends MainController
 
     public function deletePost($id)
     {
+        $is_admin = $this->session->getUserVar('is_admin');
+
         try {
+            if ($is_admin === 'Admin') {
+                $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
+                $deletePost = $postModel->deletePost($id);
+                if ($deletePost == true) {
 
-            $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
-            $deletePost = $postModel->deletePost($id);
-            if ($deletePost == true) {
-
-                echo json_encode(array("success" => true));
+                    echo json_encode(array("success" => true));
+                }
+            } else {
+                throw new \Exception(' you can\'t remove a post, you are not a admin');
             }
         } catch (\Exception $e) {
 

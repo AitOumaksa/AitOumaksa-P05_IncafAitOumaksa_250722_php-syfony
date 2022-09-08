@@ -9,6 +9,7 @@ $db_Dsn = "mysql:host={$host};dbname={$db_Name};port={$db_Port}";
 $option = [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+
 ];
 
 define('db_Name', $db_Name);

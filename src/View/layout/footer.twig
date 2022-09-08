@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="bg-dark text-center text-white">
+
 
   <div class="container p-4 g-0">
     <!-- Section: Social media -->
@@ -25,7 +25,16 @@
       <p>
         Vous pouvez me contactez sur mes reseaux sociaux !
       </p>
-      <a class="mb-4 text-light" href="/admin">Administration</a>
+       
+       
+      
+       {% if session.user.sessionId is defined %}
+       {% if session.user.is_admin == 'Admin' %}
+        <a class="mb-4 text-light" href="/admin">Administration</a>
+        {% endif %}
+        {% endif %}
+        
+
     </section>
   </div>
 
@@ -35,5 +44,5 @@
     <a class="text-white">Blog php</a>
   </div>
   <!-- Copyright -->
-</footer>
+
 <!--End Footer -->

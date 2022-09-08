@@ -5,6 +5,7 @@ namespace App\Controller;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Extension\DebugExtension;
+use App\Controller\Globals\SessionController;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -14,6 +15,19 @@ use Firebase\JWT\Key;
 
 class MainController
 {
+
+    /**
+     * Setting twig 
+     * @var $session
+     */
+
+    protected $session;
+
+    public function __construct()
+    {
+
+        $this->session = new SessionController();
+    }
 
     /**
      * Setting twig 
@@ -27,7 +41,19 @@ class MainController
         $twig = new Environment($loader, [
             'cache' => false,
         ]);
+        $twig->addGlobal('session', $_SESSION);
         echo $twig->render($path, $datas);
+    }
+
+    /**
+     * Redirect methode 
+     * @param String $page 
+     */
+
+    public function redirect($page)
+    {
+        header('Location: http://localhost' . $page);
+        exit;
     }
 
     /**
@@ -37,6 +63,7 @@ class MainController
 
     public function afficheHome()
     {
+
         return $this->view('home.twig');
     }
 
@@ -73,6 +100,12 @@ class MainController
         }
     }
 
+    /**
+     * Check input password 
+     * @param String $password
+     * @return BOOL 
+     */
+
     public function verifyInputPassword($password)
     {
         if (!preg_match("/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/", $password)) {
@@ -97,39 +130,5 @@ class MainController
         } else {
             return true;
         }
-    }
-
-    public function verifAuth()
-    {
-
-        if (!isset($_SERVER['HTTP_AUTHORIZATION'])) {
-            header('HTTP/1.0 400 Bad Request');
-            echo json_encode(array("error" => 'Token not found in request'));
-            exit;
-        }
-
-        // var_dump($_SERVER);
-        if (!preg_match('/Bearer\s+(.+)/', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
-            header('HTTP/1.0 400 Bad Request');
-            echo json_encode(array("error" => 'Token not found in request'));
-            exit;
-        }
-
-        $jwt = $matches[1];
-        if (!$jwt) {
-            header('HTTP/1.0 400 Bad Request');
-            exit;
-        }
-
-        $secretKey  = 'bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew=';
-        try {
-            $token = JWT::decode($jwt, new Key($secretKey, 'HS512'));
-        } catch (\Exception $e) {
-            header('HTTP/1.1 401 Unauthorized');
-            echo json_encode(array("error" => $e->getMessage()));
-            exit;
-        }
-
-        return $token;
     }
 }

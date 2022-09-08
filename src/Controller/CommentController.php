@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Model\ConnectDB;
 use App\Model\PDOModel;
 use App\Model\commentModel;
-use App\Model\PostModel;
+use App\Model\CommentTable;
 use App\Routes\HttpRequest;
 
 class CommentController extends MainController
@@ -14,13 +14,13 @@ class CommentController extends MainController
     /**
      * get comment attached to a post 
      * @param Integer $post_id
-     * @return Array $comment 
+     * @return Object $comment 
      */
     public function getComments($post_id)
     {
-
+        $valide = 1;
         $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
-        $comments = $commentModel->getComments($post_id);
+        $comments = $commentModel->getComments($post_id, $valide);
         return $comments;
     }
 
@@ -46,19 +46,21 @@ class CommentController extends MainController
 
     public function addComment($requestForPost, $post_id)
     {
-        $id_user = 48;
-        $data = $requestForPost->ValueForm();
 
         try {
-            $content = $this->verifyInputMessage($data['comment_content']);
-            if ($content) {
-                $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
-                $setComment = $commentModel->addComment($post_id, $data['comment_content'], $id_user);
-                if ($setComment != 'nok') {
-                    echo json_encode(array(
-                        'success' => true
-                    ));
-                }
+            $this->session->isLogged();
+            $id_user = $this->session->getUserVar('id');
+            $data = $requestForPost->ValueForm();
+            $valide = 0;
+
+
+            $this->verifyInputMessage($data['comment_content']);
+            $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+            $setComment = $commentModel->addComment($post_id, $data['comment_content'], $valide, $id_user);
+            if ($setComment) {
+                echo json_encode(array(
+                    'success' => true
+                ));
             }
         } catch (\Exception $e) {
 
@@ -75,18 +77,23 @@ class CommentController extends MainController
 
     public function updateComment($requestForPost, $id_comment)
     {
+        $this->session->isLogged();
         $data = $requestForPost->ValueForm();
-
+        $id_user = $this->getOneComment($id_comment)->getIdUser();
+        $user = $this->session->getUserVar('id');
+        $valide = 0;
         try {
-            $content = $this->verifyInputMessage($data['comment_content']);
-            if ($content) {
+            $this->verifyInputMessage($data['comment_content']);
+            if ($user === $id_user) {
                 $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
-                $setComment = $commentModel->updateComment($id_comment, $data['comment_content']);
-                if ($setComment != 'nok') {
+                $setComment = $commentModel->updateComment($id_comment, $data['comment_content'], $valide);
+                if ($setComment) {
                     echo json_encode(array(
                         'success' => true
                     ));
                 }
+            } else {
+                throw new \Exception(' you can\'t update, this not your comment');
             }
         } catch (\Exception $e) {
 
@@ -101,15 +108,58 @@ class CommentController extends MainController
      * @return BOOL  or error  
      */
 
-    public function deleteComment($id)
+    public function deleteComment($id_comment)
     {
+        $id_user = $this->session->getUserVar('id');
+        $is_admin = $this->session->getUserVar('is_admin');
+
+        try {
+            if ($id_user === $id_comment || $is_admin === 'Admin') {
+                $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+                $deleteComment = $commentModel->deleteComment($id_comment);
+                if ($deleteComment == true) {
+
+                    echo json_encode(array("success" => true));
+                }
+            } else {
+                throw new \Exception(' you can\'t remove a comment , you doesn\'t have the right');
+            }
+        } catch (\Exception $e) {
+
+            echo json_encode(array("error" => $e->getMessage()));
+        }
+    }
+
+    /**
+     * get comments need validation   
+     * @return View  
+     */
+
+    public function getCommentNeedValidate()
+    {
+        $valide = 0;
+        $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+        $comments = $commentModel->getCommentsNotValidate($valide);
+        return  $this->view('admin/commentValidate.twig', compact('comments'));
+    }
+
+    /**
+     * Validation comment 
+     * @param String $id_comment
+     * @return True or msg error
+     */
+
+    public function commentValide($id_comment)
+    {
+        $valide = 1;
         try {
 
             $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
-            $deleteComment = $commentModel->deleteComment($id);
-            if ($deleteComment == true) {
-
-                echo json_encode(array("success" => true));
+            $valideComment = $commentModel->updateColumnValidation($id_comment, $valide);
+            if ($valideComment) {
+                echo json_encode(array(
+                    'success' => true
+                ));
             }
         } catch (\Exception $e) {
 

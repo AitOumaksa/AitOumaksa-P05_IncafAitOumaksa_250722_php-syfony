@@ -12,12 +12,11 @@ class PDOModel
      * @return Mixed
      */
 
-    public function getData($req, array $params)
+    public function getData($req, $params)
     {
 
         $request = ConnectDB::getPDO()->prepare($req);
         $request->execute($params);
-        // var_dump($request->execute($params));
         return $request->fetch();
     }
 
@@ -28,11 +27,10 @@ class PDOModel
      * @return Array|Mixed
      */
 
-    public function getAllData(string $req, array $params)
+    public function getAllData(string $req, $params)
     {
         $req = ConnectDB::getPDO()->prepare($req);
         $req->execute($params);
-        //var_dump($req);
         return $req->fetchAll();
     }
 
@@ -44,17 +42,13 @@ class PDOModel
      * @return BOOL|Mixed
      */
 
-    public function setData(string $req, array $params = [])
+    public function setData(string $req, $params = [])
     {
 
         $db = ConnectDB::getPDO();
         $request = $db->prepare($req);
         //  var_dump($request = $db->prepare($req));
-        if ($request->execute($params)) {
-            return $db->lastInsertId();
-        } else {
-            return 'nok';
-        };
+        return $request->execute($params);
     }
 
 

@@ -4,55 +4,82 @@ namespace App\Controller\Globals;
 
 class SessionController
 {
+
     const ADMIN = 'Admin';
 
     const USER = 'User';
 
+    /** 
+     * @var $session
+     */
+
     private $session;
+
+    /** 
+     * @var $user 
+     */
 
     private $user;
 
     public function __construct()
     {
         $this->session = filter_var_array($_SESSION);
-
         if (isset($this->session['user'])) {
             $this->user = $this->session['user'];
         }
     }
 
-    public function createSession(array $data)
+    /** 
+     * Creating a session user 
+     * @param  Object $data
+     */
+
+    public function createSession($data)
     {
-        if ($data['is_admin'] == 1) $data['is_admin'] = self::ADMIN;
-        elseif ($data['is_admin'] == 0) $data['is_admin'] = self::USER;
+
+        if ($data->getIsAdmin() == '1') $data->setIsAdmin(self::ADMIN);
+
+        elseif ($data->getIsAdmin() == '0') $data->setIsAdmin(self::USER);
 
         $this->session['user'] = [
             'sessionId' => session_id(),
-            'id' => $data['id'],
-            'user_name' => $data['user_name'],
-            'mail' => $data['mail'],
-            'createdAt' => $data['createdAt'],
-            'updatedAt' => $data['updateddAt'],
-            'is_admin' => $data['is_admin']
+            'id' => $data->getId(),
+            'user_name' => $data->getUserName(),
+            'mail' => $data->getMail(),
+            'createdAt' => $data->getCreatedAt(),
+            'updatedAt' => $data->getUpdatedAt(),
+            'is_admin' => $data->getIsAdmin()
         ];
         $this->user = $this->session['user'];
+
         $_SESSION['user'] = $this->session['user'];
-        $this->verifyRank();
     }
+
+    /** 
+     * Getting a variable of user 
+     * @param  String  $var
+     * @return Object $var 
+     */
 
     public function getUserVar($var)
     {
-        return $this->user[$var];
+        if (!empty($this->user[$var])) {
+            return $this->user[$var];
+        }
+        return false;
     }
+
+
     public function isLogged()
     {
         if (!empty($this->getUserVar('sessionId'))) {
             return true;
         }
+        throw new \Exception(' you can\'t add comment , you need connected ');
         return false;
     }
 
-    public function isAdmin()
+    /* public function isAdmin()
     {
         if ($this->getUserVar('is_admin') !== 'Admin') {
             //  header('Location: index.php?page=home');
@@ -74,18 +101,9 @@ class SessionController
         $this->user[$var] = $data;
     }
 
-    private function verifyRank()
-    {
-        if ($this->getUserVar('is_admin') == 1) {
-            $this->setUserVar('is_admin', self::ADMIN);
-        } elseif ($this->getUserVar('is_admin') == 0) {
-            $this->setUserVar('is_admin', self::USER);
-        }
-    }
-
     public function logout()
     {
         unset($_SESSION);
         session_destroy();
-    }
+    }*/
 }

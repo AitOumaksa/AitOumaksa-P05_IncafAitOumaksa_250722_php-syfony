@@ -9,42 +9,86 @@ class commentModel extends MainModel
 
     /**
      * get all comment
-     * @param Integer $post_id
-     * @return BOOL
+     * @param String $post_id
+     * @param INT $valide
+     * @return Object
      */
 
-    public function getComments($post_id)
+    public function getComments($post_id, $valide)
     {
         $col_table = [
             'user.user_name',
-            'comment.id'  => 'id_comment',
+            'comment.id',
             'comment.comment_content',
+            'comment.id_user',
+            'comment.valide',
             'comment.createdAt' => 'datecomment',
             'comment.updatedAt' => 'updatecomment',
 
         ];
         $join = ['user' => 'user.id = comment.id_user'];
-        return $this->selectData($col_table, $join, 'comment.id_post', $post_id);
+        $keys = ['comment.id_post', 'comment.valide'];
+        $values = [$post_id, $valide];
+        $results = $this->selectData($col_table, $join, $keys, $values);
+        $custom_array = [];
+        foreach ($results as $datas) {
+
+            array_push($custom_array, new commentTable($datas));
+        }
+
+        return $custom_array;
+    }
+
+    /**
+     * get comment need validation 
+     * @param INT $valide
+     * @return Object
+     */
+
+    public function getCommentsNotValidate($valide)
+    {
+        $col_table = [
+            'user.user_name',
+            'comment.id',
+            'comment.comment_content',
+            'comment.id_user',
+            'comment.valide',
+            'comment.createdAt' => 'datecomment',
+            'comment.updatedAt' => 'updatecomment',
+
+        ];
+        $join = ['user' => 'user.id = comment.id_user'];
+        $keys = ['comment.valide'];
+        $values = [$valide];
+        $results =  $this->selectData($col_table, $join, $keys, $values);
+        $custom_array = [];
+        foreach ($results as $datas) {
+
+            array_push($custom_array, new commentTable($datas));
+        }
+
+        return $custom_array;
     }
 
     /**
      * get One comment
      * @param Integer $comment_id
-     * @return BOOL
      */
 
     public function getOneComment($comment_id)
     {
         $col_table = [
-            'comment.id'  => 'id_comment',
+            'comment.id',
             'user.user_name',
+            'comment.id_user',
             'comment.comment_content',
             'comment.createdAt' => 'datecomment',
             'comment.updatedAt' => 'updatecomment',
 
         ];
         $join = ['user' => 'user.id = comment.id_user'];
-        return $this->selectOneData($col_table, $join, 'comment.id', $comment_id);
+        $results = $this->selectOneData($col_table, $join, 'comment.id', $comment_id);
+        return new commentTable($results);
     }
 
     /**
@@ -55,12 +99,12 @@ class commentModel extends MainModel
      * @return Mixed
      */
 
-    public function addComment($id_post, $comment_content, $id_user)
+    public function addComment($id_post, $comment_content, $valide, $id_user)
     {
         $date = date("Y-m-d H:i:s");
-        $col_table = ['id_post', 'comment_content', 'createdAt', 'updatedAt', 'id_user'];
+        $col_table = ['id_post', 'comment_content', 'valide', 'createdAt', 'updatedAt', 'id_user'];
 
-        $values = array($id_post, $comment_content, $date, $date, $id_user);
+        $values = array($id_post, $comment_content, $valide, $date, $date, $id_user);
         // var_dump($values);
         return $this->insertData($col_table, $values);
     }
@@ -73,18 +117,34 @@ class commentModel extends MainModel
      * @return Mixed
      */
 
-    public function updateComment($id, $comment_content)
+    public function updateComment($id, $comment_content, $valide)
     {
 
         $date = date("Y-m-d H:i:s");
-        $col_table = ['comment_content', 'updatedAt'];
+        $col_table = ['comment_content', 'valide', 'updatedAt'];
         $key = 'id';
         $keyValue = $id;
-        $values = array($comment_content, $date);
+        $values = array($comment_content, $valide, $date);
 
         return $this->updateData($col_table, $values, $key, $keyValue);
     }
 
+    /**
+     * UPdate validation column 
+     * @param String $id
+     * @param INT $valide
+     * @return Object
+     */
+
+    public function updateColumnValidation($id, $valide)
+    {
+        $col_table = ['valide'];
+        $key = 'id';
+        $keyValue = $id;
+        $values = array($valide);
+
+        return $this->updateData($col_table, $values, $key, $keyValue);
+    }
 
     /**
      * Delete comment

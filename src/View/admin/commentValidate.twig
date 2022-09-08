@@ -1,0 +1,68 @@
+{% extends 'layout/layout.twig' %}
+{% block content %}
+
+                <div class = "all-comment container" id = "all-comment">
+                 {% if comments %}
+                      {% for comment in comments %}
+                    <div class="commente-validate-section mt-2 border-bottom" data-id= {{comment.id}}>
+                        <div class="d-flex flex-row align-items-center commented-user">
+                            <h2 class="mr-2 me-2 h5">{{comment.userName}}</h2>
+                            {% if comment.updatecomment <= comment.datecomment %}
+                            <span class="mb-1  ml-2"> Crée le {{comment.datecomment|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
+                            {% else %}
+                            <span class="mb-1  ml-2"> Mis à jour le {{comment.updatecomment|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
+                            {% endif %}
+                        </div>
+                        <div class="comment-text-sm"><span>{{comment.commentContent}}</span></div>
+                        <div class="reply-section-validate">
+                             
+                            <div class="d-flex flex-row align-items-center voting-icons">
+                            
+                                <a href ="#" class="ml-2 mt-1 validComment text-dark fw-bold mx-2">Valider</a>
+                                <a href ="#" class="ml-2 mt-1 notValidComment text-dark fw-bold">Suprimer</a>
+                          
+                            </div>                          
+                        </div>
+                    </div>
+                   {% endfor %}
+                    {% else %}
+                    <div class="alert alert-dark" role="alert">
+                    Pas encore de commentaires pour à valider!
+                    </div>
+                   {% endif %}
+                   </div>
+
+                   <script>
+               
+
+                   //Valider le commentaire 
+                   url_comment_valide = 'http://localhost/validation';
+                    btnValidate = document.querySelector('.validComment')
+                    btnValidate.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    id_comment_validate =   this.closest('.commente-validate-section').dataset.id;
+                    jsonres = getData(`${url_comment_valide}/${id_comment_validate}`)
+                    .then(function (res) {
+                    document.location.href = `http://localhost/validationComment`;
+                    })
+                    })
+
+
+                    //Ne pas valider 
+                    url_comment_Not_valide = 'http://localhost/noValidation';
+                    btnNotValidate = document.querySelector('.notValidComment')
+                    btnNotValidate.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    id_comment_validate =   this.closest('.commente-validate-section').dataset.id;
+                    jsonres = getData(`${url_comment_Not_valide}/${id_comment_validate}`)
+                    .then(function (res) {
+                    document.location.href = `http://localhost/validationComment`;
+                    })
+                    })
+
+                    </script>
+
+
+    {% endblock %} 

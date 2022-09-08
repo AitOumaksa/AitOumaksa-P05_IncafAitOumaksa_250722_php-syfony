@@ -93,10 +93,17 @@
             <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatePublication|date('d/m/Y \\à H:i',"Europe/Paris") }} par <strong> {{ one_post.autor }}</strong></p>
             {% endif %}
             <p>{{one_post.chapo}}...</br> {{one_post.content}}</p>
+            
             <div class="d-flex flex-row align-items-center voting-icons">
+             {% if session.user.sessionId is defined %}
+             {% if session.user.is_admin == 'Admin' %}
             <button type="button" class="btn btn-dark mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> Modifier</button>
             <button type="button" class="btn btn-dark ml-2 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModalDelete">Suprimer</button>
-    </div>
+             {% endif %}
+             {% endif  %}
+
+            </div>
+   
 
 <!--End container for one post-->
 
@@ -118,9 +125,9 @@
              
                 <div class = "all-comment" id = "all-comment">
                       {% for comment in comments %}
-                    <div class="commented-section mt-2 border-bottom" data-id= {{comment.id_comment}}>
+                    <div class="commented-section mt-2 border-bottom" data-id= {{comment.id}}>
                         <div class="d-flex flex-row align-items-center commented-user">
-                            <h2 class="mr-2 me-2 h5">{{comment.user_name}}</h2>
+                            <h2 class="mr-2 me-2 h5">{{comment.userName}}</h2>
                             {% if comment.updatecomment <= comment.datecomment %}
                             <span class="mb-1  ml-2"> Crée le {{comment.datecomment|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
                             {% else %}
@@ -129,7 +136,7 @@
                         </div>
                         <form method="post" class="needs-validation container updateComment"  novalidate>
                         <div class="d-flex flex-row update-comment-section mt-4 mb-4 d-none" >
-                        <input type="text"  name="comment_content" value="{{comment.comment_content}}" class="form-control mr-3 comment-content " placeholder="Ajouter un commentaire" required>
+                        <input type="text"  name="comment_content" value="{{comment.commentContent}}" class="form-control mr-3 comment-content " placeholder="Ajouter un commentaire" required>
                         <div class="valid-feedback">Commentaire valide</div>
                         <div class="invalid-feedback">Commentaire invalide</div>
                         <button class="btn btn-dark btn-sm mx-2 btn-to-update" type="submit">Modifier</button>
@@ -137,12 +144,21 @@
                         </div>
                         <div class="alertPlaceholderUpdateComment"></div>
                         </form>
-                        <div class="comment-text-sm"><span>{{comment.comment_content}}</span></div>
+                        <div class="comment-text-sm"><span>{{comment.commentContent}}</span></div>
                         <div class="reply-section">
+                             
                             <div class="d-flex flex-row align-items-center voting-icons">
+                            {% if session.user.id == comment.idUser  %}
+                            
                                 <a href ="#" class="ml-2 mt-1 modifycomment text-dark fw-bold mx-2">Modifier</a>
+                             {% endif %}
+                             {% if (session.user.id == comment.idUser ) or (session.user.is_admin == 'Admin' ) %}
                                 <a href ="#" class="ml-2 mt-1 deletecomment text-dark fw-bold">Suprimer</a>
+                              {% endif %}
+                          
                             </div>
+                           
+                            
                         </div>
                     </div>
                    {% endfor %}
@@ -266,10 +282,9 @@
               if(jsonres.success){
           
                 formReset(form_comment);
-                //window.location.reload();
                     alertType='success';
-                    alertMessage = 'Commentaire Ajouter'
-                window.location.reload();
+                    alertMessage = 'Commentaire soumis pour validation avant d\'etre afficher'
+                //window.location.reload();
 
                 }else{
                     alertType='danger'
@@ -302,7 +317,7 @@
               if(jsonres.success){
                    //formReset(this);
                     alertType='success'
-                    alertMessage = 'Article Modifier'
+                    alertMessage = 'Commentaire soumise pour validation avant d\'etres afficher'
                    window.location.reload()
                 }else{
                     alertType='danger'
@@ -327,6 +342,7 @@
     event.stopPropagation();
     event.preventDefault();
    idComment =   this.closest('.commented-section').dataset.id
+   console.log(idComment);
     jsonres = getData(`${urlDeleteComment}/${idComment}`)
             
              .then(function (jsonres) {

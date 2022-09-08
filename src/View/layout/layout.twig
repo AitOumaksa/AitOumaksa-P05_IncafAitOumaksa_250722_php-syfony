@@ -11,15 +11,14 @@
     
 </head>
 <body>
-    <div class="container-fluid g-0 cont-body">
+<div class="container-fluid g-0 cont-body d-flex flex-column min-vh-100">
     <!--Start header -->
             {{  include ('layout/navbar.twig') }}
     
     <!-- End header  -->
 
     <!--Start main -->
-        <main role="main" class="site-content">
-            <div class="jumbotron">
+        <main  class="site-content mb-5">
                
                 <div class="container bg-light.bg-gradient">
                 <!-- home decription -->
@@ -30,25 +29,22 @@
 
                 <!-- Title page  -->
                     {% block title %}{% endblock %}
-                </div>
 
                 <!-- Content   -->
                     {% block content %}{% endblock %}
                 </div>
-
-            </div>
 
         </main>
 
      <!--End  main -->    
     
     <!--Sart footer -->
-        <footer class="site-footer footer bg-dark text-white-50">
+        <footer class="site-footer footer bg-dark text-white-50 mt-auto">
             <div class="container mt-3  text-md-center g-0">
               {{  include('layout/footer.twig') }}
             </div>
         </footer>
-    </div>
+</div>
     <!--End footer -->
 
 

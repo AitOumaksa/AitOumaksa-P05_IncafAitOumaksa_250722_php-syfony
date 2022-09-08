@@ -3,8 +3,11 @@
 {% block title %}<h1 class = "text-center p-3">Nos Articles</h1>{% endblock %}
 
  {% block content %}
+
  {% for post in posts %}
-{% include "articles/all_posts.twig" with post %}
+ 
+{% include "articles/all_posts.twig"%}
+
 {% endfor %}
 
 {% endblock %}

@@ -41,7 +41,7 @@ class MainModel
      * @return Array|Mixed
      */
 
-    public function listData(string $value = null, string $key = null)
+    public function listData($value = null, $key = null)
     {
 
         if (isset($key)) {
@@ -68,6 +68,7 @@ class MainModel
         $query_col = null;
         $query_condition = null;
         $count_col = null;
+        $query_key = null;
 
         if (isset($join_tables)) {
 
@@ -95,13 +96,25 @@ class MainModel
         } else {
             $query_col = '*';
         }
+        if (isset($key)) {
+            if (is_array($key) && is_array($value)) {
 
-        if (isset($key) && isset($value)) {
-            $query_condition = ' WHERE ' . $key . ' = ?';
+                $key[count($key) - 1]  =  $key[count($key) - 1] . '=?';
+                $query_key = implode(" =? AND ", $key);
+                $query_condition = ' WHERE ' . $query_key;
+            } else {
+                $query_condition = ' WHERE ' . $key . ' = ?';
+            }
         }
 
+
+
+
+
+
         $query = 'SELECT ' . $query_col . ' FROM ' . $this->table . ' ' . $query_join . ' ' . $query_condition . '  ORDER BY ' . $this->table . '.updatedAt  DESC';
-        return $this->database->getAllData($query, [$value]);
+
+        return $this->database->getAllData($query, $value);
     }
 
 
@@ -204,6 +217,7 @@ class MainModel
         }
 
         $query = 'SELECT ' . $query_col . ' FROM ' . $this->table . ' ' . $query_join . ' ' . $query_condition;
+
         return $this->database->getData($query, [$value]);
     }
 }

@@ -25,7 +25,7 @@ class ConnectDB
     {
 
         if (self::$pdo === null) {
-            self::$pdo = new PDO(db_Dsn, db_User, db_Pass);
+            self::$pdo = new PDO(db_Dsn, db_User, db_Pass, option);
             self::$pdo->exec('SET NAMES UTF8');
         }
         return self::$pdo;

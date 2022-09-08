@@ -7,6 +7,15 @@ namespace App\Model;
 class userModel extends MainModel
 {
 
+
+    /**
+     * Registre a user in the database 
+     * @param String $user_name
+     * @param String $email
+     * @param String $password
+     * @return Array 
+     */
+
     public function signUpUser($user_name, $email, $password)
     {
         $date = date("Y-m-d H:i:s");
@@ -17,14 +26,15 @@ class userModel extends MainModel
         return $this->insertData($col_table, $values);
     }
 
-    public function getMailUser($email)
+    /**
+     * Get user 
+     * @param String $email
+     */
+
+    public function getUser($email)
     {
 
-        $col_table = ['user.mail'];
-        return $this->selectOneData($col_table, null, 'user.mail', $email);
-    }
-
-    public function loginUser()
-    {
+        $results = $this->selectOneData(null, null, 'mail', $email);
+        return new UserTable($results);
     }
 }
