@@ -20,8 +20,8 @@ class PostModel extends MainModel
             'post.title',
             'post.chapo',
             'post.autor',
-            'post.createdAt' => 'datePublication',
-            'post.updatedAt' => 'updatePublication',
+            'post.createdAt',
+            'post.updatedAt'
 
         ];
         $join = ['user' => 'user.id=post.id_user'];
@@ -49,8 +49,8 @@ class PostModel extends MainModel
             'post.chapo',
             'post.content',
             'post.autor',
-            'post.createdAt' => 'datePublication',
-            'post.updatedAt' => 'updatePublication',
+            'post.createdAt',
+            'post.updatedAt'
 
         ];
         $join = ['user' => 'user.id=post.id_user'];

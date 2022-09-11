@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Model\ConnectDB;
 use App\Model\PDOModel;
 use App\Model\userModel;
-use App\Model\userTable;
+
 
 
 class UserController extends MainController
@@ -49,8 +49,6 @@ class UserController extends MainController
             $userModel = new userModel(new PDOModel(ConnectDB::getPDO()));
             $data['password'] =  password_hash($data['password'], PASSWORD_DEFAULT);
             $user_mail = $userModel->getUser($data['mail']);
-            var_dump($user_mail);
-
             if ($user_mail->getMail()) {
                 throw new \Exception('User exist.');
             }

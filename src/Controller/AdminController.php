@@ -14,7 +14,7 @@ class AdminController extends MainController
 
     /**
      * get all posts from admin 
-     * @return View  
+     * @return View or is not allowed
      */
 
     public function getPostsAdmin()
@@ -25,6 +25,7 @@ class AdminController extends MainController
             $posts = $postModel->getAllPost();
             return $this->view('admin_interface.twig', compact('posts'));
         } else {
+            return $this->view('autorisation.twig');
             throw new \Exception('you can\'t access to the interface admin.');
         }
     }

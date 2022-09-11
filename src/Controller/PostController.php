@@ -37,9 +37,7 @@ class PostController extends MainController
         $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
         $commentModel = new CommentController();
         $comments = $commentModel->getComments($post_id);
-        //var_dump($comments);
         $one_post = $postModel->getOnePost($post_id);
-        // var_dump($one_post);
         return $this->view('onePost.twig', compact('one_post', 'comments'));
     }
 

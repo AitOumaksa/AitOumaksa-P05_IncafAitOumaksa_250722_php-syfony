@@ -46,11 +46,13 @@
         </form>
     </div>
     <script>
-    
+    // url for login 
     url_login = `http://localhost/login`;
+
+    //form for ligin 
     form_login = document.querySelector('.Connexion');
 
-      
+        //login user 
           form_login.addEventListener('submit', function (event) { 
           event.stopPropagation();
           event.preventDefault();
@@ -59,7 +61,7 @@
             const formData = createFormData(form_login);
             jsonres = postData(formData,url_login)
              .then(function (jsonres) {
-            // console.log('console',jsonres);
+            
               if(jsonres.success){
                    formReset(form_login);
                     document.location.href = `http://localhost/`;

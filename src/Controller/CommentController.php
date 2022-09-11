@@ -52,8 +52,6 @@ class CommentController extends MainController
             $id_user = $this->session->getUserVar('id');
             $data = $requestForPost->ValueForm();
             $valide = 0;
-
-
             $this->verifyInputMessage($data['comment_content']);
             $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
             $setComment = $commentModel->addComment($post_id, $data['comment_content'], $valide, $id_user);
@@ -112,9 +110,10 @@ class CommentController extends MainController
     {
         $id_user = $this->session->getUserVar('id');
         $is_admin = $this->session->getUserVar('is_admin');
+        $user = $this->getOneComment($id_comment)->getIdUser();
 
         try {
-            if ($id_user === $id_comment || $is_admin === 'Admin') {
+            if ($id_user === $user || $is_admin === 'Admin') {
                 $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
                 $deleteComment = $commentModel->deleteComment($id_comment);
                 if ($deleteComment == true) {

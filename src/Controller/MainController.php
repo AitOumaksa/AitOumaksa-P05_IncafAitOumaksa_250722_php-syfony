@@ -6,8 +6,6 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Extension\DebugExtension;
 use App\Controller\Globals\SessionController;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 
 
 
@@ -17,7 +15,6 @@ class MainController
 {
 
     /**
-     * Setting twig 
      * @var $session
      */
 
@@ -44,6 +41,8 @@ class MainController
         $twig->addGlobal('session', $_SESSION);
         echo $twig->render($path, $datas);
     }
+
+
 
     /**
      * Redirect methode 

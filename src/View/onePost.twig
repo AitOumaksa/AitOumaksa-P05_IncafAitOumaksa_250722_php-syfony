@@ -87,10 +87,10 @@
 <!--Start container for one post-->
     <div class="container p-4 blog-post" data-id= {{one_post.id}}>
             <h1 class="blog-post-title mb-4">{{one_post.title}}</h1>
-            {% if one_post.updatePublication <= one_post.datePublication %}
-            <p class="blog-post-meta mb-4">Créé le {{one_post.datePublication|date('d/m/Y \\à H:i',"Europe/Paris")}} par <strong> {{ one_post.autor}}</strong></p>
+            {% if one_post.updatedAt <= one_post.createdAt %}
+            <p class="blog-post-meta mb-4">Créé le {{one_post.createdAt|date('d/m/Y \\à H:i',"Europe/Paris")}} par <strong> {{ one_post.autor}}</strong></p>
             {% else %}
-            <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatePublication|date('d/m/Y \\à H:i',"Europe/Paris") }} par <strong> {{ one_post.autor }}</strong></p>
+            <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatedAt|date('d/m/Y \\à H:i',"Europe/Paris") }} par <strong> {{ one_post.autor }}</strong></p>
             {% endif %}
             <p>{{one_post.chapo}}...</br> {{one_post.content}}</p>
             
@@ -114,8 +114,6 @@
                 <form method="post" class="needs-validation container addComment"  novalidate>
                   <div class="d-flex flex-row add-comment-section mt-4 mb-4">
                     <input type="text"  name="comment_content" class="form-control mr-3 " placeholder="Ajouter un commentaire" required> 
-                    <div class="valid-feedback">Commentaire valide</div>
-                    <div class="invalid-feedback">Commentaire invalide</div>
                   <button class="btn btn-dark comment" type="submit">Comment</button> 
                      
                   </div>
@@ -128,17 +126,15 @@
                     <div class="commented-section mt-2 border-bottom" data-id= {{comment.id}}>
                         <div class="d-flex flex-row align-items-center commented-user">
                             <h2 class="mr-2 me-2 h5">{{comment.userName}}</h2>
-                            {% if comment.updatecomment <= comment.datecomment %}
-                            <span class="mb-1  ml-2"> Crée le {{comment.datecomment|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
+                            {% if comment.updatedAt <= comment.createdAt %}
+                            <span class="mb-1  ml-2"> Crée le {{comment.createdAt|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
                             {% else %}
-                            <span class="mb-1  ml-2"> Mis à jour le {{comment.updatecomment|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
+                            <span class="mb-1  ml-2"> Mis à jour le {{comment.updatedAt|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
                             {% endif %}
                         </div>
                         <form method="post" class="needs-validation container updateComment"  novalidate>
                         <div class="d-flex flex-row update-comment-section mt-4 mb-4 d-none" >
                         <input type="text"  name="comment_content" value="{{comment.commentContent}}" class="form-control mr-3 comment-content " placeholder="Ajouter un commentaire" required>
-                        <div class="valid-feedback">Commentaire valide</div>
-                        <div class="invalid-feedback">Commentaire invalide</div>
                         <button class="btn btn-dark btn-sm mx-2 btn-to-update" type="submit">Modifier</button>
                         <button class="btn btn-dark btn-sm btn-to-cancel" type="button">Annuler</button>
                         </div>
@@ -201,22 +197,28 @@
   });
 
 });
-      
+      //id from post
       id_post = document.querySelector('.blog-post').dataset.id
-      // url updatePost
+
+      // url update post
       url = `http://localhost/updatePost/${id_post}`
+
       // url addComment
       urlComment = `http://localhost/${id_post}/addComment`
+      
       //update comment
        urlUpdateComment = `http://localhost/updateComment`
+
       //form update post
       form_post = document.querySelector('.modifyPost')
+
       //form add comment 
       form_comment = document.querySelector('.addComment')
-      //form update post 
-       
+
+      //form update Comment
        form_update_comment = document.querySelectorAll('.updateComment')
-     //form add comment 
+
+     //url delete comment 
        urlDeleteComment = `http://localhost/deleteComment`
     
    
@@ -231,7 +233,6 @@
             const formData = createFormData(form_post);
             jsonres = postData(formData,url)
              .then(function (jsonres) {
-            // console.log('console',jsonres);
               if(jsonres.success){
                    formReset(form_post);
                     alertType='success'
@@ -274,8 +275,7 @@
       form_comment.addEventListener('submit', function (event) { 
       event.stopPropagation();
       event.preventDefault();
-      this.classList.add('was-validated');
-      if (form_comment.checkValidity()) {
+      
             const InputData = createFormData(form_comment);
             jsonres = postData(InputData,urlComment)    
              .then(function (jsonres) {
@@ -284,7 +284,6 @@
                 formReset(form_comment);
                     alertType='success';
                     alertMessage = 'Commentaire soumis pour validation avant d\'etre afficher'
-                //window.location.reload();
 
                 }else{
                     alertType='danger'
@@ -293,29 +292,26 @@
                 const alertPlaceholder = document.getElementById('alertPlaceholderComment');
                 alert(alertMessage ,alertType ,alertPlaceholder);
            })
-      }
+
 
       })
 
 
-      //update form comment 
-
-
+     
+ //update form comment 
   form_update_comment.forEach(element => {
   element.addEventListener('submit', function (event) {
     event.stopPropagation();
     event.preventDefault();
-     this.classList.add('was-validated');
      thisForm=this;
-    if (this.checkValidity()) {
+   
          idComment =   this.closest('.commented-section').dataset.id
           const formData = createFormData(this);
             jsonres = postData(formData,`${urlUpdateComment}/${idComment}`)
             
              .then(function (jsonres) {
-            // console.log('console',jsonres);
+        
               if(jsonres.success){
-                   //formReset(this);
                     alertType='success'
                     alertMessage = 'Commentaire soumise pour validation avant d\'etres afficher'
                    window.location.reload()
@@ -328,7 +324,7 @@
                 console.log(alertPlaceholder)
                 alert(alertMessage ,alertType ,alertPlaceholder)
            })
-     }
+     
    
  
   });
@@ -342,7 +338,6 @@
     event.stopPropagation();
     event.preventDefault();
    idComment =   this.closest('.commented-section').dataset.id
-   console.log(idComment);
     jsonres = getData(`${urlDeleteComment}/${idComment}`)
             
              .then(function (jsonres) {

@@ -49,10 +49,14 @@
         </form>
     </div>
     <script>
+
+    //url for signup
     url_signUp = `http://localhost/signup`;
+
+    //form for signup
     form_signUp = document.querySelector('.Inscription');
 
-       //update post 
+       //signup user 
           form_signUp.addEventListener('submit', function (event) { 
           event.stopPropagation();
           event.preventDefault();
@@ -61,10 +65,9 @@
             const formData = createFormData(form_signUp);
             jsonres = postData(formData,url_signUp)
              .then(function (jsonres) {
-            // console.log('console',jsonres);
               if(jsonres.success){
                    formReset(form_signUp);
-                    document.location.href = `http://localhost/posts`;
+                    document.location.href = `http://localhost/connexion`;
                 }else{
                     alertType='danger'
                     alertMessage = jsonres.error

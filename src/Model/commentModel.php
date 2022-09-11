@@ -22,8 +22,8 @@ class commentModel extends MainModel
             'comment.comment_content',
             'comment.id_user',
             'comment.valide',
-            'comment.createdAt' => 'datecomment',
-            'comment.updatedAt' => 'updatecomment',
+            'comment.createdAt',
+            'comment.updatedAt'
 
         ];
         $join = ['user' => 'user.id = comment.id_user'];
@@ -53,8 +53,8 @@ class commentModel extends MainModel
             'comment.comment_content',
             'comment.id_user',
             'comment.valide',
-            'comment.createdAt' => 'datecomment',
-            'comment.updatedAt' => 'updatecomment',
+            'comment.createdAt',
+            'comment.updatedAt'
 
         ];
         $join = ['user' => 'user.id = comment.id_user'];
@@ -73,6 +73,7 @@ class commentModel extends MainModel
     /**
      * get One comment
      * @param Integer $comment_id
+     * @return Object 
      */
 
     public function getOneComment($comment_id)
@@ -82,8 +83,8 @@ class commentModel extends MainModel
             'user.user_name',
             'comment.id_user',
             'comment.comment_content',
-            'comment.createdAt' => 'datecomment',
-            'comment.updatedAt' => 'updatecomment',
+            'comment.createdAt',
+            'comment.updatedAt'
 
         ];
         $join = ['user' => 'user.id = comment.id_user'];

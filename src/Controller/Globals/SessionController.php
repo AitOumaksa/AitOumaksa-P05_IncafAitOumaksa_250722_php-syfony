@@ -69,6 +69,10 @@ class SessionController
         return false;
     }
 
+    /** 
+     * virifier if user is logged
+     * @return True or error mssg
+     */
 
     public function isLogged()
     {
@@ -78,32 +82,4 @@ class SessionController
         throw new \Exception(' you can\'t add comment , you need connected ');
         return false;
     }
-
-    /* public function isAdmin()
-    {
-        if ($this->getUserVar('is_admin') !== 'Admin') {
-            //  header('Location: index.php?page=home');
-        }
-        return true;
-    }
-
-    public function isUser()
-    {
-        if ($this->getUserVar('is_admin') !== 'User') {
-            // header('Location: index.php?page=home');
-        }
-        return true;
-    }
-
-
-    public function setUserVar(string $var, $data)
-    {
-        $this->user[$var] = $data;
-    }
-
-    public function logout()
-    {
-        unset($_SESSION);
-        session_destroy();
-    }*/
 }

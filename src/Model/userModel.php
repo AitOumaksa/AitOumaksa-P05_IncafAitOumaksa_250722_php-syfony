@@ -22,7 +22,6 @@ class userModel extends MainModel
         $is_admin = 0;
         $col_table = ['user_name', 'mail', 'password', 'is_admin', 'createdAt', 'updatedAt'];
         $values = array($user_name, $email, $password, $is_admin,  $date, $date);
-        //var_dump($values);
         return $this->insertData($col_table, $values);
     }
 

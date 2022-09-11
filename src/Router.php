@@ -2,7 +2,7 @@
 
 namespace App;
 
-
+use App\Controller\MainController;
 use App\Routes\Request;
 
 class router
@@ -71,16 +71,20 @@ class router
     }
     /**
      * Run through array of the route and matching with a route sending by browser  
+     * if route dosn't exist 
+     * @return ErrorPage 
      */
     public static function run()
     {
-
         foreach (self::$request[$_SERVER['REQUEST_METHOD']] as $route) {
 
             if ($route->match(trim($_GET['url']), '/')) {
 
                 $route->execute();
+                return;
             }
         }
+        $view = new MainController();
+        return $view->view('pageError.twig');
     }
 }

@@ -4,7 +4,7 @@
 
 <!--Start form add-->
 
-<form method="post" class="needs-validation addPost" action="" novalidate>
+<form method="post" class="needs-validation addPost"  novalidate>
             <div class="row">
                 <div class="form-group col-md pb-2 pb-md-0 pt-3">
                     <label for="title" >Titre de l'article :</label><br>
@@ -52,11 +52,13 @@
 <script src="../../../public/js/main.js"></script>
 
 <script>
-
+     //url for add post
       $url = 'http://localhost/addPost'
+
+      //form for add post 
       form_post = document.querySelector('.addPost')
 
-
+         // add post 
            form_post.addEventListener('submit', function (event) { 
           event.stopPropagation();
           event.preventDefault();
