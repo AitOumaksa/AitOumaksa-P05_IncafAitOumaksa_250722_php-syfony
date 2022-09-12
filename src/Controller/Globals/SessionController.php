@@ -2,6 +2,8 @@
 
 namespace App\Controller\Globals;
 
+use App\Model\UserTable;
+
 class SessionController
 {
     public const ADMIN = 'Admin';
@@ -33,7 +35,7 @@ class SessionController
      * @param  Object $data
      */
 
-    public function createSession($data)
+    public function createSession(UserTable $data)
     {
         if ($data->getIsAdmin() == '1') {
             $data->setIsAdmin(self::ADMIN);
