@@ -2,18 +2,14 @@
 
 namespace App\Model;
 
-
-
 class userModel extends MainModel
 {
-
-
     /**
-     * Registre a user in the database 
+     * Registre a user in the database
      * @param String $user_name
      * @param String $email
      * @param String $password
-     * @return Array 
+     * @return Array
      */
 
     public function signUpUser($user_name, $email, $password)
@@ -26,13 +22,12 @@ class userModel extends MainModel
     }
 
     /**
-     * Get user 
+     * Get user
      * @param String $email
      */
 
     public function getUser($email)
     {
-
         $results = $this->selectOneData(null, null, 'mail', $email);
         return new UserTable($results);
     }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Model;
 
 use DateTime;
@@ -27,7 +26,7 @@ class PostTable
     private $content;
 
     /**
-     * @var int $id_user 
+     * @var int $id_user
      */
     private $id_user;
 
@@ -64,7 +63,6 @@ class PostTable
 
     public function hydrate($datas)
     {
-
         foreach ($datas as $key => $value) {
             $key = lcfirst(str_replace('_', '', ucwords($key, '_')));
             $method = 'set' . ucfirst($key);

@@ -2,11 +2,8 @@
 
 namespace App\Model;
 
-
-
 class commentModel extends MainModel
 {
-
     /**
      * get all comment
      * @param String $post_id
@@ -32,7 +29,6 @@ class commentModel extends MainModel
         $results = $this->selectData($col_table, $join, $keys, $values);
         $custom_array = [];
         foreach ($results as $datas) {
-
             array_push($custom_array, new commentTable($datas));
         }
 
@@ -40,7 +36,7 @@ class commentModel extends MainModel
     }
 
     /**
-     * get comment need validation 
+     * get comment need validation
      * @param INT $valide
      * @return Object
      */
@@ -63,7 +59,6 @@ class commentModel extends MainModel
         $results =  $this->selectData($col_table, $join, $keys, $values);
         $custom_array = [];
         foreach ($results as $datas) {
-
             array_push($custom_array, new commentTable($datas));
         }
 
@@ -73,7 +68,7 @@ class commentModel extends MainModel
     /**
      * get One comment
      * @param Integer $comment_id
-     * @return Object 
+     * @return Object
      */
 
     public function getOneComment($comment_id)
@@ -120,7 +115,6 @@ class commentModel extends MainModel
 
     public function updateComment($id, $comment_content, $valide)
     {
-
         $date = date("Y-m-d H:i:s");
         $col_table = ['comment_content', 'valide', 'updatedAt'];
         $key = 'id';
@@ -131,7 +125,7 @@ class commentModel extends MainModel
     }
 
     /**
-     * UPdate validation column 
+     * UPdate validation column
      * @param String $id
      * @param INT $valide
      * @return Object

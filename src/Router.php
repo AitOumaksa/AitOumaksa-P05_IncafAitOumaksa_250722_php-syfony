@@ -9,18 +9,17 @@ class router
 {
     /**
      * Request path array
-     *@var Array 
+     *@var Array
      */
     private static $request = [];
 
     /**
-     * Route  get 
+     * Route  get
      *@return Mixed
      */
 
     public static function get($path, $action)
     {
-
         $routes = new Request($path, $action);
         self::$request['GET'][] = $routes;
 
@@ -35,7 +34,6 @@ class router
 
     public static function delete($path, $action)
     {
-
         $routes = new Request($path, $action);
         self::$request['GET'][] = $routes;
 
@@ -49,7 +47,6 @@ class router
 
     public static function post($path, $action)
     {
-
         $routes = new Request($path, $action);
         self::$request['POST'][] = $routes;
 
@@ -63,23 +60,20 @@ class router
 
     public static function put($path, $action)
     {
-
         $routes = new Request($path, $action);
         self::$request['POST'][] = $routes;
 
         return $routes;
     }
     /**
-     * Run through array of the route and matching with a route sending by browser  
-     * if route dosn't exist 
-     * @return ErrorPage 
+     * Run through array of the route and matching with a route sending by browser
+     * if route dosn't exist
+     * @return ErrorPage
      */
     public static function run()
     {
         foreach (self::$request[$_SERVER['REQUEST_METHOD']] as $route) {
-
             if ($route->match(trim($_GET['url']), '/')) {
-
                 $route->execute();
                 return;
             }

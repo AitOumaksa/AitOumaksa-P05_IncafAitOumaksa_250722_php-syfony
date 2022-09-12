@@ -10,10 +10,8 @@ use App\Routes\Request;
 
 class AdminController extends MainController
 {
-
-
     /**
-     * get all posts from admin 
+     * get all posts from admin
      * @return View or is not allowed
      */
 

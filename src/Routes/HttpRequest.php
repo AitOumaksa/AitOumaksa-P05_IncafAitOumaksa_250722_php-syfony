@@ -4,9 +4,8 @@ namespace App\Routes;
 
 class HttpRequest
 {
-
     /**
-     * Received value from the form 
+     * Received value from the form
      * @return Array $_POST
      */
     public function ValueForm()
@@ -14,7 +13,7 @@ class HttpRequest
         return $_POST;
     }
     /**
-     * Received value input from the form 
+     * Received value input from the form
      * @return Array $_POST
      */
     public function nameInput($field)

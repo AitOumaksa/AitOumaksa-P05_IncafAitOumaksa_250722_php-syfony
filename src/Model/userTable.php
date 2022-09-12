@@ -56,7 +56,6 @@ class UserTable
 
     public function hydrate($datas)
     {
-
         foreach ($datas as $key => $value) {
             $key = lcfirst(str_replace('_', '', ucwords($key, '_')));
             $method = 'set' . ucfirst($key);
@@ -105,7 +104,7 @@ class UserTable
     }
 
     /**
-     * @return String 
+     * @return String
      */
     public function getMail()
     {
@@ -118,13 +117,12 @@ class UserTable
      */
     public function setMail($mail)
     {
-
         $this->mail = $mail;
         return $this;
     }
 
     /**
-     * @return String 
+     * @return String
      */
     public function getPassword()
     {
@@ -142,7 +140,7 @@ class UserTable
     }
 
     /**
-     * @return date 
+     * @return date
      */
     public function getUpdatedAt()
     {

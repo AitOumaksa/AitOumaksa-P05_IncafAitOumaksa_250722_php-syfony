@@ -8,15 +8,11 @@ use App\Model\PostModel;
 use App\Model\commentModel;
 use App\Routes\HttpRequest;
 
-
-
-
 class PostController extends MainController
 {
-
     /**
-     * get all posts and diplay 
-     * @return Array $posts and a view to display posts page 
+     * get all posts and diplay
+     * @return Array $posts and a view to display posts page
      */
 
     public function getPosts()
@@ -27,13 +23,12 @@ class PostController extends MainController
     }
 
     /**
-     * get one posts with his comments and display  
-     * @return Array $posts, $comment and a view to display onePost page 
+     * get one posts with his comments and display
+     * @return Array $posts, $comment and a view to display onePost page
      */
 
     public function getOnePost($post_id)
     {
-
         $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
         $commentModel = new CommentController();
         $comments = $commentModel->getComments($post_id);
@@ -43,14 +38,13 @@ class PostController extends MainController
 
 
     /**
-     * check the input and add post 
+     * check the input and add post
      * @param Object $requestForPost
-     * @return True or error  
+     * @return True or error
      */
 
     public function addPost($requestForPost)
     {
-
         $id_user = $this->session->getUserVar('id');
         $is_admin = $this->session->getUserVar('is_admin');
         $data = $requestForPost->ValueForm();
@@ -65,23 +59,21 @@ class PostController extends MainController
                 $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
                 $setPost = $postModel->setPost($id_user, $data['title'], $data['chapo'], $data['autor'], $data['content']);
                 if ($setPost) {
-
                     echo json_encode(array("success" => true));
                 }
             } else {
                 throw new \Exception(' you can\'t add a post, you are not a admin');
             }
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }
 
     /**
-     * check the input and add updated a post 
+     * check the input and add updated a post
      * @param Object $requestForPost
      * @param Integer $id
-     * @return True or error  
+     * @return True or error
      */
 
     public function updatePost($requestForPost, $id)
@@ -99,22 +91,20 @@ class PostController extends MainController
                 $updatePost = $postModel->updatePost($id, $data['title'], $data['chapo'], $data['content'], $data['autor']);
 
                 if ($updatePost) {
-
                     echo json_encode(array("success" => true));
                 }
             } else {
                 throw new \Exception(' you can\'t update a post, you are not a admin');
             }
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }
 
     /**
-     * Delete post 
+     * Delete post
      * @param Integer $id
-     * @return False  or error  
+     * @return False  or error
      */
 
     public function deletePost($id)
@@ -126,14 +116,12 @@ class PostController extends MainController
                 $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
                 $deletePost = $postModel->deletePost($id);
                 if ($deletePost == true) {
-
                     echo json_encode(array("success" => true));
                 }
             } else {
                 throw new \Exception(' you can\'t remove a post, you are not a admin');
             }
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }

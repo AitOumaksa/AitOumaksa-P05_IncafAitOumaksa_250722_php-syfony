@@ -6,14 +6,11 @@ use App\Model\ConnectDB;
 use App\Model\PDOModel;
 use App\Model\userModel;
 
-
-
 class UserController extends MainController
 {
-
     /**
-     * Login page  
-     * @return Render View 
+     * Login page
+     * @return Render View
      */
 
     public function loginPage()
@@ -22,8 +19,8 @@ class UserController extends MainController
     }
 
     /**
-     * SignUp page  
-     * @return Render View 
+     * SignUp page
+     * @return Render View
      */
 
     public function signUpPage()
@@ -33,7 +30,7 @@ class UserController extends MainController
 
 
     /**
-     * SignUp user 
+     * SignUp user
      * @param Object $requestForPost
      * @return True or error Msg
      */
@@ -55,13 +52,12 @@ class UserController extends MainController
             $userModel->signUpUser($data['user_name'], $data['mail'], $data['password']);
             echo json_encode(array("success" => true));
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }
 
     /**
-     * Login user 
+     * Login user
      * @param Object $requestForPost
      * @return True or error Msg
      */
@@ -86,13 +82,12 @@ class UserController extends MainController
 
             echo json_encode(array("success" => true));
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }
 
     /**
-     * Logout user and redirect to home page 
+     * Logout user and redirect to home page
      */
 
     public function logout()

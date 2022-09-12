@@ -7,7 +7,6 @@ use  App\Controller\setupSmtp\SmtpSend;
 
 class ContactMailController extends MainController
 {
-
     /**
      * Receive the form data , check the input .
      * @param Object $requestForPost
@@ -16,7 +15,6 @@ class ContactMailController extends MainController
 
     public function sendMessage($requestForPost)
     {
-
         $data = $requestForPost->ValueForm();
         try {
             $this->verifyInputName($data['name']);
@@ -27,11 +25,9 @@ class ContactMailController extends MainController
 
             header("Content-Type : application/json");
             if ($sendMessage == true) {
-
                 echo json_encode(array("success" => true));
             }
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }

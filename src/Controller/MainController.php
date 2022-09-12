@@ -7,13 +7,10 @@ use Twig\Loader\FilesystemLoader;
 use Twig\Extension\DebugExtension;
 use App\Controller\Globals\SessionController;
 
-
-
-//Main is calss Parent 
+//Main is calss Parent
 
 class MainController
 {
-
     /**
      * @var $session
      */
@@ -22,13 +19,12 @@ class MainController
 
     public function __construct()
     {
-
         $this->session = new SessionController();
     }
 
     /**
-     * Setting twig 
-     * @param String $path 
+     * Setting twig
+     * @param String $path
      * @param Array $datas
      */
 
@@ -45,8 +41,8 @@ class MainController
 
 
     /**
-     * Redirect methode 
-     * @param String $page 
+     * Redirect methode
+     * @param String $page
      */
 
     public function redirect($page)
@@ -56,25 +52,23 @@ class MainController
     }
 
     /**
-     * To display home page 
-     * @return View Home page 
+     * To display home page
+     * @return View Home page
      */
 
     public function afficheHome()
     {
-
         return $this->view('home.twig');
     }
 
     /**
-     * Check input mail 
+     * Check input mail
      * @param String $email
-     * @return BOOL 
+     * @return BOOL
      */
 
     public function verifyInputEmail($email)
     {
-
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new \Exception('Email not valid.');
             return false;
@@ -84,9 +78,9 @@ class MainController
     }
 
     /**
-     * Check input name 
+     * Check input name
      * @param String $name
-     * @return BOOL 
+     * @return BOOL
      */
 
     public function verifyInputName($name)
@@ -100,9 +94,9 @@ class MainController
     }
 
     /**
-     * Check input password 
+     * Check input password
      * @param String $password
-     * @return BOOL 
+     * @return BOOL
      */
 
     public function verifyInputPassword($password)
@@ -116,9 +110,9 @@ class MainController
     }
 
     /**
-     * Check input message  
+     * Check input message
      * @param String $message
-     * @return BOOL 
+     * @return BOOL
      */
 
     public function verifyInputMessage($message)

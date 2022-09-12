@@ -2,7 +2,6 @@
 
 namespace App\Routes;
 
-
 class Request
 {
     /**
@@ -36,7 +35,7 @@ class Request
     /**
      * Route constructor ,received $path and $action
      * @param String $path
-     * @param String $action 
+     * @param String $action
      */
 
     public function __construct(string $path, string $action)
@@ -47,7 +46,7 @@ class Request
     }
 
     /**
-     * Route matching 
+     * Route matching
      * @param String $url
      * @return BOOL
      */
@@ -59,7 +58,6 @@ class Request
         $pathToMatch = "#^$path$#";
 
         if (preg_match($pathToMatch, $url, $results)) {
-
             array_shift($results);
             $this->params = $results;
 
@@ -72,13 +70,12 @@ class Request
 
 
     /**
-     * If matching OK Excuting 
+     * If matching OK Excuting
      * @return $_GET or $_POST
      */
 
     public function execute()
     {
-
         $action = explode('@', $this->action);
         $controller = $action[0];
         $controllerPath = 'App\\Controller\\' . $controller;
@@ -86,10 +83,8 @@ class Request
         $methode = $action[1];
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
             return isset($this->params) ? $controller->$methode(implode($this->params)) : $controller->$methode;
         } else {
-
             return isset($this->params) ? $controller->$methode($this->requestForPost, implode($this->params)) :
                 $controller->$methode($this->requestForPost);
         }

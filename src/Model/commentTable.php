@@ -1,12 +1,9 @@
 <?php
 
-
 namespace App\Model;
-
 
 class CommentTable
 {
-
     /**
      * @var INT $id
      */
@@ -43,7 +40,7 @@ class CommentTable
     private $idUser;
 
     /**
-     * @var String $username 
+     * @var String $username
      */
     private $userName;
 
@@ -55,13 +52,12 @@ class CommentTable
     }
 
     /**
-     * @param  Object $datas 
+     * @param  Object $datas
      */
 
     public function hydrate($datas)
     {
         foreach ($datas as $key => $value) {
-
             $key = lcfirst(str_replace('_', '', ucwords($key, '_')));
             $method = 'set' . ucfirst($key);
 
@@ -100,8 +96,8 @@ class CommentTable
     }
 
     /**
-     * @param String $commentContent 
-     * @return $commentContent 
+     * @param String $commentContent
+     * @return $commentContent
      */
     public function setCommentContent($commentContent)
     {

@@ -10,11 +10,10 @@ use App\Routes\HttpRequest;
 
 class CommentController extends MainController
 {
-
     /**
-     * get comment attached to a post 
+     * get comment attached to a post
      * @param Integer $post_id
-     * @return Object $comment 
+     * @return Object $comment
      */
     public function getComments($post_id)
     {
@@ -25,28 +24,26 @@ class CommentController extends MainController
     }
 
     /**
-     * get one comment 
+     * get one comment
      * @param Integer $comment_id
-     * @return Array $comment 
+     * @return Array $comment
      */
     public function getOneComment($comment_id)
     {
-
         $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
         $comment = $commentModel->getOneComment($comment_id);
         return $comment;
     }
 
     /**
-     * add comment 
+     * add comment
      * @param Integer $post_id
      * @param Object $requestForPost
-     * @return Array $comment 
+     * @return Array $comment
      */
 
     public function addComment($requestForPost, $post_id)
     {
-
         try {
             $this->session->isLogged();
             $id_user = $this->session->getUserVar('id');
@@ -61,16 +58,15 @@ class CommentController extends MainController
                 ));
             }
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }
 
     /**
-     * Update comment  
+     * Update comment
      * @param Integer $id_comment
      * @param Object $requestForPost
-     * @return BOOL  or error  
+     * @return BOOL  or error
      */
 
     public function updateComment($requestForPost, $id_comment)
@@ -94,16 +90,15 @@ class CommentController extends MainController
                 throw new \Exception(' you can\'t update, this not your comment');
             }
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }
 
 
     /**
-     * Delete comment  
+     * Delete comment
      * @param Integer $id
-     * @return BOOL  or error  
+     * @return BOOL  or error
      */
 
     public function deleteComment($id_comment)
@@ -117,21 +112,19 @@ class CommentController extends MainController
                 $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
                 $deleteComment = $commentModel->deleteComment($id_comment);
                 if ($deleteComment == true) {
-
                     echo json_encode(array("success" => true));
                 }
             } else {
                 throw new \Exception(' you can\'t remove a comment , you doesn\'t have the right');
             }
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }
 
     /**
-     * get comments need validation   
-     * @return View  
+     * get comments need validation
+     * @return View
      */
 
     public function getCommentNeedValidate()
@@ -143,7 +136,7 @@ class CommentController extends MainController
     }
 
     /**
-     * Validation comment 
+     * Validation comment
      * @param String $id_comment
      * @return True or msg error
      */
@@ -152,7 +145,6 @@ class CommentController extends MainController
     {
         $valide = 1;
         try {
-
             $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
             $valideComment = $commentModel->updateColumnValidation($id_comment, $valide);
             if ($valideComment) {
@@ -161,7 +153,6 @@ class CommentController extends MainController
                 ));
             }
         } catch (\Exception $e) {
-
             echo json_encode(array("error" => $e->getMessage()));
         }
     }

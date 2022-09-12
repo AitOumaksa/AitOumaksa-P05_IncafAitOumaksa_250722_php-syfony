@@ -2,10 +2,8 @@
 
 namespace App\Model;
 
-
 class PDOModel
 {
-
     /**
      * Returns a unique result from the Database
      * @param string $req
@@ -14,7 +12,6 @@ class PDOModel
 
     public function getData($req, $params)
     {
-
         $request = ConnectDB::getPDO()->prepare($req);
         $request->execute($params);
         return $request->fetch();
@@ -44,7 +41,6 @@ class PDOModel
 
     public function setData(string $req, $params = [])
     {
-
         $db = ConnectDB::getPDO();
         $request = $db->prepare($req);
         //  var_dump($request = $db->prepare($req));

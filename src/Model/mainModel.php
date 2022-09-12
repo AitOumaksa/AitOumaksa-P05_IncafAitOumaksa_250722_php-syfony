@@ -4,10 +4,8 @@ namespace App\Model;
 
 class MainModel
 {
-
-
     /**
-     * database 
+     * database
      * @var PDOModel
      */
 
@@ -43,7 +41,6 @@ class MainModel
 
     public function listData($value = null, $key = null)
     {
-
         if (isset($key)) {
             $query = 'SELECT * FROM ' . $this->table . ' WHERE ' . $key . ' = ?';
         } else {
@@ -54,7 +51,7 @@ class MainModel
     }
 
     /**
-     * Join a table 
+     * Join a table
      * @param Mixed $col_tables
      * @param Mixed $join_tables
      * @param String $key
@@ -71,7 +68,6 @@ class MainModel
         $query_key = null;
 
         if (isset($join_tables)) {
-
             foreach ($join_tables as $table => $condition) {
                 $query_join .= ' INNER JOIN ' . $table . ' ON ' . $condition;
             }
@@ -82,7 +78,6 @@ class MainModel
                 if (is_string($col)) {
                     $label = 'AS ' . $label;
                 } else {
-
                     $col = $label;
                     $label = '';
                 }
@@ -98,7 +93,6 @@ class MainModel
         }
         if (isset($key)) {
             if (is_array($key) && is_array($value)) {
-
                 $key[count($key) - 1]  =  $key[count($key) - 1] . '=?';
                 $query_key = implode(" =? AND ", $key);
                 $query_condition = ' WHERE ' . $query_key;
@@ -120,7 +114,7 @@ class MainModel
 
 
     /**
-     * Insert data 
+     * Insert data
      * @param Array $col_table
      * @param String|Array $value
      * @return BOOL
@@ -137,7 +131,7 @@ class MainModel
     }
 
     /**
-     * Update data 
+     * Update data
      * @param Array $col_table
      * @param String|Array $value
      * @param String $key
@@ -156,7 +150,7 @@ class MainModel
 
 
     /**
-     * Delete data 
+     * Delete data
      * @param String $key
      * @param String $keyValue
      * @return BOOL
@@ -170,7 +164,7 @@ class MainModel
 
 
     /**
-     * Join a table 
+     * Join a table
      * @param Mixed $col_tables
      * @param Mixed $join_tables
      * @param String $key
@@ -186,7 +180,6 @@ class MainModel
         $count_col = null;
 
         if (isset($join_tables)) {
-
             foreach ($join_tables as $table => $condition) {
                 $query_join .= ' INNER JOIN ' . $table . ' ON ' . $condition;
             }
@@ -197,7 +190,6 @@ class MainModel
                 if (is_string($col)) {
                     $label = 'AS ' . $label;
                 } else {
-
                     $col = $label;
                     $label = '';
                 }

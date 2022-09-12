@@ -2,12 +2,8 @@
 
 namespace App\Model;
 
-
 class PostModel extends MainModel
 {
-
-
-
     /**
      * get all post
      * @return Array
@@ -28,7 +24,6 @@ class PostModel extends MainModel
         $results = $this->selectData($col_table, $join, null, null);
         $custom_array = [];
         foreach ($results as $datas) {
-
             array_push($custom_array, new PostTable($datas));
         }
 
@@ -89,7 +84,6 @@ class PostModel extends MainModel
 
     public function updatePost($id, $post_title, $post_chapo, $post_content, $post_autor)
     {
-
         $date = date("Y-m-d H:i:s");
         $col_table = ['title', 'chapo', 'content', 'updatedAt', 'autor'];
         $key = 'id';
@@ -100,7 +94,7 @@ class PostModel extends MainModel
     }
 
     /**
-     * Delete post 
+     * Delete post
      * @param Integer $id
      * @return BOOL
      */

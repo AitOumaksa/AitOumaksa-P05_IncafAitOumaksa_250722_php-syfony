@@ -4,19 +4,18 @@ namespace App\Controller\Globals;
 
 class SessionController
 {
+    public const ADMIN = 'Admin';
 
-    const ADMIN = 'Admin';
+    public const USER = 'User';
 
-    const USER = 'User';
-
-    /** 
+    /**
      * @var $session
      */
 
     private $session;
 
-    /** 
-     * @var $user 
+    /**
+     * @var $user
      */
 
     private $user;
@@ -29,17 +28,18 @@ class SessionController
         }
     }
 
-    /** 
-     * Creating a session user 
+    /**
+     * Creating a session user
      * @param  Object $data
      */
 
     public function createSession($data)
     {
-
-        if ($data->getIsAdmin() == '1') $data->setIsAdmin(self::ADMIN);
-
-        elseif ($data->getIsAdmin() == '0') $data->setIsAdmin(self::USER);
+        if ($data->getIsAdmin() == '1') {
+            $data->setIsAdmin(self::ADMIN);
+        } elseif ($data->getIsAdmin() == '0') {
+            $data->setIsAdmin(self::USER);
+        }
 
         $this->session['user'] = [
             'sessionId' => session_id(),
@@ -55,10 +55,10 @@ class SessionController
         $_SESSION['user'] = $this->session['user'];
     }
 
-    /** 
-     * Getting a variable of user 
+    /**
+     * Getting a variable of user
      * @param  String  $var
-     * @return Object $var 
+     * @return Object $var
      */
 
     public function getUserVar($var)
@@ -69,7 +69,7 @@ class SessionController
         return false;
     }
 
-    /** 
+    /**
      * virifier if user is logged
      * @return True or error mssg
      */
