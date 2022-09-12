@@ -35,7 +35,6 @@ mail->Port =     // TCP port pour se connecter
 mail->addAddress('');  // Ajouter un email de réception 
 
 ## Importer la base de données 
-
-
+Importer  le fichier blog_php.sql situé dans le dossier DbImport dans la base de donnée.
 
 
