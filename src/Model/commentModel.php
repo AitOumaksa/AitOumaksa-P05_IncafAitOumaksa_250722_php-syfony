@@ -101,7 +101,6 @@ class CommentModel extends MainModel
         $col_table = ['id_post', 'comment_content', 'valide', 'createdAt', 'updatedAt', 'id_user'];
 
         $values = array($id_post, $comment_content, $valide, $date, $date, $id_user);
-        // var_dump($values);
         return $this->insertData($col_table, $values);
     }
 

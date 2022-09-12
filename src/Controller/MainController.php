@@ -48,7 +48,6 @@ class MainController
     public function redirect($page)
     {
         header('Location: http://localhost' . $page);
-        die;
     }
 
     /**

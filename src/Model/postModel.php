@@ -68,16 +68,7 @@ class PostModel extends MainModel
     {
         $date = date("Y-m-d H:i:s");
         $col_table = ['id_user', 'title', 'chapo', 'autor', 'content', 'createdAt', 'updatedAt'];
-        $values = array(
-            ':id_user' => $id_user,
-            ':title' => $title,
-            ':chapo' => $chapo,
-            ':autor' => $autor,
-            'content' => $content,
-            ':createdAt' => $date,
-            ':updatedAt' => $date
-        );
-        // var_dump($values);
+        $values = array($id_user, $title, $chapo, $autor, $content, $date, $date);
         return $this->insertData($col_table, $values);
     }
 
