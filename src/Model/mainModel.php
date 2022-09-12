@@ -42,12 +42,12 @@ class MainModel
     public function listData($value = null, $key = null)
     {
         if (isset($key)) {
-            $query = 'SELECT * FROM ' . $this->table . ' WHERE ' . $key . ' = ?';
+            $query = 'SELECT * FROM ? WHERE ' . $key . ' = ?';
         } else {
-            $query = 'SELECT * FROM ' . $this->table;
+            $query = 'SELECT * FROM ?';
         }
 
-        return $this->database->getAllData($query, [$value]);
+        return $this->database->getAllData($query, [$this->table, $value]);
     }
 
     /**
