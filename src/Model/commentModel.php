@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class commentModel extends MainModel
+class CommentModel extends MainModel
 {
     /**
      * get all comment

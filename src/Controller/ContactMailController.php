@@ -15,7 +15,7 @@ class ContactMailController extends MainController
 
     public function sendMessage($requestForPost)
     {
-        $data = $requestForPost->ValueForm();
+        $data = $requestForPost->valueForm();
         try {
             $this->verifyInputName($data['name']);
             $this->verifyInputEmail($data['email']);
@@ -24,7 +24,7 @@ class ContactMailController extends MainController
             $sendMessage = $smtpSend->smtpSend($data);
 
             header("Content-Type : application/json");
-            if ($sendMessage == true) {
+            if ($sendMessage) {
                 echo json_encode(array("success" => true));
             }
         } catch (\Exception $e) {

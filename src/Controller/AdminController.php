@@ -5,8 +5,7 @@ namespace App\Controller;
 use App\Model\ConnectDB;
 use App\Model\PDOModel;
 use App\Model\PostModel;
-use App\Routes\HttpRequest;
-use App\Routes\Request;
+
 
 class AdminController extends MainController
 {

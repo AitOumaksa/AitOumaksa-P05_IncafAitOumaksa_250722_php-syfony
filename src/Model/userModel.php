@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class userModel extends MainModel
+class UserModel extends MainModel
 {
     /**
      * Registre a user in the database

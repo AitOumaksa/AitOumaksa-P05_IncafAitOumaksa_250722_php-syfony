@@ -47,7 +47,7 @@ class PostController extends MainController
     {
         $id_user = $this->session->getUserVar('id');
         $is_admin = $this->session->getUserVar('is_admin');
-        $data = $requestForPost->ValueForm();
+        $data = $requestForPost->valueForm();
 
         try {
             $this->verifyInputMessage($data['title']);
@@ -78,7 +78,7 @@ class PostController extends MainController
 
     public function updatePost($requestForPost, $id)
     {
-        $data = $requestForPost->ValueForm();
+        $data = $requestForPost->valueForm();
         $is_admin = $this->session->getUserVar('is_admin');
 
         try {
@@ -115,7 +115,7 @@ class PostController extends MainController
             if ($is_admin === 'Admin') {
                 $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
                 $deletePost = $postModel->deletePost($id);
-                if ($deletePost == true) {
+                if ($deletePost) {
                     echo json_encode(array("success" => true));
                 }
             } else {

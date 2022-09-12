@@ -221,9 +221,6 @@
      //url delete comment 
        urlDeleteComment = `http://localhost/deleteComment`
     
-   
-     
-      
         //update post 
           form_post.addEventListener('submit', function (event) { 
           event.stopPropagation();
@@ -250,8 +247,6 @@
 
       })
       
-      
-      
     //Delete post
       btnDelete = document.querySelector('.btn-delete-post')
       btnDelete.addEventListener('click', function (event) {
@@ -266,11 +261,6 @@
 
         })
 
-
-       
-
-
-  
      // add comment 
       form_comment.addEventListener('submit', function (event) { 
       event.stopPropagation();
@@ -295,16 +285,13 @@
 
 
       })
-
-
-     
+   
  //update form comment 
   form_update_comment.forEach(element => {
   element.addEventListener('submit', function (event) {
     event.stopPropagation();
     event.preventDefault();
      thisForm=this;
-   
          idComment =   this.closest('.commented-section').dataset.id
           const formData = createFormData(this);
             jsonres = postData(formData,`${urlUpdateComment}/${idComment}`)
@@ -323,16 +310,11 @@
                 const alertPlaceholder = thisForm.querySelector('.alertPlaceholderUpdateComment')
                 console.log(alertPlaceholder)
                 alert(alertMessage ,alertType ,alertPlaceholder)
-           })
-     
-   
- 
+           }) 
   });
-
 });
 
 //delete comment
-
   document.querySelectorAll('.deletecomment').forEach(element => {
   element.addEventListener('click', function (event) {
     event.stopPropagation();
@@ -343,15 +325,7 @@
              .then(function (jsonres) {
               document.location.href = `http://localhost/post/${id_post}`;
            })
-   
- 
   });
-
 });
-        
-
-
 </script>
-
-
 {% endblock %}

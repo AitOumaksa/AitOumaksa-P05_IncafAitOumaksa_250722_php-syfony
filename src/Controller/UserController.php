@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Model\ConnectDB;
 use App\Model\PDOModel;
-use App\Model\userModel;
+use App\Model\UserModel;
 
 class UserController extends MainController
 {
@@ -37,13 +37,13 @@ class UserController extends MainController
 
     public function signUp($requestForPost)
     {
-        $data = $requestForPost->ValueForm();
+        $data = $requestForPost->valueForm();
 
         try {
             $this->verifyInputName($data['user_name']);
             $this->verifyInputEmail($data['mail']);
             $this->verifyInputPassword($data['password']);
-            $userModel = new userModel(new PDOModel(ConnectDB::getPDO()));
+            $userModel = new UserModel(new PDOModel(ConnectDB::getPDO()));
             $data['password'] =  password_hash($data['password'], PASSWORD_DEFAULT);
             $user_mail = $userModel->getUser($data['mail']);
             if ($user_mail->getMail()) {
@@ -64,11 +64,11 @@ class UserController extends MainController
 
     public function login($requestForPost)
     {
-        $data = $requestForPost->ValueForm();
+        $data = $requestForPost->valueForm();
         try {
             $this->verifyInputEmail($data['mail']);
             $this->verifyInputPassword($data['password']);
-            $userModel = new userModel(new PDOModel(ConnectDB::getPDO()));
+            $userModel = new UserModel(new PDOModel(ConnectDB::getPDO()));
             $data_user = $userModel->getUser($data['mail']);
             if (!$data_user->getMail()) {
                 throw new \Exception('Email user doesn\'t exist.');

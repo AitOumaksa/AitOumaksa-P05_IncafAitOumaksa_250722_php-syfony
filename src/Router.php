@@ -5,7 +5,7 @@ namespace App;
 use App\Controller\MainController;
 use App\Routes\Request;
 
-class router
+class Router
 {
     /**
      * Request path array

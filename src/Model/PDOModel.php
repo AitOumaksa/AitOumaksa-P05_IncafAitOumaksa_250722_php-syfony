@@ -41,7 +41,6 @@ class PDOModel
 
     public function setData(string $req, $params = [])
     {
-        var_dump($params);
         $db = ConnectDB::getPDO();
         $request = $db->prepare($req);
 

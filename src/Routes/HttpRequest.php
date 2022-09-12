@@ -8,7 +8,7 @@ class HttpRequest
      * Received value from the form
      * @return Array $_POST
      */
-    public function ValueForm()
+    public function valueForm()
     {
         return $_POST;
     }

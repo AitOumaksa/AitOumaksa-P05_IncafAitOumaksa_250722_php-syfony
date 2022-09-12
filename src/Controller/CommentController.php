@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Model\ConnectDB;
 use App\Model\PDOModel;
-use App\Model\commentModel;
+use App\Model\CommentModel;
 use App\Model\CommentTable;
 use App\Routes\HttpRequest;
 
@@ -18,7 +18,7 @@ class CommentController extends MainController
     public function getComments($post_id)
     {
         $valide = 1;
-        $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+        $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
         $comments = $commentModel->getComments($post_id, $valide);
         return $comments;
     }
@@ -30,7 +30,7 @@ class CommentController extends MainController
      */
     public function getOneComment($comment_id)
     {
-        $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+        $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
         $comment = $commentModel->getOneComment($comment_id);
         return $comment;
     }
@@ -47,10 +47,10 @@ class CommentController extends MainController
         try {
             $this->session->isLogged();
             $id_user = $this->session->getUserVar('id');
-            $data = $requestForPost->ValueForm();
+            $data = $requestForPost->valueForm();
             $valide = 0;
             $this->verifyInputMessage($data['comment_content']);
-            $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+            $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
             $setComment = $commentModel->addComment($post_id, $data['comment_content'], $valide, $id_user);
             if ($setComment) {
                 echo json_encode(array(
@@ -72,14 +72,14 @@ class CommentController extends MainController
     public function updateComment($requestForPost, $id_comment)
     {
         $this->session->isLogged();
-        $data = $requestForPost->ValueForm();
+        $data = $requestForPost->valueForm();
         $id_user = $this->getOneComment($id_comment)->getIdUser();
         $user = $this->session->getUserVar('id');
         $valide = 0;
         try {
             $this->verifyInputMessage($data['comment_content']);
             if ($user === $id_user) {
-                $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+                $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
                 $setComment = $commentModel->updateComment($id_comment, $data['comment_content'], $valide);
                 if ($setComment) {
                     echo json_encode(array(
@@ -109,9 +109,9 @@ class CommentController extends MainController
 
         try {
             if ($id_user === $user || $is_admin === 'Admin') {
-                $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+                $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
                 $deleteComment = $commentModel->deleteComment($id_comment);
-                if ($deleteComment == true) {
+                if ($deleteComment) {
                     echo json_encode(array("success" => true));
                 }
             } else {
@@ -130,7 +130,7 @@ class CommentController extends MainController
     public function getCommentNeedValidate()
     {
         $valide = 0;
-        $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+        $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
         $comments = $commentModel->getCommentsNotValidate($valide);
         return  $this->view('admin/commentValidate.twig', compact('comments'));
     }
@@ -145,7 +145,7 @@ class CommentController extends MainController
     {
         $valide = 1;
         try {
-            $commentModel = new commentModel(new PDOModel(ConnectDB::getPDO()));
+            $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
             $valideComment = $commentModel->updateColumnValidation($id_comment, $valide);
             if ($valideComment) {
                 echo json_encode(array(

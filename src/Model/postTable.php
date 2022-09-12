@@ -148,7 +148,7 @@ class PostTable
     /**
      * @return String
      */
-    public function getId_user()
+    public function getIdUser()
     {
         return $this->id_user;
     }
@@ -157,7 +157,7 @@ class PostTable
      * @param INT $id_user
      * @return $id_user
      */
-    public function setId_user($id_user)
+    public function setIdUser($id_user)
     {
         $this->id_user = $id_user;
         return $this;
