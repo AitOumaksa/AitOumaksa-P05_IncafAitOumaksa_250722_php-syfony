@@ -58,10 +58,10 @@ class PostTable
     }
 
     /**
-     * @var Object $datas
+     * @param Array $datas
      */
 
-    public function hydrate($datas)
+    public function hydrate(array $datas)
     {
         foreach ($datas as $key => $value) {
             $key = lcfirst(str_replace('_', '', ucwords($key, '_')));

@@ -8,7 +8,7 @@ class CommentModel extends MainModel
      * get all comment
      * @param String $post_id
      * @param INT $valide
-     * @return Object
+     * @return Array
      */
 
     public function getComments(String $post_id, int $valide)
@@ -38,7 +38,7 @@ class CommentModel extends MainModel
     /**
      * get comment need validation
      * @param INT $valide
-     * @return Object
+     * @return Array
      */
 
     public function getCommentsNotValidate(int $valide)
@@ -61,7 +61,7 @@ class CommentModel extends MainModel
         foreach ($results as $datas) {
             array_push($custom_array, new commentTable($datas));
         }
-
+        var_dump($custom_array);
         return $custom_array;
     }
 

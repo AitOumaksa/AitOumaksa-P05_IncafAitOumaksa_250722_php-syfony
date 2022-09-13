@@ -54,7 +54,7 @@ class SessionController
         ];
         $this->user = $this->session['user'];
 
-        $_SESSION['user'] = $this->session['user'];
+        return $_SESSION['user'] = $this->session['user'];
     }
 
     /**

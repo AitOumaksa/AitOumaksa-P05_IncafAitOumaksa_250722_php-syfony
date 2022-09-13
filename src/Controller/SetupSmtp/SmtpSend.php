@@ -14,7 +14,7 @@ class SmtpSend
      * @param Array | $data
      * @return True ou erreur
      */
-    public function smtpSend($data)
+    public function smtpSend(array $data)
     {
         try {
             $mail = new PHPMailer(true);

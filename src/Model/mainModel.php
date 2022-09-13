@@ -129,7 +129,7 @@ class MainModel
      * @param Array $value
      * @param String $key
      *  @param String $$keyValue
-     * @return BOOL
+     * @return Bool
      */
 
 

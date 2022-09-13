@@ -13,7 +13,7 @@ class CommentController extends MainController
     /**
      * get comment attached to a post
      * @param String $post_id
-     * @return Object $comment
+     * @return Array $comment
      */
     public function getComments(string $post_id)
     {
@@ -39,7 +39,6 @@ class CommentController extends MainController
      * add comment
      * @param String $post_id
      * @param Object $requestForPost
-     * @return Array $comment
      */
 
     public function addComment(HttpRequest $requestForPost, string $post_id)
@@ -66,7 +65,6 @@ class CommentController extends MainController
      * Update comment
      * @param String $id_comment
      * @param Object $requestForPost
-     * @return BOOL  or error
      */
 
     public function updateComment(HttpRequest $requestForPost, string $id_comment)
@@ -98,7 +96,6 @@ class CommentController extends MainController
     /**
      * Delete comment
      * @param String $id_comment
-     * @return BOOL  or error
      */
 
     public function deleteComment(string $id_comment)
@@ -138,7 +135,6 @@ class CommentController extends MainController
     /**
      * Validation comment
      * @param String $id_comment
-     * @return True or msg error
      */
 
     public function commentValide(string $id_comment)
