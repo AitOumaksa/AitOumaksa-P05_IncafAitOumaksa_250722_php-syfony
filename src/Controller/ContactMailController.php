@@ -10,7 +10,7 @@ class ContactMailController extends MainController
     /**
      * Receive the form data , check the input .
      * @param Object $requestForPost
-     * @return True or error
+     * @return void
      */
 
     public function sendMessage(HttpRequest $requestForPost)

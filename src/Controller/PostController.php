@@ -12,7 +12,7 @@ class PostController extends MainController
 {
     /**
      * get all posts and diplay
-     * @return Array $posts and a view to display posts page
+     * @return void
      */
 
     public function getPosts()
@@ -25,7 +25,7 @@ class PostController extends MainController
     /**
      * get one posts with his comments and display
      * @param String $post_id
-     * @return Array $posts, $comment and a view to display onePost page
+     * @return void
      */
 
     public function getOnePost(string $post_id)
@@ -41,7 +41,7 @@ class PostController extends MainController
     /**
      * check the input and add post
      * @param Object $requestForPost
-     * @return True or error
+     * @return void
      */
 
     public function addPost(HttpRequest $requestForPost)
@@ -74,7 +74,7 @@ class PostController extends MainController
      * check the input and add updated a post
      * @param Object $requestForPost
      * @param String $id
-     * @return True or error
+     * @return void
      */
 
     public function updatePost(HttpRequest $requestForPost, string $id)
@@ -105,7 +105,7 @@ class PostController extends MainController
     /**
      * Delete post
      * @param String $id
-     * @return False  or error
+     * @return void
      */
 
     public function deletePost(string $id)

@@ -54,7 +54,7 @@ class MainController
 
     /**
      * To display home page
-     * @return View Home page
+     * @return void
      */
 
     public function afficheHome()

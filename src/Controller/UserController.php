@@ -11,7 +11,7 @@ class UserController extends MainController
 {
     /**
      * Login page
-     * @return Render View
+     * @return view
      */
 
     public function loginPage()
@@ -21,7 +21,7 @@ class UserController extends MainController
 
     /**
      * SignUp page
-     * @return Render View
+     * @return void
      */
 
     public function signUpPage()

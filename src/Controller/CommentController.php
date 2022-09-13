@@ -124,7 +124,7 @@ class CommentController extends MainController
 
     /**
      * get comments need validation
-     * @return View
+     * @return void
      */
 
     public function getCommentNeedValidate()

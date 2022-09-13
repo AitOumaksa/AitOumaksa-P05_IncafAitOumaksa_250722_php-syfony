@@ -11,7 +11,7 @@ class AdminController extends MainController
 {
     /**
      * get all posts from admin
-     * @return View or is not allowed
+     * @return void
      */
 
     public function getPostsAdmin()
