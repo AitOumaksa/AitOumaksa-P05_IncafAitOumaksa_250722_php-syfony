@@ -33,7 +33,7 @@ class UserController extends MainController
     /**
      * SignUp user
      * @param Object $requestForPost
-     * @return True or error Msg
+     * @return void
      */
 
     public function signUp(HttpRequest $requestForPost)
@@ -60,7 +60,7 @@ class UserController extends MainController
     /**
      * Login user
      * @param Object $requestForPost
-     * @return True or error Msg
+     * @return void
      */
 
     public function login(HttpRequest $requestForPost)

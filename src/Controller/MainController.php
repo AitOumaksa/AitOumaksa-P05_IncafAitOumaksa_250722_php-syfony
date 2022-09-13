@@ -26,6 +26,7 @@ class MainController
      * Setting twig
      * @param String $path
      * @param Array $datas
+     * @return void
      */
 
     public function view(string $path, array $datas = [])
@@ -43,6 +44,7 @@ class MainController
     /**
      * Redirect methode
      * @param String $page
+     * @return void
      */
 
     public function redirect(string $page)
