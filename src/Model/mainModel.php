@@ -52,14 +52,13 @@ class MainModel
 
     /**
      * Join a table
-     * @param Mixed $col_tables
-     * @param Mixed $join_tables
-     * @param String $key
-     * @param String $value
+     * @param Array $col_tables
+     * @param Array $join_tables
+
      * @return Array|Mixed
      */
 
-    public function selectData($col_tables, $join_tables, $key, $value)
+    public function selectData(array $col_tables, array $join_tables,  $key,  $value)
     {
         $query_join = null;
         $query_col = null;
@@ -116,11 +115,11 @@ class MainModel
     /**
      * Insert data
      * @param Array $col_table
-     * @param String|Array $value
+     * @param Array $value
      * @return BOOL
      */
 
-    public function insertData($col_table, $value)
+    public function insertData(array $col_table, array $value)
     {
         $query_col = implode(",", $col_table);
         $value_num = array_fill(0, count($col_table), '?');
@@ -133,14 +132,14 @@ class MainModel
     /**
      * Update data
      * @param Array $col_table
-     * @param String|Array $value
+     * @param Array $value
      * @param String $key
      *  @param String $$keyValue
      * @return BOOL
      */
 
 
-    public function updateData($col_table, $values, $key, $keyValue)
+    public function updateData(array $col_table, array $values, string $key, string $keyValue)
     {
         $col_table[count($col_table) - 1]  =  $col_table[count($col_table) - 1] . '=?';
         $query_col = implode("=?,", $col_table);
@@ -151,12 +150,12 @@ class MainModel
 
     /**
      * Delete data
-     * @param String $key
+     * @param Sring $key
      * @param String $keyValue
      * @return BOOL
      */
 
-    public function deleteData($key, $keyValue)
+    public function deleteData(string $key, string $keyValue)
     {
         $query = 'DELETE FROM ' . $this->table . ' WHERE ' . $key . ' = ' . $keyValue;
         return $this->database->deleteData($query);
@@ -172,7 +171,7 @@ class MainModel
      * @return Array|Mixed
      */
 
-    public function selectOneData($col_tables, $join_tables, $key, $value)
+    public function selectOneData($col_tables, $join_tables, string $key, string $value)
     {
         $query_join = null;
         $query_col = null;

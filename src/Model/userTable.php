@@ -79,7 +79,7 @@ class UserTable
      * @param INT $id
      * @return $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
         return $this;
@@ -97,7 +97,7 @@ class UserTable
      * @param String  $userName
      * @return $userName
      */
-    public function setUserName($userName)
+    public function setUserName(string $userName)
     {
         $this->userName = $userName;
         return $this;
@@ -115,7 +115,7 @@ class UserTable
      * @param Satring $mail
      * @return $mail
      */
-    public function setMail($mail)
+    public function setMail(string $mail)
     {
         $this->mail = $mail;
         return $this;
@@ -133,7 +133,7 @@ class UserTable
      * @param String $password
      * @return $password
      */
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
         return $this;
@@ -149,10 +149,10 @@ class UserTable
 
 
     /**
-     * @param Date  $updatedAt
+     * @param String  $updatedAt
      * @return Date
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(string $updatedAt)
     {
         $this->updatedAt = $updatedAt;
         return $this;
@@ -168,10 +168,10 @@ class UserTable
     }
 
     /**
-     * @param Date  $createdAt
+     * @param String  $createdAt
      * @return Date
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(string $createdAt)
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -187,7 +187,7 @@ class UserTable
     }
 
     /**
-     * @param BOOL $isAdmin
+     * @param String $isAdmin
      * @return BOOL
      */
     public function setIsAdmin(string $isAdmin)

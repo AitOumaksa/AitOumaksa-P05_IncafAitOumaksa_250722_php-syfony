@@ -67,11 +67,11 @@ class CommentModel extends MainModel
 
     /**
      * get One comment
-     * @param Integer $comment_id
+     * @param String $comment_id
      * @return Object
      */
 
-    public function getOneComment(int $comment_id)
+    public function getOneComment(string $comment_id)
     {
         $col_table = [
             'comment.id',
@@ -112,7 +112,7 @@ class CommentModel extends MainModel
      * @return Mixed
      */
 
-    public function updateComment(int $id, string $comment_content, int $valide)
+    public function updateComment(int $id, string $comment_content, string $valide)
     {
         $date = date("Y-m-d H:i:s");
         $col_table = ['comment_content', 'valide', 'updatedAt'];
@@ -126,11 +126,11 @@ class CommentModel extends MainModel
     /**
      * UPdate validation column
      * @param String $id
-     * @param INT $valide
+     * @param String $valide
      * @return Object
      */
 
-    public function updateColumnValidation(string $id, int $valide)
+    public function updateColumnValidation(string $id, string $valide)
     {
         $col_table = ['valide'];
         $key = 'id';
@@ -142,11 +142,11 @@ class CommentModel extends MainModel
 
     /**
      * Delete comment
-     * @param Integer $id
+     * @param String $id
      * @return BOOL
      */
 
-    public function deleteComment(int $id)
+    public function deleteComment(string $id)
     {
         $key = 'id';
         $keyValue = $id;

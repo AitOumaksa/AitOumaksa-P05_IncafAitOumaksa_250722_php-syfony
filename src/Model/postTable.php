@@ -50,7 +50,7 @@ class PostTable
      */
     private $imgUrl;
 
-    public function __construct($datas = [])
+    public function __construct(array $datas = [])
     {
         if (!empty($datas)) {
             $this->hydrate($datas);
@@ -85,7 +85,7 @@ class PostTable
      * @param INT $id
      * @return $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
         return $this;
@@ -103,7 +103,7 @@ class PostTable
      * @param String $title
      * @return $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
         $this->title = $title;
         return $this;
@@ -121,7 +121,7 @@ class PostTable
      * @param String $chapo
      * @return $chapo
      */
-    public function setChapo($chapo)
+    public function setChapo(string $chapo)
     {
         $this->chapo = $chapo;
         return $this;
@@ -139,7 +139,7 @@ class PostTable
      * @param String $content
      * @return $content
      */
-    public function setContent($content)
+    public function setContent(string $content)
     {
         $this->content = $content;
         return $this;
@@ -157,7 +157,7 @@ class PostTable
      * @param INT $id_user
      * @return $id_user
      */
-    public function setIdUser($id_user)
+    public function setIdUser(int $id_user)
     {
         $this->id_user = $id_user;
         return $this;
@@ -172,10 +172,10 @@ class PostTable
     }
 
     /**
-     * @param Date $createdAt
+     * @param String $createdAt
      * @return Date
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(string $createdAt)
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -193,7 +193,7 @@ class PostTable
      * @param Date $updatedAt
      * @return Date
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(string $updatedAt)
     {
         $this->updatedAt = $updatedAt;
         return $this;
@@ -211,7 +211,7 @@ class PostTable
      * @param String $autor
      * @return $autor
      */
-    public function setAutor($autor)
+    public function setAutor(string $autor)
     {
         $this->autor = $autor;
         return $this;
@@ -230,7 +230,7 @@ class PostTable
      * @param String $imgUrl
      * @return $ImgUrl
      */
-    public function setImgUrl($imgUrl)
+    public function setImgUrl(string $imgUrl)
     {
         $this->imgUrl = $imgUrl;
         return $this;

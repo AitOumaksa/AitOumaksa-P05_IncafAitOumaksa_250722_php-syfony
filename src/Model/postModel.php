@@ -32,11 +32,11 @@ class PostModel extends MainModel
 
     /**
      * get unique post
-     * @param Integer $post_id
+     * @param String $post_id
      * @return Array
      */
 
-    public function getOnePost($post_id)
+    public function getOnePost(string $post_id)
     {
         $col_table = [
             'post.id',
@@ -64,7 +64,7 @@ class PostModel extends MainModel
      * @return BOOL
      */
 
-    public function setPost($id_user, $title, $chapo, $autor, $content)
+    public function setPost(int $id_user, string $title, string $chapo, string $autor, string $content)
     {
         $date = date("Y-m-d H:i:s");
         $col_table = ['id_user', 'title', 'chapo', 'autor', 'content', 'createdAt', 'updatedAt'];
@@ -82,7 +82,7 @@ class PostModel extends MainModel
      * @return BOOL
      */
 
-    public function updatePost($id, $post_title, $post_chapo, $post_content, $post_autor)
+    public function updatePost(int $id, string $post_title, string $post_chapo, string $post_content, string $post_autor)
     {
         $date = date("Y-m-d H:i:s");
         $col_table = ['title', 'chapo', 'content', 'updatedAt', 'autor'];
@@ -95,11 +95,11 @@ class PostModel extends MainModel
 
     /**
      * Delete post
-     * @param Integer $id
+     * @param String $id
      * @return BOOL
      */
 
-    public function deletePost($id)
+    public function deletePost(string $id)
     {
         $key = 'id';
         $keyValue = $id;

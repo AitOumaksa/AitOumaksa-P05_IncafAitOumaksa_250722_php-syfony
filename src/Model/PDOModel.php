@@ -10,7 +10,7 @@ class PDOModel
      * @return Mixed
      */
 
-    public function getData($req, $params)
+    public function getData(string $req, array $params)
     {
         $request = ConnectDB::getPDO()->prepare($req);
         $request->execute($params);
@@ -39,7 +39,7 @@ class PDOModel
      * @return BOOL|Mixed
      */
 
-    public function setData(string $req, $params = [])
+    public function setData(string $req, array $params = [])
     {
         $db = ConnectDB::getPDO();
         $request = $db->prepare($req);
@@ -54,7 +54,7 @@ class PDOModel
      * @return BOOL
      */
 
-    public function deleteData($req)
+    public function deleteData(string $req)
     {
         $request = ConnectDB::getPDO()->prepare($req);
         return  $request->execute();

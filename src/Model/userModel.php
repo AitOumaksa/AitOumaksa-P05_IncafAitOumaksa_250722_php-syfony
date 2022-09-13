@@ -12,7 +12,7 @@ class UserModel extends MainModel
      * @return Array
      */
 
-    public function signUpUser($user_name, $email, $password)
+    public function signUpUser(string $user_name, string $email, string $password)
     {
         $date = date("Y-m-d H:i:s");
         $is_admin = 0;
@@ -26,7 +26,7 @@ class UserModel extends MainModel
      * @param String $email
      */
 
-    public function getUser($email)
+    public function getUser(string $email)
     {
         $results = $this->selectOneData(null, null, 'mail', $email);
         return new UserTable($results);
