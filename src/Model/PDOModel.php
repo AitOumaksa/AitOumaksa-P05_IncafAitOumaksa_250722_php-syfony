@@ -13,7 +13,6 @@ class PDOModel
     /**
      * pdo connection construct
      * @param PDO
-     * @return void
      */
     public function __construct($pdo)
     {
