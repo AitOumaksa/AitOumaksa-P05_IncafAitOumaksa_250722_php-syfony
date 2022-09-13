@@ -13,7 +13,7 @@ class ContactMailController extends MainController
      * @return True or error
      */
 
-    public function sendMessage($requestForPost)
+    public function sendMessage(HttpRequest $requestForPost)
     {
         $data = $requestForPost->valueForm();
         try {

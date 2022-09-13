@@ -12,10 +12,10 @@ class CommentController extends MainController
 {
     /**
      * get comment attached to a post
-     * @param Integer $post_id
+     * @param String $post_id
      * @return Object $comment
      */
-    public function getComments($post_id)
+    public function getComments(string $post_id)
     {
         $valide = 1;
         $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
@@ -25,10 +25,10 @@ class CommentController extends MainController
 
     /**
      * get one comment
-     * @param Integer $comment_id
+     * @param String $comment_id
      * @return Array $comment
      */
-    public function getOneComment($comment_id)
+    public function getOneComment(string $comment_id)
     {
         $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
         $comment = $commentModel->getOneComment($comment_id);
@@ -37,12 +37,12 @@ class CommentController extends MainController
 
     /**
      * add comment
-     * @param Integer $post_id
+     * @param String $post_id
      * @param Object $requestForPost
      * @return Array $comment
      */
 
-    public function addComment($requestForPost, $post_id)
+    public function addComment(HttpRequest $requestForPost, string $post_id)
     {
         try {
             $this->session->isLogged();
@@ -64,12 +64,12 @@ class CommentController extends MainController
 
     /**
      * Update comment
-     * @param Integer $id_comment
+     * @param String $id_comment
      * @param Object $requestForPost
      * @return BOOL  or error
      */
 
-    public function updateComment($requestForPost, $id_comment)
+    public function updateComment(HttpRequest $requestForPost, string $id_comment)
     {
         $this->session->isLogged();
         $data = $requestForPost->valueForm();
@@ -78,7 +78,7 @@ class CommentController extends MainController
         $valide = 0;
         try {
             $this->verifyInputMessage($data['comment_content']);
-            if ($user === $id_user) {
+            if ($user == $id_user) {
                 $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
                 $setComment = $commentModel->updateComment($id_comment, $data['comment_content'], $valide);
                 if ($setComment) {
@@ -97,11 +97,11 @@ class CommentController extends MainController
 
     /**
      * Delete comment
-     * @param Integer $id
+     * @param String $id_comment
      * @return BOOL  or error
      */
 
-    public function deleteComment($id_comment)
+    public function deleteComment(string $id_comment)
     {
         $id_user = $this->session->getUserVar('id');
         $is_admin = $this->session->getUserVar('is_admin');
@@ -141,7 +141,7 @@ class CommentController extends MainController
      * @return True or msg error
      */
 
-    public function commentValide($id_comment)
+    public function commentValide(string $id_comment)
     {
         $valide = 1;
         try {

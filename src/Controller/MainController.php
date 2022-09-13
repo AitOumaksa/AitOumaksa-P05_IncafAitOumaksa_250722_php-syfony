@@ -28,7 +28,7 @@ class MainController
      * @param Array $datas
      */
 
-    public function view($path, $datas = [])
+    public function view(string $path, array $datas = [])
     {
         $loader = new FilesystemLoader('src/View');
         $twig = new Environment($loader, [
@@ -45,7 +45,7 @@ class MainController
      * @param String $page
      */
 
-    public function redirect($page)
+    public function redirect(string $page)
     {
         header('Location: http://localhost' . $page);
     }
@@ -66,7 +66,7 @@ class MainController
      * @return BOOL
      */
 
-    public function verifyInputEmail($email)
+    public function verifyInputEmail(string $email)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new \Exception('Email not valid.');
@@ -82,7 +82,7 @@ class MainController
      * @return BOOL
      */
 
-    public function verifyInputName($name)
+    public function verifyInputName(string $name)
     {
         if (!preg_match("/^([a-zA-Z' ]+)$/", $name)) {
             throw new \Exception('Name format not valide or empty.');
@@ -98,7 +98,7 @@ class MainController
      * @return BOOL
      */
 
-    public function verifyInputPassword($password)
+    public function verifyInputPassword(string $password)
     {
         if (!preg_match("/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/", $password)) {
             throw new \Exception('le mot de passe doit contenir 8 caractères dont au minimum une majuscule, une minuscule, un caractère numérique et un caractère spécial.');
@@ -114,7 +114,7 @@ class MainController
      * @return BOOL
      */
 
-    public function verifyInputMessage($message)
+    public function verifyInputMessage(string $message)
     {
         if (empty(htmlspecialchars($message))) {
             throw new \Exception('input empty or format not valid');

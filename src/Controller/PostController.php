@@ -24,10 +24,11 @@ class PostController extends MainController
 
     /**
      * get one posts with his comments and display
+     * @param String $post_id
      * @return Array $posts, $comment and a view to display onePost page
      */
 
-    public function getOnePost($post_id)
+    public function getOnePost(string $post_id)
     {
         $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
         $commentModel = new CommentController();
@@ -43,7 +44,7 @@ class PostController extends MainController
      * @return True or error
      */
 
-    public function addPost($requestForPost)
+    public function addPost(HttpRequest $requestForPost)
     {
         $id_user = $this->session->getUserVar('id');
         $is_admin = $this->session->getUserVar('is_admin');
@@ -72,11 +73,11 @@ class PostController extends MainController
     /**
      * check the input and add updated a post
      * @param Object $requestForPost
-     * @param Integer $id
+     * @param String $id
      * @return True or error
      */
 
-    public function updatePost($requestForPost, $id)
+    public function updatePost(HttpRequest $requestForPost, string $id)
     {
         $data = $requestForPost->valueForm();
         $is_admin = $this->session->getUserVar('is_admin');
@@ -103,11 +104,11 @@ class PostController extends MainController
 
     /**
      * Delete post
-     * @param Integer $id
+     * @param String $id
      * @return False  or error
      */
 
-    public function deletePost($id)
+    public function deletePost(string $id)
     {
         $is_admin = $this->session->getUserVar('is_admin');
 

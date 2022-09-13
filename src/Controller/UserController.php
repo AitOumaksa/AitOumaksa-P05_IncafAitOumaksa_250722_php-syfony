@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\ConnectDB;
 use App\Model\PDOModel;
 use App\Model\UserModel;
+use App\Routes\HttpRequest;
 
 class UserController extends MainController
 {
@@ -35,7 +36,7 @@ class UserController extends MainController
      * @return True or error Msg
      */
 
-    public function signUp($requestForPost)
+    public function signUp(HttpRequest $requestForPost)
     {
         $data = $requestForPost->valueForm();
 
@@ -62,7 +63,7 @@ class UserController extends MainController
      * @return True or error Msg
      */
 
-    public function login($requestForPost)
+    public function login(HttpRequest $requestForPost)
     {
         $data = $requestForPost->valueForm();
         try {
