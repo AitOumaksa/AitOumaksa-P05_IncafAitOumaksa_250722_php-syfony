@@ -53,6 +53,7 @@ class CommentTable
 
     /**
      * @param  Array $datas
+     * @return void
      */
 
     public function hydrate(array $datas)
@@ -70,7 +71,7 @@ class CommentTable
 
     /**
      * @param String $id
-     * @return $id
+     * @return Object
      */
     public function setId(string $id)
     {
@@ -79,7 +80,7 @@ class CommentTable
     }
 
     /**
-     * @return $id
+     * @return String
      */
     public function getId()
     {
@@ -97,7 +98,7 @@ class CommentTable
 
     /**
      * @param String $commentContent
-     * @return $commentContent
+     * @return Object
      */
     public function setCommentContent(string $commentContent)
     {
@@ -115,7 +116,7 @@ class CommentTable
 
     /**
      * @param String $idPost
-     * @return $idPost
+     * @return Object
      */
     public function setIdPost(string $idPost)
     {
@@ -133,7 +134,7 @@ class CommentTable
 
     /**
      * @param String $createdAt
-     * @return $createdAt
+     * @return Object
      */
     public function setCreatedAt(string $createdAt)
     {
@@ -170,7 +171,7 @@ class CommentTable
 
     /**
      * @param String $isValide
-     * @return BOOL
+     * @return Object
      */
     public function setValide(string $valide)
     {
@@ -188,7 +189,7 @@ class CommentTable
 
     /**
      * @param String  $username
-     * @return $userNAme
+     * @return Object
      */
     public function setUserName(string $userName)
     {
@@ -206,7 +207,7 @@ class CommentTable
 
     /**
      * @param INT $idUser
-     * @return $idUser
+     * @return Object
      */
     public function setIdUser(int $idUser)
     {

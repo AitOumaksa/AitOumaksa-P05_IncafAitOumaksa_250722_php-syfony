@@ -89,12 +89,13 @@ class UserController extends MainController
 
     /**
      * Logout user and redirect to home page
+     * @return void
      */
 
     public function logout()
     {
         unset($_SESSION['user']);
         session_destroy();
-        return $this->redirect('/');
+        $this->redirect('/');
     }
 }

@@ -59,6 +59,7 @@ class PostTable
 
     /**
      * @param Array $datas
+     * @return void
      */
 
     public function hydrate(array $datas)

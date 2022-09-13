@@ -126,7 +126,7 @@ class CommentModel extends MainModel
      * UPdate validation column
      * @param String $id
      * @param String $valide
-     * @return Object
+     * @return Bool
      */
 
     public function updateColumnValidation(string $id, string $valide)

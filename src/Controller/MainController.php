@@ -59,7 +59,7 @@ class MainController
 
     public function afficheHome()
     {
-        return $this->view('home.twig');
+        $this->view('home.twig');
     }
 
     /**

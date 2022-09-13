@@ -33,6 +33,7 @@ class SessionController
     /**
      * Creating a session user
      * @param  Object $data
+     *  @return void
      */
 
     public function createSession(UserTable $data)
@@ -54,13 +55,13 @@ class SessionController
         ];
         $this->user = $this->session['user'];
 
-        return $_SESSION['user'] = $this->session['user'];
+        $_SESSION['user'] = $this->session['user'];
     }
 
     /**
      * Getting a variable of user
      * @param  String  $var
-     * @return Object $var
+     * @return Mixed $var
      */
 
     public function getUserVar($var)
@@ -73,7 +74,7 @@ class SessionController
 
     /**
      * virifier if user is logged
-     * @return True or error mssg
+     * @return Bool 
      */
 
     public function isLogged()
