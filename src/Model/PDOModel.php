@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use PDO;
+
 class PDOModel
 {
     /**
@@ -14,7 +16,7 @@ class PDOModel
      * pdo connection construct
      * @param PDO
      */
-    public function __construct($pdo)
+    public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
