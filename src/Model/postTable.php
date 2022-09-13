@@ -84,7 +84,7 @@ class PostTable
 
     /**
      * @param INT $id
-     * @return $id
+     * @return Object
      */
     public function setId(int $id)
     {
@@ -102,7 +102,7 @@ class PostTable
 
     /**
      * @param String $title
-     * @return $title
+     * @return Object
      */
     public function setTitle(string $title)
     {
@@ -120,7 +120,7 @@ class PostTable
 
     /**
      * @param String $chapo
-     * @return $chapo
+     * @return Object
      */
     public function setChapo(string $chapo)
     {
@@ -138,7 +138,7 @@ class PostTable
 
     /**
      * @param String $content
-     * @return $content
+     * @return Object
      */
     public function setContent(string $content)
     {
@@ -156,7 +156,7 @@ class PostTable
 
     /**
      * @param INT $id_user
-     * @return $id_user
+     * @return Object
      */
     public function setIdUser(int $id_user)
     {
@@ -165,7 +165,7 @@ class PostTable
     }
 
     /**
-     * @return Date
+     * @return String
      */
     public function getCreatedAt()
     {
@@ -174,7 +174,7 @@ class PostTable
 
     /**
      * @param String $createdAt
-     * @return Date
+     * @return Object
      */
     public function setCreatedAt(string $createdAt)
     {
@@ -191,8 +191,8 @@ class PostTable
     }
 
     /**
-     * @param Date $updatedAt
-     * @return Date
+     * @param String $updatedAt
+     * @return Object
      */
     public function setUpdatedAt(string $updatedAt)
     {
@@ -210,7 +210,7 @@ class PostTable
 
     /**
      * @param String $autor
-     * @return $autor
+     * @return Object
      */
     public function setAutor(string $autor)
     {
@@ -229,7 +229,7 @@ class PostTable
 
     /**
      * @param String $imgUrl
-     * @return $ImgUrl
+     * @return Object
      */
     public function setImgUrl(string $imgUrl)
     {

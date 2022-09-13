@@ -78,7 +78,7 @@ class UserTable
 
     /**
      * @param INT $id
-     * @return $id
+     * @return Object
      */
     public function setId(int $id)
     {
@@ -96,7 +96,7 @@ class UserTable
 
     /**
      * @param String  $userName
-     * @return $userName
+     * @return Object
      */
     public function setUserName(string $userName)
     {
@@ -114,7 +114,7 @@ class UserTable
 
     /**
      * @param Satring $mail
-     * @return $mail
+     * @return Object
      */
     public function setMail(string $mail)
     {
@@ -132,7 +132,7 @@ class UserTable
 
     /**
      * @param String $password
-     * @return $password
+     * @return Object
      */
     public function setPassword(string $password)
     {
@@ -141,7 +141,7 @@ class UserTable
     }
 
     /**
-     * @return date
+     * @return String
      */
     public function getUpdatedAt()
     {
@@ -151,7 +151,7 @@ class UserTable
 
     /**
      * @param String  $updatedAt
-     * @return Date
+     * @return Object
      */
     public function setUpdatedAt(string $updatedAt)
     {
@@ -161,7 +161,7 @@ class UserTable
 
 
     /**
-     * @return Date
+     * @return String
      */
     public function getCreatedAt()
     {
@@ -170,7 +170,7 @@ class UserTable
 
     /**
      * @param String  $createdAt
-     * @return Date
+     * @return Object
      */
     public function setCreatedAt(string $createdAt)
     {
@@ -180,7 +180,7 @@ class UserTable
 
 
     /**
-     * @return BOLL
+     * @return Bool
      */
     public function getIsAdmin()
     {
@@ -188,8 +188,8 @@ class UserTable
     }
 
     /**
-     * @param String $isAdmin
-     * @return BOOL
+     * @param Bool $isAdmin
+     * @return Object
      */
     public function setIsAdmin(string $isAdmin)
     {

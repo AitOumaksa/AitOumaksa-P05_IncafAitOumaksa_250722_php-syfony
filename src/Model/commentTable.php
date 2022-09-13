@@ -70,7 +70,7 @@ class CommentTable
     }
 
     /**
-     * @param String $id
+     * @param Int $id
      * @return Object
      */
     public function setId(string $id)
@@ -80,7 +80,7 @@ class CommentTable
     }
 
     /**
-     * @return String
+     * @return Int
      */
     public function getId()
     {
@@ -107,7 +107,7 @@ class CommentTable
     }
 
     /**
-     * @return String
+     * @return Int
      */
     public function getIdPost()
     {
@@ -115,7 +115,7 @@ class CommentTable
     }
 
     /**
-     * @param String $idPost
+     * @param Int $idPost
      * @return Object
      */
     public function setIdPost(string $idPost)
@@ -153,7 +153,7 @@ class CommentTable
 
     /**
      * @param String $updatedAt
-     * @return $updatedAt
+     * @return Object
      */
     public function setUpdatedAt(string $updatedAt)
     {

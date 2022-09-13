@@ -68,17 +68,16 @@ class Router
     /**
      * Run through array of the route and matching with a route sending by browser
      * if route dosn't exist
-     * @return ErrorPage
+     * @return void
      */
     public static function run()
     {
         foreach (self::$request[$_SERVER['REQUEST_METHOD']] as $route) {
             if ($route->match(trim($_GET['url']), '/')) {
                 $route->execute();
-                return;
             }
         }
         $view = new MainController();
-        return $view->view('pageError.twig');
+        $view->view('pageError.twig');
     }
 }

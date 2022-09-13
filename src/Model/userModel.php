@@ -9,7 +9,7 @@ class UserModel extends MainModel
      * @param String $user_name
      * @param String $email
      * @param String $password
-     * @return Array
+     * @return Bool
      */
 
     public function signUpUser(string $user_name, string $email, string $password)
@@ -24,6 +24,7 @@ class UserModel extends MainModel
     /**
      * Get user
      * @param String $email
+     * @return Object
      */
 
     public function getUser(string $email)

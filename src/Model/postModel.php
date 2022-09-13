@@ -33,7 +33,7 @@ class PostModel extends MainModel
     /**
      * get unique post
      * @param String $post_id
-     * @return Array
+     * @return Object
      */
 
     public function getOnePost(string $post_id)

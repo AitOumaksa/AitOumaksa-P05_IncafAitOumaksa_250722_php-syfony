@@ -71,7 +71,7 @@ class Request
 
     /**
      * If matching OK Excuting
-     * @return $_GET or $_POST
+     * @return void 
      */
 
     public function execute()
@@ -83,9 +83,9 @@ class Request
         $methode = $action[1];
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            return isset($this->params) ? $controller->$methode(implode($this->params)) : $controller->$methode;
+            isset($this->params) ? $controller->$methode(implode($this->params)) : $controller->$methode;
         } else {
-            return isset($this->params) ? $controller->$methode($this->requestForPost, implode($this->params)) :
+            isset($this->params) ? $controller->$methode($this->requestForPost, implode($this->params)) :
                 $controller->$methode($this->requestForPost);
         }
     }
