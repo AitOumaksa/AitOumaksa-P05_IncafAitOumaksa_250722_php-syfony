@@ -51,7 +51,7 @@ class Request
      * @return BOOL
      */
 
-    public function match($url)
+    public function match(string $url)
     {
         $path = preg_replace('#({[\w]+})#', '([^/]+)', $this->path);
 

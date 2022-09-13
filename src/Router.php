@@ -18,7 +18,7 @@ class Router
      *@return Mixed
      */
 
-    public static function get($path, $action)
+    public static function get(string $path, string $action)
     {
         $routes = new Request($path, $action);
         self::$request['GET'][] = $routes;
@@ -32,7 +32,7 @@ class Router
      *@return Mixed
      */
 
-    public static function delete($path, $action)
+    public static function delete(string $path, string $action)
     {
         $routes = new Request($path, $action);
         self::$request['GET'][] = $routes;
@@ -45,7 +45,7 @@ class Router
      *@return Mixed
      */
 
-    public static function post($path, $action)
+    public static function post(string $path, string $action)
     {
         $routes = new Request($path, $action);
         self::$request['POST'][] = $routes;
@@ -58,7 +58,7 @@ class Router
      *@return Mixed
      */
 
-    public static function put($path, $action)
+    public static function put(string $path, string $action)
     {
         $routes = new Request($path, $action);
         self::$request['POST'][] = $routes;

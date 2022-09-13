@@ -16,7 +16,7 @@ class HttpRequest
      * Received value input from the form
      * @return Array $_POST
      */
-    public function nameInput($field)
+    public function nameInput(array $field)
     {
         return $_POST[$field];
     }
