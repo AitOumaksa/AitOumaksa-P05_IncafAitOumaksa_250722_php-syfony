@@ -147,7 +147,7 @@ class PostTable
     }
 
     /**
-     * @return String
+     * @return INT
      */
     public function getIdUser()
     {

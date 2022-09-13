@@ -75,6 +75,7 @@ class Router
         foreach (self::$request[$_SERVER['REQUEST_METHOD']] as $route) {
             if ($route->match(trim($_GET['url']), '/')) {
                 $route->execute();
+                return;
             }
         }
         $view = new MainController();

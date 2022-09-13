@@ -4,6 +4,13 @@ namespace App\Model;
 
 class PDOModel
 {
+
+    private $pdo;
+
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+    }
     /**
      * Returns a unique result from the Database
      * @param string $req
@@ -14,7 +21,7 @@ class PDOModel
     {
 
 
-        $request = ConnectDB::getPDO()->prepare($req);
+        $request = $this->pdo->prepare($req);
         $request->execute($params);
         return $request->fetch();
     }
@@ -28,7 +35,7 @@ class PDOModel
 
     public function getAllData(string $req, array $params = null)
     {
-        $req = ConnectDB::getPDO()->prepare($req);
+        $req = $this->pdo->prepare($req);
         $req->execute($params);
         return $req->fetchAll();
     }
@@ -43,7 +50,7 @@ class PDOModel
 
     public function setData(string $req, array $params = [])
     {
-        $db = ConnectDB::getPDO();
+        $db = $this->pdo;
         $request = $db->prepare($req);
 
         return $request->execute($params);
@@ -58,7 +65,7 @@ class PDOModel
 
     public function deleteData(string $req)
     {
-        $request = ConnectDB::getPDO()->prepare($req);
+        $request = $this->pdo->prepare($req);
         return  $request->execute();
     }
 }
