@@ -11,7 +11,7 @@ class CommentModel extends MainModel
      * @return Object
      */
 
-    public function getComments($post_id, $valide)
+    public function getComments(String $post_id, int $valide)
     {
         $col_table = [
             'user.user_name',
@@ -41,7 +41,7 @@ class CommentModel extends MainModel
      * @return Object
      */
 
-    public function getCommentsNotValidate($valide)
+    public function getCommentsNotValidate(int $valide)
     {
         $col_table = [
             'user.user_name',
@@ -71,7 +71,7 @@ class CommentModel extends MainModel
      * @return Object
      */
 
-    public function getOneComment($comment_id)
+    public function getOneComment(int $comment_id)
     {
         $col_table = [
             'comment.id',
@@ -95,7 +95,7 @@ class CommentModel extends MainModel
      * @return Mixed
      */
 
-    public function addComment($id_post, $comment_content, $valide, $id_user)
+    public function addComment(int $id_post, string $comment_content, int $valide, int $id_user)
     {
         $date = date("Y-m-d H:i:s");
         $col_table = ['id_post', 'comment_content', 'valide', 'createdAt', 'updatedAt', 'id_user'];
@@ -112,7 +112,7 @@ class CommentModel extends MainModel
      * @return Mixed
      */
 
-    public function updateComment($id, $comment_content, $valide)
+    public function updateComment(int $id, string $comment_content, int $valide)
     {
         $date = date("Y-m-d H:i:s");
         $col_table = ['comment_content', 'valide', 'updatedAt'];
@@ -130,7 +130,7 @@ class CommentModel extends MainModel
      * @return Object
      */
 
-    public function updateColumnValidation($id, $valide)
+    public function updateColumnValidation(string $id, int $valide)
     {
         $col_table = ['valide'];
         $key = 'id';
@@ -146,7 +146,7 @@ class CommentModel extends MainModel
      * @return BOOL
      */
 
-    public function deleteComment($id)
+    public function deleteComment(int $id)
     {
         $key = 'id';
         $keyValue = $id;
