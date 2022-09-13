@@ -43,7 +43,7 @@ class UserTable
     private $isAdmin;
 
 
-    public function __construct($datas = [])
+    public function __construct(array $datas = [])
     {
         if (!empty($datas)) {
             $this->hydrate($datas);
