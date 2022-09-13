@@ -132,7 +132,7 @@ class CommentController extends MainController
         $valide = 0;
         $commentModel = new CommentModel(new PDOModel(ConnectDB::getPDO()));
         $comments = $commentModel->getCommentsNotValidate($valide);
-        return  $this->view('admin/commentValidate.twig', compact('comments'));
+        $this->view('admin/commentValidate.twig', compact('comments'));
     }
 
     /**

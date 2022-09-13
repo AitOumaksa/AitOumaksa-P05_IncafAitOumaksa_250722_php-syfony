@@ -19,7 +19,7 @@ class PostController extends MainController
     {
         $postModel = new PostModel(new PDOModel(ConnectDB::getPDO()));
         $posts = $postModel->getAllPost();
-        return $this->view('posts.twig', compact('posts'));
+        $this->view('posts.twig', compact('posts'));
     }
 
     /**
@@ -34,7 +34,7 @@ class PostController extends MainController
         $commentModel = new CommentController();
         $comments = $commentModel->getComments($post_id);
         $one_post = $postModel->getOnePost($post_id);
-        return $this->view('onePost.twig', compact('one_post', 'comments'));
+        $this->view('onePost.twig', compact('one_post', 'comments'));
     }
 
 

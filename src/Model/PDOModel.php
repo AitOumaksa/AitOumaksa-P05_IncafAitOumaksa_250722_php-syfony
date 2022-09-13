@@ -10,7 +10,7 @@ class PDOModel
      * @return Mixed
      */
 
-    public function getData(string $req, array $params)
+    public function getData(string $req, array $params = null)
     {
 
 
@@ -26,7 +26,7 @@ class PDOModel
      * @return Array|Mixed
      */
 
-    public function getAllData(string $req, array $params)
+    public function getAllData(string $req, array $params = null)
     {
         $req = ConnectDB::getPDO()->prepare($req);
         $req->execute($params);

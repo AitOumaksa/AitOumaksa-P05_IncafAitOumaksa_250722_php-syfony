@@ -16,7 +16,7 @@ class UserController extends MainController
 
     public function loginPage()
     {
-        return $this->view('userConnection/login.twig');
+        $this->view('userConnection/login.twig');
     }
 
     /**
@@ -26,7 +26,7 @@ class UserController extends MainController
 
     public function signUpPage()
     {
-        return $this->view('userConnection/signUp.twig');
+        $this->view('userConnection/signUp.twig');
     }
 
 
