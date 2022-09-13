@@ -83,7 +83,7 @@ class CommentModel extends MainModel
 
         ];
         $join = ['user' => 'user.id = comment.id_user'];
-        $results = $this->selectOneData($col_table, $join, 'comment.id', $comment_id);
+        $results = $this->selectOneData($col_table, $join, ['comment.id'], [$comment_id]);
         return new commentTable($results);
     }
 

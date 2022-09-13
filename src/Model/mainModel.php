@@ -54,11 +54,13 @@ class MainModel
      * Join a table
      * @param Array $col_tables
      * @param Array $join_tables
+     * @param Array $key
+     * @param Array $value
 
      * @return Array|Mixed
      */
 
-    public function selectData(array $col_tables, array $join_tables,  $key,  $value)
+    public function selectData(array $col_tables = null, array $join_tables = null, array $key = null,  array $value = null)
     {
         $query_join = null;
         $query_col = null;
@@ -66,13 +68,13 @@ class MainModel
         $count_col = null;
         $query_key = null;
 
-        if (isset($join_tables)) {
+        if ($join_tables) {
             foreach ($join_tables as $table => $condition) {
                 $query_join .= ' INNER JOIN ' . $table . ' ON ' . $condition;
             }
         }
 
-        if (isset($col_tables)) {
+        if ($col_tables) {
             foreach ($col_tables as $col => $label) {
                 if (is_string($col)) {
                     $label = 'AS ' . $label;
@@ -90,20 +92,12 @@ class MainModel
         } else {
             $query_col = '*';
         }
-        if (isset($key)) {
-            if (is_array($key) && is_array($value)) {
-                $key[count($key) - 1]  =  $key[count($key) - 1] . '=?';
-                $query_key = implode(" =? AND ", $key);
-                $query_condition = ' WHERE ' . $query_key;
-            } else {
-                $query_condition = ' WHERE ' . $key . ' = ?';
-            }
+        if ($key) {
+
+            $key[count($key) - 1]  =  $key[count($key) - 1] . '=?';
+            $query_key = implode(" =? AND ", $key);
+            $query_condition = ' WHERE ' . $query_key;
         }
-
-
-
-
-
 
         $query = 'SELECT ' . $query_col . ' FROM ' . $this->table . ' ' . $query_join . ' ' . $query_condition . '  ORDER BY ' . $this->table . '.updatedAt  DESC';
 
@@ -161,30 +155,31 @@ class MainModel
         return $this->database->deleteData($query);
     }
 
-
     /**
      * Join a table
-     * @param Mixed $col_tables
-     * @param Mixed $join_tables
-     * @param String $key
-     * @param String $value
+     * @param Array $col_tables
+     * @param Array $join_tables
+     * @param Array $key
+     * @param Array $value
+
      * @return Array|Mixed
      */
 
-    public function selectOneData($col_tables, $join_tables, string $key, string $value)
+    public function selectOneData(array $col_tables = null, array $join_tables = null, array $key = null,  array $value = null)
     {
         $query_join = null;
         $query_col = null;
         $query_condition = null;
         $count_col = null;
+        $query_key = null;
 
-        if (isset($join_tables)) {
+        if ($join_tables) {
             foreach ($join_tables as $table => $condition) {
                 $query_join .= ' INNER JOIN ' . $table . ' ON ' . $condition;
             }
         }
 
-        if (isset($col_tables)) {
+        if ($col_tables) {
             foreach ($col_tables as $col => $label) {
                 if (is_string($col)) {
                     $label = 'AS ' . $label;
@@ -202,13 +197,15 @@ class MainModel
         } else {
             $query_col = '*';
         }
+        if ($key) {
 
-        if (isset($key) && isset($value)) {
-            $query_condition = ' WHERE ' . $key . ' = ?';
+            $key[count($key) - 1]  =  $key[count($key) - 1] . '=?';
+            $query_key = implode(" =? AND ", $key);
+            $query_condition = ' WHERE ' . $query_key;
         }
 
-        $query = 'SELECT ' . $query_col . ' FROM ' . $this->table . ' ' . $query_join . ' ' . $query_condition;
+        $query = 'SELECT ' . $query_col . ' FROM ' . $this->table . ' ' . $query_join . ' ' . $query_condition . '  ORDER BY ' . $this->table . '.updatedAt  DESC';
 
-        return $this->database->getData($query, [$value]);
+        return $this->database->getData($query, $value);
     }
 }

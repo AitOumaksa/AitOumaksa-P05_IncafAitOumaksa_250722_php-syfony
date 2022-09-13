@@ -12,6 +12,8 @@ class PDOModel
 
     public function getData(string $req, array $params)
     {
+
+
         $request = ConnectDB::getPDO()->prepare($req);
         $request->execute($params);
         return $request->fetch();
