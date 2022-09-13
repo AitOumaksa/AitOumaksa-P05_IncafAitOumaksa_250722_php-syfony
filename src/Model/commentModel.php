@@ -61,7 +61,6 @@ class CommentModel extends MainModel
         foreach ($results as $datas) {
             array_push($custom_array, new commentTable($datas));
         }
-        var_dump($custom_array);
         return $custom_array;
     }
 
