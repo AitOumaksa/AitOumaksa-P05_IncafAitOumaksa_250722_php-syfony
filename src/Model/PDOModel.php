@@ -4,9 +4,16 @@ namespace App\Model;
 
 class PDOModel
 {
-
+    /**
+     * pdo 
+     * @var
+     */
     private $pdo;
 
+    /**
+     * pdo connection construct
+     * @return void
+     */
     public function __construct($pdo)
     {
         $this->pdo = $pdo;
