@@ -26,7 +26,7 @@ class PDOModel
      * @return Array|Mixed
      */
 
-    public function getAllData(string $req, $params)
+    public function getAllData(string $req, array $params)
     {
         $req = ConnectDB::getPDO()->prepare($req);
         $req->execute($params);
