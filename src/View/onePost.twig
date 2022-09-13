@@ -3,171 +3,29 @@
  {% block content %}
 
  <!-- Modal edite -->
-<div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modifier l'article</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        
-      <form method="post" class="needs-validation modifyPost" action="" novalidate>
-            <div class="row">
-                <div class="form-group col-md pb-2 pb-md-0 pt-3">
-                    <label for="title" >Titre de l'article :</label><br>
-                      <input  type="text" name="title" id="title" class="form-control" placeholder="Titre de l'article" value="{{ one_post.title}}" required>
-                       <div class="valid-feedback">Titre de l'article valide</div>
-                    <div class="invalid-feedback">Titre de l'article invalide</div>
-                </div>
-				<div class="form-group col-md pb-2 pb-md-0 pt-3">
-                    <label for="autor" >Auteur de l'article :</label><br>
-                      <input  type="text" name="autor" id="autor" class="form-control" placeholder="auteur de l'article" value="{{ one_post.autor}}" required>
-                       <div class="valid-feedback">Auteur de l'article valide</div>
-                    <div class="invalid-feedback">Auteur de l'article invalide</div>
-                </div>
 
-            </div>
-			    
-				  <div class="row">
-                    <div class=" pt-3">
-                    <label for="description" >Description de l'article :</label><br>
-                        <textarea name="chapo" class="form-control" rows="4" id="chapo" placeholder="chapo de l'article"  required>{{ one_post.chapo}}</textarea>
-                        <div class="valid-feedback">Description de l'article valide</div>
-                    <div class="invalid-feedback">Description de l'article invalide</div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class=" pt-3">
-                    <label for="Content" >Contenu de l'article :</label><br>
-                        <textarea name="content" class="form-control" rows="4" id="content" placeholder="Contenu de l'article"  required>{{ one_post.content}}</textarea>
-                        <div class="valid-feedback">Contenu de l'article valide</div>
-                    <div class="invalid-feedback">Contenu de l'article invalide</div>
-                    </div>
-                </div>
-                     <div class="row">
-                    <div class="col pt-3">
-                        <input class = "btn btn-dark" type="submit" value="Modifier"/>
-                    </div>
-                </div>
-                 
-                <div id="liveAlertPlaceholder"></div>
-      </form>
-
-      </div>
-    </div>
-  </div>
-</div>
+{{  include ('articles/edite_posts.twig') }}
 
 <!--End modale edite-->
 
 <!--modal delete -->
 
-
-<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Supression de l'article</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Êtes-vous sur de suprimer l'article ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark btn-delete-post">Suprimer</button>
-      </div>
-    </div>
-  </div>
-</div>
+{{  include ('articles/delete_posts.twig') }}
 
 <!--modal en delete -->
 
 <!--Start container for one post-->
-    <div class="container p-4 blog-post" data-id= {{one_post.id}}>
-            <h1 class="blog-post-title mb-4">{{one_post.title}}</h1>
-            {% if one_post.updatedAt <= one_post.createdAt %}
-            <p class="blog-post-meta mb-4">Créé le {{one_post.createdAt|date('d/m/Y \\à H:i',"Europe/Paris")}} par <strong> {{ one_post.autor}}</strong></p>
-            {% else %}
-            <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatedAt|date('d/m/Y \\à H:i',"Europe/Paris") }} par <strong> {{ one_post.autor }}</strong></p>
-            {% endif %}
-            <p>{{one_post.chapo}}...</br> {{one_post.content}}</p>
-            
-            <div class="d-flex flex-row align-items-center voting-icons">
-             {% if session.user.sessionId is defined %}
-             {% if session.user.is_admin == 'Admin' %}
-            <button type="button" class="btn btn-dark mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> Modifier</button>
-            <button type="button" class="btn btn-dark ml-2 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModalDelete">Suprimer</button>
-             {% endif %}
-             {% endif  %}
 
-            </div>
-   
+{{  include ('articles/post.twig') }} 
 
 <!--End container for one post-->
-
         <!-- start comment -->
-        <div class="d-flex justify-content-center row">
-              <div class="coment-bottom bg-white p-2 px-4">
-                <h2 class="blog-post-title mb-4 h4">Commentaires</h2>
-                <form method="post" class="needs-validation container addComment"  novalidate>
-                  <div class="d-flex flex-row add-comment-section mt-4 mb-4">
-                    <input type="text"  name="comment_content" class="form-control mr-3 " placeholder="Ajouter un commentaire" required> 
-                  <button class="btn btn-dark comment" type="submit">Comment</button> 
-                     
-                  </div>
-                  
-                    <div id="alertPlaceholderComment"></div>
-                </form>
-             
-                <div class = "all-comment" id = "all-comment">
-                      {% for comment in comments %}
-                    <div class="commented-section mt-2 border-bottom" data-id= {{comment.id}}>
-                        <div class="d-flex flex-row align-items-center commented-user">
-                            <h2 class="mr-2 me-2 h5">{{comment.userName}}</h2>
-                            {% if comment.updatedAt <= comment.createdAt %}
-                            <span class="mb-1  ml-2"> Crée le {{comment.createdAt|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
-                            {% else %}
-                            <span class="mb-1  ml-2"> Mis à jour le {{comment.updatedAt|date('d/m/Y \\à H:i' ,"Europe/Paris")}} </span>
-                            {% endif %}
-                        </div>
-                        <form method="post" class="needs-validation container updateComment"  novalidate>
-                        <div class="d-flex flex-row update-comment-section mt-4 mb-4 d-none" >
-                        <input type="text"  name="comment_content" value="{{comment.commentContent}}" class="form-control mr-3 comment-content " placeholder="Ajouter un commentaire" required>
-                        <button class="btn btn-dark btn-sm mx-2 btn-to-update" type="submit">Modifier</button>
-                        <button class="btn btn-dark btn-sm btn-to-cancel" type="button">Annuler</button>
-                        </div>
-                        <div class="alertPlaceholderUpdateComment"></div>
-                        </form>
-                        <div class="comment-text-sm"><span>{{comment.commentContent}}</span></div>
-                        <div class="reply-section">
-                             
-                            <div class="d-flex flex-row align-items-center voting-icons">
-                            {% if session.user.id == comment.idUser  %}
-                            
-                                <a href ="#" class="ml-2 mt-1 modifycomment text-dark fw-bold mx-2">Modifier</a>
-                             {% endif %}
-                             {% if (session.user.id == comment.idUser ) or (session.user.is_admin == 'Admin' ) %}
-                                <a href ="#" class="ml-2 mt-1 deletecomment text-dark fw-bold">Suprimer</a>
-                              {% endif %}
-                          
-                            </div>
-                           
-                            
-                        </div>
-                    </div>
-                   {% endfor %}
-                  </div>
-         <!-- end comment -->
-         
-          </div>
-          <!-- /.blog-post -->
 
+        {{  include ('articles/comment.twig') }} 
+       
+        <!-- end comment -->
 
-       <script>
-
-
+<script>
   document.querySelectorAll('.modifycomment').forEach(element => {
   element.addEventListener('click', function (event) {
     event.stopPropagation();

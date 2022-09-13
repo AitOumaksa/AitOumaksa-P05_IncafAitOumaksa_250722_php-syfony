@@ -1,0 +1,22 @@
+<!--Start container for one post-->
+    <div class="container p-4 blog-post" data-id= {{one_post.id}}>
+            <h1 class="blog-post-title mb-4">{{one_post.title}}</h1>
+            {% if one_post.updatedAt <= one_post.createdAt %}
+            <p class="blog-post-meta mb-4">Créé le {{one_post.createdAt|date('d/m/Y \\à H:i',"Europe/Paris")}} par <strong> {{ one_post.autor}}</strong></p>
+            {% else %}
+            <p class="blog-post-meta mb-4">Mis à jour le {{ one_post.updatedAt|date('d/m/Y \\à H:i',"Europe/Paris") }} par <strong> {{ one_post.autor }}</strong></p>
+            {% endif %}
+            <p>{{one_post.chapo}}...</br> {{one_post.content}}</p>
+            
+            <div class="d-flex flex-row align-items-center voting-icons">
+             {% if session.user.sessionId is defined %}
+             {% if session.user.is_admin == 'Admin' %}
+            <button type="button" class="btn btn-dark mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> Modifier</button>
+            <button type="button" class="btn btn-dark ml-2 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModalDelete">Suprimer</button>
+             {% endif %}
+             {% endif  %}
+
+            </div>
+   
+
+<!--End container for one post-->
