@@ -39,7 +39,6 @@ class UserController extends MainController
     public function signUp(HttpRequest $requestForPost)
     {
         $data = $requestForPost->valueForm();
-
         try {
             $this->verifyInputName($data['user_name']);
             $this->verifyInputEmail($data['mail']);
@@ -47,9 +46,11 @@ class UserController extends MainController
             $userModel = new UserModel(new PDOModel(ConnectDB::getPDO()));
             $data['password'] =  password_hash($data['password'], PASSWORD_DEFAULT);
             $user_mail = $userModel->getUser($data['mail']);
-            if ($user_mail->getMail()) {
+
+            if ($user_mail) {
                 throw new \Exception('User exist.');
             }
+
             $userModel->signUpUser($data['user_name'], $data['mail'], $data['password']);
             echo json_encode(array("success" => true));
         } catch (\Exception $e) {

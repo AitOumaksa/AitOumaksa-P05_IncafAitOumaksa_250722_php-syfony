@@ -20,6 +20,7 @@ class PDOModel
     {
         $this->pdo = $pdo;
     }
+
     /**
      * Returns a unique result from the Database
      * @param string $req
@@ -29,9 +30,9 @@ class PDOModel
     public function getData(string $req, array $params = null)
     {
 
-
         $request = $this->pdo->prepare($req);
         $request->execute($params);
+
         return $request->fetch();
     }
 

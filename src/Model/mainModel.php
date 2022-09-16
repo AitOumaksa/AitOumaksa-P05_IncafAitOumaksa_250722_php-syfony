@@ -205,7 +205,6 @@ class MainModel
         }
 
         $query = 'SELECT ' . $query_col . ' FROM ' . $this->table . ' ' . $query_join . ' ' . $query_condition . '  ORDER BY ' . $this->table . '.updatedAt  DESC';
-
         return $this->database->getData($query, $value);
     }
 }

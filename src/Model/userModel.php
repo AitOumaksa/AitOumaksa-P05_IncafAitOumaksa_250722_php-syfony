@@ -30,6 +30,10 @@ class UserModel extends MainModel
     public function getUser(string $email)
     {
         $results = $this->selectOneData(null, null, ['mail'], [$email]);
-        return new UserTable($results);
+        if ($results) {
+            return new UserTable($results);
+        } else {
+            return $results;
+        }
     }
 }
