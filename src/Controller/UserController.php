@@ -72,7 +72,7 @@ class UserController extends MainController
             $this->verifyInputPassword($data['password']);
             $userModel = new UserModel(new PDOModel(ConnectDB::getPDO()));
             $data_user = $userModel->getUser($data['mail']);
-            if (!$data_user->getMail()) {
+            if (!$data_user) {
                 throw new \Exception('Email user doesn\'t exist.');
             }
 
