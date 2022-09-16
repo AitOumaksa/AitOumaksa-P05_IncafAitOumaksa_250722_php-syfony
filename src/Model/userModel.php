@@ -24,7 +24,7 @@ class UserModel extends MainModel
     /**
      * Get user
      * @param String $email
-     * @return Object
+     * @return Mixed
      */
 
     public function getUser(string $email)
